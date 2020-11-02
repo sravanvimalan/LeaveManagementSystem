@@ -1,0 +1,60 @@
+﻿@model LeaveManagementSystem.ViewModel.DesignationViewModel
+@{
+    ViewBag.Title = "AddDesignation";
+}
+
+    <link rel="stylesheet" href="~/Content/CustomStyleSheet.css" >
+
+
+
+
+    <div class="container">
+        <h3>Register new designation</h3>
+
+        <hr>
+        @using (Html.BeginForm("adddesignation", "designation", FormMethod.Post))
+        {
+            @Html.LabelFor(temp => temp.DesignationName, "Designation Name")
+            @Html.TextBoxFor(temp => temp.DesignationName)
+            <div class="valid-feedback">Looks good</div>
+            <div class="invalid-feedback">Not good</div>
+            <small class="designation-exist text-danger"></small>
+            <button type="submit" style="float:right;" class="btn btn-primary">Add</button>
+
+        }
+
+       
+
+
+
+    </div>
+
+<script>
+    $("#DesignationName").blur(
+        function () {
+            $.ajax(
+                {
+                    url: "/Api/ValidateDesignation?designation=" + $("#DesignationName").val(),
+                    type: "GET",
+                    success: function (response) {
+                        if (response == "found") {
+                            $(".designation-exist").text("Designation already exist");
+                            //$(".Isdesignation-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
+                        }
+                        else {
+                            $(".designation-exist").text("");
+                            //$(".Isdesignation-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
+                        }
+                    },
+                    error: function () {
+                        alert("Error occured")
+                    }
+                }
+
+            )
+        });
+</script>
+
+
+
+

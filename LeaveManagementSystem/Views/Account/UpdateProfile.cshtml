@@ -1,0 +1,142 @@
+﻿@model LeaveManagementSystem.ViewModel.ViewModel.UpdateProfileViewModel
+@{
+    ViewBag.Title = "UpdateProfile";
+}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: white;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Add padding to containers */
+    .container {
+        padding: 16px;
+        background-color: white;
+    }
+
+    /* Full-width input fields */
+    input[type=text], input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: inline-block;
+        border: none;
+        background: #f1f1f1;
+    }
+
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+    /* Overwrite default styles of hr */
+    hr {
+        border: 1px solid #f1f1f1;
+        margin-bottom: 25px;
+    }
+
+    /* Set a style for the submit button */
+    .registerbtn {
+        background-color: #1a53ff;
+        color: white;
+        padding: 16px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+    }
+
+        .registerbtn:hover {
+            opacity: 1;
+        }
+
+    /* Add a blue text color to links */
+    a {
+        color: dodgerblue;
+    }
+
+    /* Set a grey background color and center the text of the "sign in" section */
+    .signin {
+        background-color: #f1f1f1;
+        text-align: center;
+    }
+
+    .container {
+        width: 500px;
+    }
+</style>
+
+
+
+@using (Html.BeginForm("updateprofile", "account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<div class="container">
+    <h1>Update Profile</h1>
+    <p>Your current details.</p>
+    <label for="Image">Add Image</label>
+    <input type="file" name="Image" id="Image" />
+    
+    <br>
+    <br> <br> <br> <br>
+    @Html.HiddenFor(temp => temp.EmployeeID)
+
+
+    @Html.LabelFor(temp => temp.FirstName, "First Name")
+    @Html.TextBoxFor(temp => temp.FirstName)
+
+    @Html.LabelFor(temp => temp.MiddleName, "Middle Name")
+    @Html.TextBoxFor(temp => temp.MiddleName)
+
+    @Html.LabelFor(temp => temp.LastName, "Last Name")
+    @Html.TextBoxFor(temp => temp.LastName)
+
+    @Html.LabelFor(temp => temp.DateOfBirth, "Date Of Birth")
+    @Html.TextBoxFor(model => model.DateOfBirth,
+           new { @type = "date", @Value = Model.DateOfBirth.ToString("yyyy-MM-dd") })<br /><br />
+
+    @Html.LabelFor(temp => temp.MobileNumber, "Mobile Number")
+    @Html.TextBoxFor(temp => temp.MobileNumber)
+
+
+
+    @Html.LabelFor(temp => temp.AddressLine1, "AddressLine 1")
+    @Html.TextBoxFor(temp => temp.AddressLine1)
+
+    @Html.LabelFor(temp => temp.AddressLine2, "AddressLine 2")
+    @Html.TextBoxFor(temp => temp.AddressLine2)
+
+    @Html.LabelFor(temp => temp.AddressLine3, "AddressLine 3")
+    @Html.TextBoxFor(temp => temp.AddressLine3)
+
+
+    @Html.LabelFor(temp => temp.GenderID, "Gender")
+    @Html.DropDownListFor(temp => temp.GenderID, Model.GenderList, Model.GenderName)
+
+    <br /><br />
+
+
+
+
+
+    @Html.LabelFor(temp => temp.Nationality, "Nationality")
+    @Html.TextBoxFor(temp => temp.Nationality)
+
+
+    <button type="submit" class="btn btn-success">Save</button>
+</div>
+    }
+
+
+
+
+
+
+
+

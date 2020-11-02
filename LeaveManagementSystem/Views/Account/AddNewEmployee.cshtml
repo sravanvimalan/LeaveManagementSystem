@@ -1,0 +1,312 @@
+﻿
+@model LeaveManagementSystem.ViewModel.AdminProfileViewModel
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: white;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Add padding to containers */
+    .container {
+        padding: 16px;
+        background-color: white;
+    }
+
+    /* Full-width input fields */
+    input[type=text], input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: inline-block;
+        border: none;
+        background: #f1f1f1;
+    }
+
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+    /* Overwrite default styles of hr */
+    hr {
+        border: 1px solid #f1f1f1;
+        margin-bottom: 25px;
+    }
+
+    /* Set a style for the submit button */
+    .registerbtn {
+        background-color: #1a53ff;
+        color: white;
+        padding: 16px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+    }
+
+        .registerbtn:hover {
+            opacity: 1;
+        }
+
+    /* Add a blue text color to links */
+    a {
+        color: dodgerblue;
+    }
+
+    /* Set a grey background color and center the text of the "sign in" section */
+    .signin {
+        background-color: #f1f1f1;
+        text-align: center;
+    }
+
+   /* .container {
+        height:500px;
+        width: 500px;
+        overflow: auto;
+
+    }*/
+</style>
+
+
+
+<form action="/account/addnewemployee/" class="form-validation" method="post" novalidate="novalidate" enctype="multipart/form-data" >
+    <div class="container ">
+        <h1>Register</h1>
+        <p>Enter employee details.</p>
+        <br> <br>
+        <label for="Image">Add Image</label>
+        @*<img style="float:right;width:100px;height:auto;" src="">*@
+        <input type="file" name="Image" id="Image" />
+        <br>
+        <br> <br> <br> <br>
+        <div class="form-row">
+            <div class="form-group col-sm-3">
+                <label for="FirstName"><b>First Name</b></label>
+                <input type="text" placeholder="First Name" name="FirstName" id="FirstName" required>
+            </div>
+            <div class="form-group col-sm-3">
+                <label for="MiddleName"><b>Middle Name</b></label>
+                <input type="text" placeholder="Middle Name" name="MiddleName" id="MiddleName" required>
+
+            </div>
+            <div class="form-group col-sm-3">
+                <label for="LastName"><b>Last Name</b></label>
+                <input type="text" placeholder="Last Name" name="LastName" id="LastName" required>
+
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-sm-9">
+                <label for="EmailID"><b>Email</b></label>
+                <input type="text" placeholder="Enter Email" name="EmailID" id="EmailID">
+                @*<div class="valid-feedback">looks good</div>
+                <div class="invalid-feedback">Invalid email</div>
+                <small class="email-exist text-danger"></small>*@
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-sm-4">
+                <label for="Password"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="Password" id="Password" required>
+            </div>
+            <div class="form-group col-sm-1">
+
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="psw-repeat"><b>Confirm Password</b></label>
+                <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-sm-9">
+                <label for="AddressLineOne"><b>AddressLine 1</b></label>
+                <input type="text" placeholder="Address" name="AddressLine1" id="AddressLineOne" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-sm-9">
+                <label for="AddressLineTwo"><b>AddressLine 2</b></label>
+                <input type="text" placeholder="Address" name="AddressLine2" id="AddressLineTwo" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-sm-9">
+                <label for="AddressLineOne"><b>AddressLine 3</b></label>
+                <input type="text" placeholder="Address" name="AddressLine3" id="AddressLineThree" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-sm-4">
+                <label for="Nationality"><b>Nationality</b></label>
+                <input type="text" placeholder="Nationality" name="Nationality" id="Nationality" required>
+            </div>
+            <div class="form-group col-sm-1">
+
+            </div>
+            <div class="form-group col-sm-4">
+
+                @Html.LabelFor(temp => temp.MobileNumber, "Mobile Number")
+                @Html.TextBoxFor(temp => temp.MobileNumber)@*, new { pattern = "^[789]\\d{9}$" ,required="required"}*@
+                @*<div class="valid-feedback">looks good</div>
+                <div class="invalid-feedback">Invalid mobile number</div>
+                <small class="mobile-exist text-danger"></small>*@
+            </div>
+        </div>
+
+        <label for="DateOfBirth"><b>Date Of Birth</b></label>
+        <input type="date" name="DateOfBirth" id="DateOfBirth" required>
+
+        @Html.LabelFor(temp => temp.GenderStringId, "Gender");
+        @Html.DropDownListFor(temp => temp.GenderStringId, Model.GenderList, "Select Gender")
+
+        <br /><br />
+        <fieldset>
+            <legend>Experience</legend>
+
+            <div class="form-row">
+                <div class="form-group col-sm-4">
+                    <label for="CompanyName">Company Name</label>
+                    <input type="text" id="CompanyName" name="CompanyName">
+                </div>
+                <div class="form-group col-sm-1">
+
+                </div>
+                <div class="form-group col-sm-4">
+                    <label for="JobRole">Job Role</label>
+                    <input type="text" id="JobRole" name="JobRole">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-4">
+                    <label for="StartDate">Start Date</label>
+                    <input type="date" id="StartDate" name="StartDate">
+                </div>
+                <div class="form-group col-sm-1">
+
+                </div>
+                <div class="form-group col-sm-4">
+                    <label for="EndDate">End Date</label>
+                    <input type="date" id="EndDate" name="EndDate"><br><br>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Company</legend>
+
+            <label for="JoinDate"><b>Join Date</b></label>
+            <input type="date" name="JoinDate" id="JoinDate" required>
+
+            
+
+            @Html.LabelFor(temp => temp.QualificationStringId, "Qualification")
+            @Html.DropDownListFor(temp => temp.QualificationStringId, Model.QualificationList, "Select Qualification",new {@class = "form-control col-sm-4" })
+
+
+            <br /><br />
+
+
+
+            @Html.LabelFor(temp => temp.DepartmentStringId, "Department")
+            @Html.DropDownListFor(temp => temp.DepartmentStringId, Model.DepartmentList, "select Department")
+            <br />  <br />
+
+
+
+
+            @Html.LabelFor(temp => temp.DesignationStringId, "Designation")
+            @Html.DropDownListFor(temp => temp.DesignationStringId, Model.DesignationList, "select Designation")
+
+            <br><br>
+
+            <label for="IsspecialPermission"><b> Is special Permission</b></label>
+            <input type="checkbox" id="IsspecialPermission" name="IsspecialPermission" value="true">
+
+
+            <label for="VirtualTeamHead"><b>Virtual Team Head</b></label>
+            <input type="checkbox" id="VirtualTeamHead" name="IsVirtualTeamHead" value="true">
+
+
+            <label for="Status"><b> Current Status</b></label>
+            <input type="checkbox" id="Status" name="CurrentStatus" value="true">
+        </fieldset>
+        <div class="form-row">
+            <div class="form-group  col-sm-3">
+                <button type="submit" class="btn btn-info">Register new employee</button>
+            </div>
+            
+        </div>
+        
+    </div>
+
+</form>
+
+@*<script>
+    $(document).on("submit", ".form-validation", validation);
+    $(".form-validation,input").blur(validation);
+    function validation(event) {
+        if ($(".form-validation")[0].checkValidity() == false) {
+            event.preventDefault();
+        }
+        $(".form-validation")[0].classList.add("was-validated");
+    }
+
+    $("#MobileNumber").blur(
+        function () {
+            $.ajax(
+                {
+                    url: "/Api/Validation?mobile=" + $("#MobileNumber").val(),
+                    type: "GET",
+                    success: function (response) {
+                        if (response == "found") {
+                            $(".mobile-exist").text("Mobile number already exist");
+                            $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
+                        }
+                        else {
+                            $(".mobile-exist").text("");
+                            $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
+                        }
+                    },
+                    error: function () {
+                        alert("Error occured")
+                    }
+                }
+
+            )
+        });
+
+
+    $("#EmailID").blur(
+        function () {
+            $.ajax(
+                {
+                    url: "/Api/ValidateEmail?email=" + $("#EmailID").val(),
+                    type: "GET",
+                    success: function (response) {
+                        if (response == "found") {
+                            $(".email-exist").text("Email already exist");
+                            $(".email-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
+                        }
+                        else {
+                            $(".email-exist").text("");
+                            $(".email-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
+                        }
+                    },
+                    error: function () {
+                        alert("Error occured")
+                    }
+                }
+
+            )
+        });
+</script>*@      
+    

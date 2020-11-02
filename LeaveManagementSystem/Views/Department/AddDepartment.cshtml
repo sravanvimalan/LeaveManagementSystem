@@ -1,0 +1,56 @@
+﻿@model LeaveManagementSystem.ViewModel.DepartmentViewModel
+@{
+    ViewBag.Title = "AddDepartment";
+}
+
+
+<link rel="stylesheet" href="~/Content/CustomStyleSheet.css">
+
+<div class="container">
+    <h3>Register new department</h3>
+
+    <hr>
+    @using (Html.BeginForm("adddepartment", "department", FormMethod.Post))
+    {
+        @Html.LabelFor(temp => temp.DepartmentName, "Department Name")
+        @Html.TextBoxFor(temp => temp.DepartmentName)
+        <small class="department-exist text-danger"></small>
+        <button type="submit" style="float:right;" class="btn btn-primary">Add</button>
+        <a href="/department/index" style="float:left" class="btn btn-primary">back</a>
+
+    }
+
+
+
+
+
+</div>
+
+<script>
+    $("#DepartmentName").blur(
+        function () {
+            $.ajax(
+                {
+                    url: "/Api/ValidateDepartment?department=" + $("#DepartmentName").val(),
+                    type: "GET",
+                    success: function (response) {
+                        if (response == "found") {
+                            $(".department-exist").text("Designation already exist");
+                            //$(".Isdesignation-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
+                        }
+                        else {
+                            $(".department-exist").text("");
+                            //$(".Isdesignation-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
+                        }
+                    },
+                    error: function () {
+                        alert("Error occured")
+                    }
+                }
+
+            )
+        });
+</script>
+
+
+

@@ -1,0 +1,38 @@
+﻿@model List<LeaveManagementSystem.ViewModel.RequestVacationViewModel>
+@{
+    ViewBag.Title = "LeaveStatus";
+}
+@{ 
+    int count = 0;
+}
+<h3>LeaveStatus</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">FromDate</th>
+            <th scope="col">ToDate</th>
+            <th scope="col">VacationName</th>
+            <th scope="col">Approver Name</th>
+            <th scope="col">Approver Reply</th>
+            <th scope="col">Leave Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@(@count+=1)</th>
+                <td>@item.FromDate.ToShortDateString()</td>
+                <td>@item.ToDate.ToShortDateString()</td>
+                <td>@item.VacationName</td>
+                <td>@item.ApproverName</td>
+                <td>@item.Response</td>
+                <td>@item.LeaveStatus</td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>

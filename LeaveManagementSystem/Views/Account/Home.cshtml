@@ -1,0 +1,54 @@
+﻿@model LeaveManagementSystem.ViewModel.AdminProfileViewModel
+@{
+    ViewBag.Title = "Home";
+}
+
+
+<br /><br /><br />
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <th scope="row">Name</th>
+            <td>@Model.FirstName @Model.MiddleName @Model.LastName</td>
+
+        </tr>
+        <tr>
+            <th scope="row">Email</th>
+            <td>@Model.EmailID</td>
+
+        </tr>
+        <tr>
+            <th scope="row">Date Of Birth</th>
+            <td>@Model.DateOfBirth.ToShortDateString()</td>
+
+        </tr>
+        <tr>
+            @*<th scope="row">Gender</th>
+            <td>@Model.GenderName</td>*@
+
+        </tr>
+        <tr>
+            <th scope="row">Nationality</th>
+            <td>@Model.Nationality</td>
+
+        </tr>
+        <tr>
+            @*<th scope="row">Qualification</th>
+            <td>@Model.QualificationName</td>*@
+
+        </tr>
+        <tr>
+            <th scope="row">Mobile Number</th>
+            <td>@Model.MobileNumber</td>
+        </tr>
+
+        <tr>
+            <th scope="row">Address</th>
+            <td>@Model.AddressLine1 @Model.AddressLine2 @Model.AddressLine3</td>
+
+        </tr>
+   
+
+
+        </tbody>
+</table>

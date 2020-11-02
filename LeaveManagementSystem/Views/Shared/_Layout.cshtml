@@ -1,0 +1,131 @@
+﻿@{
+    var emp =(LeaveManagementSystem.ViewModel.AdminProfileViewModel) Session["EmployeeObj"];
+}
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="~/Scripts/popper.js"></script>
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/css/bootstrapValidator.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+
+
+    <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+    .row.content {height: 2000px}
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+        textarea {
+            overflow-y: scroll;
+
+        }
+        .hide-element {
+            visibility: hidden;
+        }
+   
+    </style>
+</head>
+<body>
+    @if (emp.IsSpecialPermission || emp.DesignationName == "Project Manager" || emp.IsVirtualTeamHead == true)
+    {
+        <style>
+            .hide-element {
+                visibility: visible !important;
+            }
+        </style>
+    }
+    <div class="container-fluid">
+        <div class="row content">
+            <div class="col-sm-3 sidenav">
+                <br />
+                <h6 class="btn btn-success">Leave Management System</h6>
+                <br /><br />
+                <ul class="nav nav-pills nav-stacked ">
+                    <li><a href="/account/home">Home</a></li>
+                    <li><a href="/Account/sendleaverequest">Leave Request</a></li>
+                    <li><a href="/Account/updateprofile">Profile</a></li>
+                    <li><a href="/Account/updatepassword">Password</a></li>
+                    <li class="hide-element"><a href="/Account/Employee">Employee</a></li>
+                    <li class="hide-element" ><a href="/designation/adddesignation"> Designation</a></li>
+                    <li class="hide-element"><a href="/department/index">Department</a></li>
+
+                </ul><br>
+
+            </div>
+
+            <div class="col-sm-9">
+
+                <hr>
+                <a href="/account/logout" class="btn btn-warning" style="float:right">Log out</a>
+
+                <img src="data:image/png;base64,@emp.Image" alt="Image" />
+
+
+
+
+
+
+                <h2> @emp.FirstName @emp.MiddleName @emp.LastName</h2>
+
+                <h5><span><i class='far fa-calendar'></i></span>@emp.JoinDate.ToShortDateString()</h5>
+                <h5>@emp.DesignationName</h5>
+                <h5>@emp.Department.DepartmentName</h5>
+                @if (emp.IsSpecialPermission || emp.DesignationName == "Project Manager" || emp.IsVirtualTeamHead == true)
+                {
+
+                    <h5> <span class="label label-danger"> Admin</span></h5>
+
+                }
+                <h5>
+                    <span class="label label-success">Active</span>
+                </h5>
+                <p>
+
+                    @RenderBody()
+
+                    @*---------------------renderbody---------------------------------*@
+
+
+
+                </p>
+
+                <br><br>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="container-fluid" style="text-align:center;">
+        <p>&#169; companyname 2020. All Rights Reserved. Privacy & Cookies Policy</p>
+    </footer>
+
+</body>
+</html>
+
+

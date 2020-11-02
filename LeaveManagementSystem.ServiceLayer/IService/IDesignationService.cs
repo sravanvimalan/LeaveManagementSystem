@@ -1,0 +1,25 @@
+﻿using LeaveManagementSystem.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using LeaveManagementSystem.DomainModel;
+
+namespace LeaveManagementSystem.ServiceLayer
+{
+    public interface IDesignationService
+    {
+        public List<Designation> GetAllDesignation();
+
+        public int GetDesignationIdByName(string DesignationName);
+
+        public DesignationViewModel GetDesignationByDesignationID(int DesignationID);
+
+        public bool IsDesignationExist(string designation);
+
+        //public int GetLatestDesignationId();
+
+        public void AddDesignation(DesignationViewModel designationViewModel);
+    }
+}
