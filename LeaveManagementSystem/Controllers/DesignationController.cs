@@ -10,6 +10,7 @@ using LeaveManagementSystem.ViewModel;
 
 namespace LeaveManagementSystem.Controllers
 {
+    [Authorize]
     public class DesignationController : Controller
     {
         IDesignationService designationService;
@@ -29,10 +30,29 @@ namespace LeaveManagementSystem.Controllers
         [HttpPost]
         public ActionResult AddDesignation(DesignationViewModel designation)
         {
-            designationService.AddDesignation(designation);
+            if(ModelState.IsValid)
+            {
+                designationService.AddDesignation(designation);
+                 return RedirectToAction("AddDesignation");
+            }
+            else
+            {
+                ModelState.AddModelError("x", "Insertion failed");
+                return View(designation);
+            }
+           
 
-            return RedirectToAction("AddDesignation");
-
+        }
+        public string GetDesignation(string designation)
+        {
+            if (designationService.IsDesignationExist(designation))
+            {
+                return "found";
+            }
+            else
+            {
+                return "not found";
+            }
         }
 
 

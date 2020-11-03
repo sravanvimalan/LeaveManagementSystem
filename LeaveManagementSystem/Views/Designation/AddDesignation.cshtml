@@ -16,6 +16,7 @@
         {
             @Html.LabelFor(temp => temp.DesignationName, "Designation Name")
             @Html.TextBoxFor(temp => temp.DesignationName)
+            @Html.ValidationMessageFor(temp => temp.DesignationName, "", new { @class = "text-danger", required = "required" })
             <div class="valid-feedback">Looks good</div>
             <div class="invalid-feedback">Not good</div>
             <small class="designation-exist text-danger"></small>
@@ -23,7 +24,7 @@
 
         }
 
-       
+
 
 
 
@@ -34,16 +35,16 @@
         function () {
             $.ajax(
                 {
-                    url: "/Api/ValidateDesignation?designation=" + $("#DesignationName").val(),
+                    url: "/designation/getdesignation?designation=" + $("#DesignationName").val(),
                     type: "GET",
                     success: function (response) {
                         if (response == "found") {
                             $(".designation-exist").text("Designation already exist");
-                            //$(".Isdesignation-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
+                            $(".Isdesignation-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
                         }
                         else {
                             $(".designation-exist").text("");
-                            //$(".Isdesignation-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
+                            $(".Isdesignation-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
                         }
                     },
                     error: function () {

@@ -9,6 +9,7 @@ using LeaveManagementSystem.DomainModel;
 using AutoMapper;
 using System.Data.Entity.Migrations.Model;
 using LeaveManagementSystem.ViewModel.ViewModel;
+using System.Web.Mvc;
 
 namespace LeaveManagementSystem.ServiceLayer
 {
@@ -214,5 +215,35 @@ namespace LeaveManagementSystem.ServiceLayer
 
             er.UpdateProfileByEmployee(profile);
         }
+        public IEnumerable<SelectListItem> ApproverList(List<AdminProfileViewModel> list)
+        {
+            var selectlist = new List<SelectListItem>();
+
+            foreach (var item in list)
+            {
+                selectlist.Add(new SelectListItem
+                {
+                    Text = item.FirstName + " " + item.MiddleName + " " + item.LastName,
+                    Value = item.EmployeeID.ToString()
+
+                });
+            }
+            return selectlist;
+        }
+        public IEnumerable<SelectListItem> GetAllEmployeeOfDepartment(List<AdminProfileViewModel> employee)
+        {
+            var selectList = new List<SelectListItem>();
+
+            foreach (var item in employee)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = item.EmployeeID.ToString(),
+                    Text = item.FirstName + " " + item.MiddleName + " " + item.LastName
+                });
+            }
+            return selectList;
+        }
+
     }
 }

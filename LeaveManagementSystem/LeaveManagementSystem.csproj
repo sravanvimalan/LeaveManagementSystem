@@ -134,6 +134,7 @@
     <Content Include="Content\download.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\CustomStyleSheet.css" />
+    <Content Include="Content\StyleSheetSignIn.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -245,10 +246,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiControllers\ValidateDepartmentController.cs" />
-    <Compile Include="ApiControllers\ValidateDesignationController.cs" />
-    <Compile Include="ApiControllers\ValidateEmailController.cs" />
-    <Compile Include="ApiControllers\ValidationController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -257,6 +254,7 @@
     <Compile Include="Controllers\DesignationController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\LeaveController.cs" />
+    <Compile Include="Controllers\RemoteValidationController.cs" />
     <Compile Include="CustomAuthorizationFilter\CustomAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -268,16 +266,13 @@
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Shared\_PartialView1.cshtml" />
     <Content Include="Views\Account\UpdatePassword.cshtml" />
     <Content Include="Views\Account\UpdateProfile.cshtml" />
-    <Content Include="Views\Account\SendLeaveRequest.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Leave\SendLeaveRequest.cshtml" />
     <Content Include="Views\Account\SignIn.cshtml" />
-    <Content Include="Views\Account\AddNewEmployee.cshtml" />
-    <Content Include="Views\Account\Employee.cshtml" />
-    <Content Include="Views\Default\Index.cshtml" />
-    <Content Include="Views\Account\AdminEditEmployee.cshtml" />
+    <Content Include="Views\Employee\AddNewEmployee.cshtml" />
+    <Content Include="Views\Employee\ListEmployee.cshtml" />
+    <Content Include="Views\Employee\AdminEditEmployee.cshtml" />
     <Content Include="Views\Account\Home.cshtml" />
     <Content Include="Views\Leave\VerifyLeave.cshtml" />
     <Content Include="Views\Leave\LeaveDetail.cshtml" />
@@ -307,7 +302,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Employee\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LeaveManagementSystem.DomainModel\LeaveManagementSystem.DomainModel.csproj">

@@ -8,6 +8,7 @@ using LeaveManagementSystem.Repository;
 using LeaveManagementSystem.ViewModel;
 using AutoMapper;
 using System.Net;
+using System.Web.Mvc;
 
 namespace LeaveManagementSystem.ServiceLayer
 {
@@ -88,6 +89,20 @@ namespace LeaveManagementSystem.ServiceLayer
         public bool IsDepartmentExist(string department)
         {
             return departmentRepository.IsDepartmentExist(department);
+        }
+        public IEnumerable<SelectListItem> GetSelectListItemsDepartment(IEnumerable<DepartmentViewModel> department)
+        {
+            var selectList = new List<SelectListItem>();
+
+            foreach (var item in department)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = item.DepartmentID.ToString(),
+                    Text = item.DepartmentName
+                });
+            }
+            return selectList;
         }
     }
 }

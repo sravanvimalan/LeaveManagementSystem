@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace LeaveManagementSystem.ServiceLayer
 {
@@ -87,6 +88,23 @@ namespace LeaveManagementSystem.ServiceLayer
         public bool IsDesignationExist(string designation)
         {
             return designationRepository.IsDesignationExist(designation);
+        }
+
+
+       public IEnumerable<SelectListItem> GetSelectListItemDesignation(IEnumerable<Designation> designation)
+        {
+            var selectList = new List<SelectListItem>();
+
+            foreach (var item in designation)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Text = item.DesignationName,
+                    Value = item.DesignationID.ToString()
+                });
+            }
+
+            return selectList;
         }
     }
 }

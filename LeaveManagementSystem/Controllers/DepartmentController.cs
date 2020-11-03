@@ -10,6 +10,7 @@ using LeaveManagementSystem.CustomAuthorizationFilter;
 
 namespace LeaveManagementSystem.Controllers
 {
+    [Authorize]
     public class DepartmentController : Controller
     {
         IDepartmentService departmentService;
@@ -20,20 +21,7 @@ namespace LeaveManagementSystem.Controllers
             this.departmentService = departmentService;
             this.employeeService = employeeService;
         }
-        private IEnumerable<SelectListItem> GetAllDepartment(IEnumerable<DepartmentViewModel> departmentViewModels)
-        {
-            var selectList = new List<SelectListItem>();
-
-            foreach (var item in departmentViewModels)
-            {
-                selectList.Add(new SelectListItem
-                {
-                    Text = item.DepartmentName,
-                    Value = item.DepartmentID.ToString()
-                }) ;
-            }
-            return selectList;
-        }
+      
 
         [CustomAuthorizeAttribute("HR")]
         public ActionResult Index()
@@ -58,20 +46,7 @@ namespace LeaveManagementSystem.Controllers
             return View(listAllVirutalHead);
 
         }
-        private IEnumerable<SelectListItem> GetAllEmployeeOfDepartment(List<AdminProfileViewModel> employee)
-        {
-            var selectList = new List<SelectListItem>();
-
-            foreach (var item in employee)
-            {
-                selectList.Add(new SelectListItem
-                {
-                    Value =item.EmployeeID.ToString(),
-                    Text = item.FirstName + " " + item.MiddleName + " " + item.LastName
-                });
-            }
-            return selectList;
-        }
+       
         [CustomAuthorizeAttribute("HR")]
         public ActionResult ChangeVirtualHead(int Id)
         {
@@ -80,7 +55,7 @@ namespace LeaveManagementSystem.Controllers
 
             AdminProfileViewModel newVitualHead = new AdminProfileViewModel();
 
-            existingVH.EmployeeList = GetAllEmployeeOfDepartment(employeeList);
+            existingVH.EmployeeList = employeeService.GetAllEmployeeOfDepartment(employeeList);
 
             return View(existingVH);
 
@@ -91,17 +66,22 @@ namespace LeaveManagementSystem.Controllers
         [CustomAuthorizeAttribute("HR")]
         public ActionResult ChangeVirtualHead(NewVHViewModel newVirtualHead)
         {
-            newVirtualHead.NewVirtualTeamHeadIntId = Convert.ToInt32(newVirtualHead.NewVirtualTeamHeadID);
+            if(ModelState.IsValid)
+            {
+                newVirtualHead.NewVirtualTeamHeadIntId = Convert.ToInt32(newVirtualHead.NewVirtualTeamHeadID);
 
-            employeeService.UpdateIsVirtualHeadFlag(newVirtualHead.EmployeeID, false);
+                employeeService.UpdateIsVirtualHeadFlag(newVirtualHead.EmployeeID, false);
 
-            employeeService.UpdateIsVirtualHeadFlag(newVirtualHead.NewVirtualTeamHeadIntId, true);
+                employeeService.UpdateIsVirtualHeadFlag(newVirtualHead.NewVirtualTeamHeadIntId, true);
 
-            
+                return RedirectToAction("index");
 
-            
-
-            return RedirectToAction("index");
+            }
+            else
+            {
+                ModelState.AddModelError("Error", "Error Occured");
+                return RedirectToAction("index");
+            }
 
         }
         [CustomAuthorizeAttribute("HR")]
@@ -114,8 +94,33 @@ namespace LeaveManagementSystem.Controllers
         [CustomAuthorizeAttribute("HR")]
         public ActionResult AddDepartment(DepartmentViewModel department)
         {
-            departmentService.AddDepartment(department);
-            return RedirectToAction("AddDepartment");
+            if (ModelState.IsValid)
+            {
+                departmentService.AddDepartment(department);
+                return RedirectToAction("AddDepartment");
+               
+            }
+            else
+            {
+
+                ModelState.AddModelError("error", "Insertion failed");
+                return View(department);
+            }
+            
+               
+            
+            
+        }
+        public string GetDepartment(string department)
+        {
+            if (departmentService.IsDepartmentExist(department))
+            {
+                return "found";
+            }
+            else
+            {
+                return "not found";
+            }
         }
 
 

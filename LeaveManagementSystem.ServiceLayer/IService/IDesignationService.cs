@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LeaveManagementSystem.DomainModel;
+using System.Web.Mvc;
 
 namespace LeaveManagementSystem.ServiceLayer
 {
@@ -21,5 +22,6 @@ namespace LeaveManagementSystem.ServiceLayer
         //public int GetLatestDesignationId();
 
         public void AddDesignation(DesignationViewModel designationViewModel);
+        public IEnumerable<SelectListItem> GetSelectListItemDesignation(IEnumerable<Designation> designation);
     }
 }

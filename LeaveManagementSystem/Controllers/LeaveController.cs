@@ -18,13 +18,14 @@ using System.Net.Mail;
 
 namespace LeaveManagementSystem.Controllers
 {
+    [Authorize]
     public class LeaveController : Controller
     {
         ILeaveRequestService leaveRequestService;
         IEmployeeService employeeService;
         IDesignationService designationService;
         IDepartmentService departmentService;
-        IVacationTypeService VacationTypeService;
+        IVacationTypeService vacationTypeService;
 
         public LeaveController(ILeaveRequestService leaveRequestService, IEmployeeService employeeService, IDesignationService designationService, IDepartmentService departmentService, IVacationTypeService vacationTypeService)
         {
@@ -32,18 +33,50 @@ namespace LeaveManagementSystem.Controllers
             this.employeeService = employeeService;
             this.designationService = designationService;
             this.departmentService = departmentService;
-            VacationTypeService = vacationTypeService;
+            this.vacationTypeService = vacationTypeService;
         }
 
+        [Authorize]
+        public ActionResult SendLeaveRequest()
+        {
 
+            RequestVacationViewModel requestVacationViewModel = new RequestVacationViewModel();
 
+            requestVacationViewModel.VacationTypeList = vacationTypeService.GetAllVacationTypeList(vacationTypeService.GetAllVacationType());
 
+            int designationId = designationService.GetDesignationIdByName("Project Manager");
 
+            List<AdminProfileViewModel> list = employeeService.GetEmployeesByDesignationId(designationId);
 
+            requestVacationViewModel.ApproverList = employeeService.ApproverList(list);
 
+            return View(requestVacationViewModel);
+        }
+        [HttpPost]
+        [Authorize]
+        public ActionResult SendLeaveRequest(RequestVacationViewModel vacationRequestViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                vacationRequestViewModel.VacationTypeID = Convert.ToInt32(vacationRequestViewModel.VacationStringID);
+                vacationRequestViewModel.CreatedOn = DateTime.Today;
+                var employee = (AdminProfileViewModel)Session["EmployeeObj"];
+                vacationRequestViewModel.CreatedBy = employee.EmployeeID;
+
+                vacationRequestViewModel.LeaveStatus = "Pending"; //by default
+                leaveRequestService.AddLeaveRequest(vacationRequestViewModel);
+                return RedirectToAction("SendLeaveRequest");
+            }
+            else
+            {
+                ModelState.AddModelError("Request", "Invalid Request please try again");
+                return RedirectToAction("SendLeaveRequest");
+            }
+
+        }
 
         // GET: Leave
-        [CustomAuthorizeAttribute("Project Manager", "VirtualHead")]
+        [CustomAuthorizeAttribute("Project Manager", "VirtualHead","HR")]
         public ActionResult VerifyLeave()
         {
             var profile = (AdminProfileViewModel)(Session["EmployeeObj"]);
@@ -66,7 +99,7 @@ namespace LeaveManagementSystem.Controllers
                 {
                     var employee = employeeService.GetEmployeeByID(item.CreatedBy);
                     item.RequesterName = employee.FirstName + " " + employee.MiddleName + " " + employee.LastName;
-                    var vacationType = VacationTypeService.GetVacationTypeByVacationId(item.VacationTypeID);
+                    var vacationType = vacationTypeService.GetVacationTypeByVacationId(item.VacationTypeID);
                     item.VacationName = vacationType.VacationName;
                     int designationId = employee.DesignationID;
                     var designation = designationService.GetDesignationByDesignationID(designationId);
@@ -98,7 +131,7 @@ namespace LeaveManagementSystem.Controllers
                 {
                     var employee = employeeService.GetEmployeeByID(item.CreatedBy);
                     item.RequesterName = employee.FirstName + " " + employee.MiddleName + " " + employee.LastName;
-                    var vacationType = VacationTypeService.GetVacationTypeByVacationId(item.VacationTypeID);
+                    var vacationType = vacationTypeService.GetVacationTypeByVacationId(item.VacationTypeID);
                     item.VacationName = vacationType.VacationName;
                     int designationId = employee.DesignationID;
                     var designation = designationService.GetDesignationByDesignationID(designationId);
@@ -106,9 +139,6 @@ namespace LeaveManagementSystem.Controllers
                     var departmentObj = departmentService.GetDepartmentByDepartmentID(employee.DepartmentID);
                     item.RequesterDepartment = departmentObj.DepartmentName;
                     //item.ApproverID = profile.EmployeeID;
-
-
-
 
                 }
                 return View(leaveRequestForVT);
@@ -133,7 +163,7 @@ namespace LeaveManagementSystem.Controllers
 
                     item.RequesterDepartment = departmentViewModel.DepartmentName;
 
-                    VacationTypeViewModel vacationTypeViewModel = VacationTypeService.GetVacationTypeByVacationId(item.VacationTypeID);
+                    VacationTypeViewModel vacationTypeViewModel = vacationTypeService.GetVacationTypeByVacationId(item.VacationTypeID);
 
                     item.VacationName = vacationTypeViewModel.VacationName;
 
@@ -147,7 +177,7 @@ namespace LeaveManagementSystem.Controllers
 
         }
         [HttpPost]
-        [CustomAuthorizeAttribute("Project Manager", "VirtualHead")]
+        [CustomAuthorizeAttribute("Project Manager", "VirtualHead", "HR")]
         public ActionResult VerifyLeave(RequestVacationViewModel requestVacationViewModel)
         {
             var employee = (AdminProfileViewModel)Session["EmployeeObj"];
@@ -173,7 +203,7 @@ namespace LeaveManagementSystem.Controllers
                         item.ApproverName = employee.FirstName + " " + employee.MiddleName + " " + employee.LastName;
                     }
                   
-                    VacationTypeViewModel vacationType = VacationTypeService.GetVacationTypeByVacationId(item.VacationTypeID);
+                    VacationTypeViewModel vacationType = vacationTypeService.GetVacationTypeByVacationId(item.VacationTypeID);
                     item.VacationName = vacationType.VacationName;
                 }
                 return View(requestVacation);
@@ -181,7 +211,7 @@ namespace LeaveManagementSystem.Controllers
 
             return RedirectToAction("Leavestatus");
         }
-        [CustomAuthorizeAttribute("Project Manager", "VirtualHead")]
+        [CustomAuthorizeAttribute("Project Manager", "VirtualHead","HR")]
         public ActionResult LeaveDetail(int Id)     //show each emp leave details for admin
         {
             RequestVacationViewModel requestVacation = leaveRequestService.GetLeaveRequestByRequestID(Id);
@@ -191,7 +221,7 @@ namespace LeaveManagementSystem.Controllers
 
             requestVacation.RequesterDesignation = designation.DesignationName;
 
-            VacationTypeViewModel vacationType = VacationTypeService.GetVacationTypeByVacationId(requestVacation.VacationTypeID);
+            VacationTypeViewModel vacationType = vacationTypeService.GetVacationTypeByVacationId(requestVacation.VacationTypeID);
 
             requestVacation.VacationName = vacationType.VacationName;
 
@@ -199,7 +229,7 @@ namespace LeaveManagementSystem.Controllers
             return View(requestVacation);
         }
         [HttpPost]
-        [CustomAuthorizeAttribute("Project Manager", "VirtualHead")]
+        [CustomAuthorizeAttribute("Project Manager", "VirtualHead", "HR")]
         public ActionResult LeaveDetail( AdminReplyViewModel adminReply)     
         {
             var employee = (AdminProfileViewModel)Session["EmployeeObj"];

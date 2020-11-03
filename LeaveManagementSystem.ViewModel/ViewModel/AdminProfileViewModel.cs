@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Permissions;
 using System.Text;
@@ -10,13 +11,23 @@ namespace LeaveManagementSystem.ViewModel
 {
     public class AdminProfileViewModel
     {
+        
         public int EmployeeID { get; set; }
 
         public string Image { get; set; }
+        [Required]
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
+        [Required]
         public string LastName { get; set; }
+        [Required]
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime JoinDate { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
         public int QualificationID { get; set; }
         public int ExperienceID { get; set; }
@@ -24,6 +35,7 @@ namespace LeaveManagementSystem.ViewModel
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string AddressLine3 { get; set; }
+        [Required]
         public string EmailID { get; set; }
         
        
@@ -32,11 +44,9 @@ namespace LeaveManagementSystem.ViewModel
         public string DesignationStringId { get; set; }
         public string QualificationStringId { get; set; }
         public int GenderID { get; set; }
-        //public string GenderName { get; set; }
-        //public int QualificationId { get; set; }
       
-        //public string QualificationName { get; set; }
         public string Nationality { get; set; }
+        [Required]
         public string  MobileNumber { get; set; }
         public int DesignationID { get; set; }
 
@@ -46,6 +56,7 @@ namespace LeaveManagementSystem.ViewModel
         public DateTime CreatedOn { get; set; }
         public int ModifiedBy { get; set; }
         public DateTime ModifiedOn { get; set; }
+        [Required]
         public string Password { get; set; }
 
         public bool IsSpecialPermission { get; set; }

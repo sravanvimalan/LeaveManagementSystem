@@ -5,7 +5,8 @@
 @{
     var emp = (LeaveManagementSystem.ViewModel.AdminProfileViewModel)Session["EmployeeObj"];
 }
-<style>
+<link rel="stylesheet" href="~/Content/CustomStyleSheet.css">
+@*<style>
     body {
         font-family: Arial, Helvetica, sans-serif;
         background-color: white;
@@ -76,7 +77,7 @@
     .hide-element {
         visibility: hidden;
     }
-</style>
+</style>*@
 @if (emp.IsSpecialPermission || emp.DesignationName == "Project Manager" || emp.IsVirtualTeamHead == true)
 {
     <style>
@@ -90,7 +91,7 @@
 }
 <a href="~/Leave/verifyleave" class="btn btn-primary hide-element">Verify Request</a>
 <a href="~/Leave/Leavestatus" class="btn btn-primary hide-leavestatus" style="float:right;">Leave Status</a>
-<form action="~/account/sendleaverequest" method="post">
+<form action="~/leave/sendleaverequest" method="post">
     <div class="container">
         <h1>Leave Request</h1>
         <p>Please fill in this form to request a leave.</p>

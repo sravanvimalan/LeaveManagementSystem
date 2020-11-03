@@ -45,7 +45,7 @@ namespace LeaveManagementSystem.ServiceLayer
             return GetSelectListItemsGender(genderrepo.GetGenders());
         }
         
-      private IEnumerable<SelectListItem> GetSelectListItemsGender(IEnumerable<Gender> genders)
+     public IEnumerable<SelectListItem> GetSelectListItemsGender(IEnumerable<Gender> genders)
         {
 
             var selectList = new List<SelectListItem>();

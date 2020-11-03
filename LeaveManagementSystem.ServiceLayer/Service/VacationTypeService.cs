@@ -9,6 +9,7 @@ using System.Data.Entity.Core.Mapping;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace LeaveManagementSystem.ServiceLayer.Service
 {
@@ -41,6 +42,20 @@ namespace LeaveManagementSystem.ServiceLayer.Service
             VacationTypeViewModel vacationTypeViewModel = mapper.Map<VacationType, VacationTypeViewModel>(vacation);
 
             return vacationTypeViewModel;
+        }
+        public IEnumerable<SelectListItem> GetAllVacationTypeList(IEnumerable<VacationType> vacationType)
+        {
+            var selectList = new List<SelectListItem>();
+            foreach (var item in vacationType)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = item.VacationTypeID.ToString(),
+                    Text = item.VacationName
+                });
+            }
+            return selectList;
+
         }
     }
 }

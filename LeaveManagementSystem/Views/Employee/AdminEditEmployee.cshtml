@@ -1,0 +1,256 @@
+﻿@model LeaveManagementSystem.ViewModel.AdminProfileViewModel
+@{
+    ViewBag.Title = "AdminEditEmployee";
+}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+@*<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: white;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Add padding to containers */
+    .container {
+        padding: 16px;
+        background-color: white;
+    }
+
+    /* Full-width input fields */
+    input[type=text], input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: inline-block;
+        border: none;
+        background: #f1f1f1;
+    }
+
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+    /* Overwrite default styles of hr */
+    hr {
+        border: 1px solid #f1f1f1;
+        margin-bottom: 25px;
+    }
+
+    /* Set a style for the submit button */
+    .registerbtn {
+        background-color: #1a53ff;
+        color: white;
+        padding: 16px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+    }
+
+        .registerbtn:hover {
+            opacity: 1;
+        }
+
+    /* Add a blue text color to links */
+    a {
+        color: dodgerblue;
+    }
+
+    /* Set a grey background color and center the text of the "sign in" section */
+    .signin {
+        background-color: #f1f1f1;
+        text-align: center;
+    }
+
+    .container {
+        width: 500px;
+    }
+</style>*@
+
+
+
+<form action="/employee/admineditemployee/" method="post" novalidate enctype="multipart/form-data">
+    <div class="container">
+        <h1>Update Profile</h1>
+        <p>Enter employee details.</p>
+        <br> <br>
+        <label for="Image">Add Image</label>
+        @*<img style="float:right;width:100px;height:auto;" src="">*@
+        <input type="file" name="Image" id="Image" />
+        <br>
+        <br> <br> <br> <br>
+        <input type="hidden" name="EmployeeID" value=@Model.EmployeeID>
+        <div class="form-row">
+            <div class="form-group col-sm-3">
+                @Html.LabelFor(temp => temp.FirstName)
+                @Html.TextBoxFor(temp => temp.FirstName)
+                @Html.ValidationMessageFor(temp => temp.FirstName, "", new { @class = "text-danger", required = "required" })
+            </div>
+            <div class="form-group col-sm-3">
+                @Html.LabelFor(temp => temp.MiddleName)
+                @Html.TextBoxFor(temp => temp.MiddleName)
+
+            </div>
+
+
+            <div class="form-group col-sm-3">
+                @Html.LabelFor(temp => temp.LastName)
+                @Html.TextBoxFor(temp => temp.LastName)
+                @Html.ValidationMessageFor(temp => temp.LastName, "", new { @class = "text-danger", required = "required" })
+
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-sm-9">
+                @Html.LabelFor(temp => temp.EmailID, "Email ID")
+                @Html.TextBoxFor(temp => temp.EmailID)
+                @Html.ValidationMessageFor(temp => temp.EmailID, "", new { @class = "text-danger", required = "required" })
+                <div class="valid-feedback">looks good</div>
+                <div class="invalid-feedback">Invalid email</div>
+                <small class="email-exist text-danger"></small>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-sm-4">
+                @Html.LabelFor(temp => temp.Password)
+                @Html.PasswordFor(temp => temp.Password)
+                @Html.ValidationMessageFor(temp => temp.Password, "", new { @class = "text-danger", required = "required" })
+            </div>
+            <div class="form-group col-sm-1">
+
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="pass2"><b>Confirm Password</b></label>
+                <input type="password" placeholder="confirm Password" id="Password2" required>
+                <p id="validate-status"></p>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-sm-9">
+                @Html.LabelFor(temp => temp.AddressLine1)
+                @Html.TextBoxFor(temp => temp.AddressLine1)
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-sm-9">
+                @Html.LabelFor(temp => temp.AddressLine1)
+                @Html.TextBoxFor(temp => temp.AddressLine1)
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-sm-9">
+                @Html.LabelFor(temp => temp.AddressLine2)
+                @Html.TextBoxFor(temp => temp.AddressLine2)
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-sm-4">
+                @Html.LabelFor(temp => temp.AddressLine3)
+                @Html.TextBoxFor(temp => temp.AddressLine3)
+            </div>
+            <div class="form-group col-sm-1">
+
+            </div>
+            <div class="form-group col-sm-4">
+
+                @Html.LabelFor(temp => temp.MobileNumber, "Mobile Number")
+                @Html.TextBoxFor(temp => temp.MobileNumber, new { pattern = "^[789]\\d{9}$", required = "required" })
+                <div class="valid-feedback">looks good</div>
+                <div class="invalid-feedback">Invalid mobile number</div>
+                <small class="mobile-exist text-danger"></small>
+            </div>
+        </div>
+
+        <label for="DateOfBirth"><b>Date Of Birth</b></label>
+        <input type="date" name="DateOfBirth" id="DateOfBirth" required>
+
+        @Html.LabelFor(temp => temp.GenderStringId, "Gender");
+        @Html.DropDownListFor(temp => temp.GenderStringId, Model.GenderList, "Select Gender")
+
+        <br /><br />
+        <fieldset>
+            <legend>Experience</legend>
+
+            <div class="form-row">
+                <div class="form-group col-sm-4">
+                    @Html.LabelFor(temp => temp.CompanyName)
+                    @Html.TextBoxFor(temp => temp.CompanyName)
+                </div>
+                <div class="form-group col-sm-1">
+
+                </div>
+                <div class="form-group col-sm-4">
+                    @Html.LabelFor(temp => temp.JobRole)
+                    @Html.TextBoxFor(temp => temp.JobRole)
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-4">
+                    @Html.LabelFor(temp => temp.StartDate)
+                    @Html.TextBoxFor(model => model.StartDate,
+             new { @type = "date", @Value = Model.StartDate.ToString("yyyy-MM-dd") })
+
+                </div>
+                <div class="form-group col-sm-1">
+
+                </div>
+                <div class="form-group col-sm-4">
+                    @Html.LabelFor(temp => temp.EndDate)
+                    @Html.TextBoxFor(model => model.EndDate,
+             new { @type = "date", @Value = Model.EndDate.ToString("yyyy-MM-dd") })
+                    <br><br>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Company</legend>
+            <div class="form-row">
+                <div class="form-group col-sm-4">
+                    @Html.LabelFor(temp => temp.JoinDate)
+                    @Html.TextBoxFor(model => model.JoinDate,
+             new { @type = "date", @Value = Model.JoinDate.ToString("yyyy-MM-dd") })
+                </div>
+                <div class="form-group col-sm-1">
+
+                </div>
+                <div class="form-group col-sm-4">
+                    @Html.LabelFor(temp => temp.QualificationStringId, "Qualification")
+                    @Html.DropDownListFor(temp => temp.QualificationStringId, Model.QualificationList, "Select Qualification")
+                </div>
+            </div>
+            <br /><br />
+            @Html.LabelFor(temp => temp.DepartmentStringId, "Department")
+            @Html.DropDownListFor(temp => temp.DepartmentStringId, Model.DepartmentList, "select Department")
+            <br />  <br />
+            @Html.LabelFor(temp => temp.DesignationStringId, "Designation")
+            @Html.DropDownListFor(temp => temp.DesignationStringId, Model.DesignationList, "select Designation")
+
+            <br><br>
+
+            @Html.LabelFor(temp => temp.IsSpecialPermission)
+            @Html.CheckBoxFor(temp => temp.IsSpecialPermission)
+
+
+            @Html.LabelFor(temp => temp.IsVirtualTeamHead)
+            @Html.CheckBoxFor(temp => temp.IsVirtualTeamHead)
+
+
+            @Html.LabelFor(temp => temp.CurrentStatus)
+            @Html.CheckBoxFor(temp => temp.CurrentStatus)
+            </fieldset>
+                <br />
+                <br />
+                <button type="submit" class="btn btn-success" style="float:right;">Update</button>
+</div>
+
+</form>
+
+
+

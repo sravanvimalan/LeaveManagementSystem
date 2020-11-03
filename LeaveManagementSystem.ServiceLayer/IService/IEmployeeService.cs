@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using LeaveManagementSystem.ViewModel;
 using LeaveManagementSystem.DomainModel;
 using LeaveManagementSystem.ViewModel.ViewModel;
+using System.Web.Mvc;
 
 namespace LeaveManagementSystem.ServiceLayer
 {
@@ -33,5 +34,7 @@ namespace LeaveManagementSystem.ServiceLayer
 
         public bool IsEmailExist(string email);
         public void UpdateProfileByAdmin(UpdateEmpProfileByAdminViewModel profile);
+        public IEnumerable<SelectListItem> ApproverList(List<AdminProfileViewModel> list);
+        public IEnumerable<SelectListItem> GetAllEmployeeOfDepartment(List<AdminProfileViewModel> employee);
     }  
 }

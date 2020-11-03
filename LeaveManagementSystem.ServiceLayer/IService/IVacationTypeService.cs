@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LeaveManagementSystem.ViewModel;
-
+using System.Web.Mvc;
 
 namespace LeaveManagementSystem.ServiceLayer.IService
 {
@@ -13,5 +13,7 @@ namespace LeaveManagementSystem.ServiceLayer.IService
     {
         public List<VacationType> GetAllVacationType();
         public VacationTypeViewModel GetVacationTypeByVacationId(int vacationId);
+
+        public IEnumerable<SelectListItem> GetAllVacationTypeList(IEnumerable<VacationType> vacationType);
     }
 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LeaveManagementSystem.DomainModel;
 using AutoMapper;
+using System.Web.Mvc;
 
 namespace LeaveManagementSystem.ServiceLayer
 {
@@ -29,5 +30,22 @@ namespace LeaveManagementSystem.ServiceLayer
         {
             return qualificationRepository.GetQualificationById(QualificationId);
         }
+       public IEnumerable<SelectListItem> GetSelectListItemQualification(IEnumerable<Qualification> qualification)
+        {
+            var selectList = new List<SelectListItem>();
+
+            foreach (var item in qualification)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = item.QualificationID.ToString(),
+                    Text = item.QualificationName
+                });
+
+
+            }
+            return selectList;
+        }
+
     }
 }

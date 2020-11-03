@@ -72,30 +72,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ListAllDepartmentAndVirtualHeadViewModel.cs" />
-    <Compile Include="NewVHViewModel.cs" />
-    <Compile Include="UpdateEmpProfileByAdminViewModel.cs" />
-    <Compile Include="VacationTypeViewModel.cs" />
-    <Compile Include="ViewModel\AdminDashboardViewModel.cs" />
-    <Compile Include="ViewModel\AdminEmployeeProfileViewModel.cs" />
+    <Compile Include="ViewModel\ListAllDepartmentAndVirtualHeadViewModel.cs" />
+    <Compile Include="ViewModel\NewVHViewModel.cs" />
+    <Compile Include="ViewModel\UpdateEmpProfileByAdminViewModel.cs" />
+    <Compile Include="ViewModel\VacationTypeViewModel.cs" />
     <Compile Include="ViewModel\AdminProfileViewModel.cs" />
     <Compile Include="ViewModel\AdminReplyViewModel.cs" />
     <Compile Include="ViewModel\RequestVacationViewModel.cs" />
     <Compile Include="ViewModel\DepartmentViewModel.cs" />
     <Compile Include="ViewModel\DesignationViewModel.cs" />
-    <Compile Include="ViewModel\EmployeeProfileViewModel.cs" />
-    <Compile Include="ViewModel\ExperienceViewModel.cs" />
-    <Compile Include="ViewModel\GenderViewModel.cs" />
     <Compile Include="ViewModel\NormalEditEmployeeProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\QualificationViewModel.cs" />
     <Compile Include="ViewModel\SignInViewModel.cs" />
     <Compile Include="ViewModel\UpdatePasswordViewModel.cs" />
     <Compile Include="ViewModel\UpdateProfileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="ViewModel\packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -16,5 +16,6 @@ namespace LeaveManagementSystem.ServiceLayer
         public IEnumerable<SelectListItem> GenderList();
 
         public string GetGenderById(int GenderId);
+        public IEnumerable<SelectListItem> GetSelectListItemsGender(IEnumerable<Gender> genders);
     }
 }

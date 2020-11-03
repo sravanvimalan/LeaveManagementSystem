@@ -13,9 +13,12 @@ using LeaveManagementSystem.ViewModel.ViewModel;
 using System.Web.Http.Filters;
 using LeaveManagementSystem.CustomAuthorizationFilter;
 using System.Runtime.Remoting;
+using System.Web.Security;
 
 namespace LeaveManagementSystem.Controllers
 {
+
+    
     public class AccountController : Controller
     {
         IGenderService genderService;
@@ -38,7 +41,7 @@ namespace LeaveManagementSystem.Controllers
             this.leaveRequestService = leaveRequestService;
             this.vacationTypeService = vacationTypeService;
         }
-
+        
         public ActionResult SignIn()
         {
             SignInViewModel signInViewModel = new SignInViewModel();
@@ -47,143 +50,49 @@ namespace LeaveManagementSystem.Controllers
         [HttpPost]
         public ActionResult SignIn(SignInViewModel signInViewModel)
         {
-            signInViewModel.Password = SHA256HashGenerator.GenerateHash(signInViewModel.Password);
-            AdminProfileViewModel obj = employeeService.GetEmployeeByEmailAndPassword(signInViewModel.EmailID, signInViewModel.Password);
-
-            if(obj != null)
+            if (ModelState.IsValid)
             {
-                var designation = designationService.GetDesignationByDesignationID(obj.DesignationID);
-                obj.DesignationName = designation.DesignationName;
-                Session["EmployeeObj"] = obj;
-                Session["DesignationName"] = designation.DesignationName;
-                if(obj.IsVirtualTeamHead == true)
+
+                signInViewModel.Password = SHA256HashGenerator.GenerateHash(signInViewModel.Password);
+                AdminProfileViewModel obj = employeeService.GetEmployeeByEmailAndPassword(signInViewModel.EmailID, signInViewModel.Password);
+
+                if (obj != null)
                 {
-                    Session["VirtualHead"] = "VirtualHead";
+                   
+                    var designation = designationService.GetDesignationByDesignationID(obj.DesignationID);
+                    obj.DesignationName = designation.DesignationName;
+                    Session["EmployeeObj"] = obj;
+                    Session["EmployeeEmail"] = obj.EmailID;
+                    Session["DesignationName"] = designation.DesignationName;
+                    if (obj.IsVirtualTeamHead == true)
+                    {
+                        Session["VirtualHead"] = "VirtualHead";
+                    }
+                    if (obj.IsSpecialPermission == true)
+                    {
+                        Session["HR"] = "HR";
+                    }
+                    FormsAuthentication.SetAuthCookie(Convert.ToString(Session["EmployeeEmail"]), false);
+            
+                    return RedirectToAction("home");
                 }
-                if(obj.IsSpecialPermission == true)
+                else
                 {
-                    Session["HR"] = "HR";
+                    ModelState.AddModelError("signin", "Invalid email or password");
+                    return View("SignIn", signInViewModel);
                 }
-                
-                return RedirectToAction("home");
+               
             }
-            return RedirectToAction("SignIn");
+            else
+            {
+                ModelState.AddModelError("signin", "Invalid email or password");
+                return View("SignIn", signInViewModel);
+            }
+         
         }
-        [CustomAuthorizeAttribute("HR")]
-        public ActionResult Employee(string Search = "")
-        {
-            List<AdminProfileViewModel> list = employeeService.GetAllEmployees();
-            list = list.Where(temp => temp.FirstName.Contains(Search)).ToList();
-            return View(list);
-        }
-       
       
-        private IEnumerable<SelectListItem> GetSelectListItemsGender(IEnumerable<Gender> genders)
-        {
-
-            var selectList = new List<SelectListItem>();
-
-
-            foreach (var item in genders)
-            {
-                selectList.Add(new SelectListItem
-                {
-                    Value = item.GenderID.ToString(),
-                    Text = item.GenderName
-                });
-            }
-
-            return selectList;
-        }
-        private IEnumerable<SelectListItem> GetSelectListItemQualification(IEnumerable<Qualification> qualification)
-        {
-            var selectList = new List<SelectListItem>();
-
-            foreach (var item in qualification)
-            {
-                selectList.Add(new SelectListItem
-                {
-                    Value = item.QualificationID.ToString(),
-                    Text = item.QualificationName
-                }) ;
-                
-                
-            }
-            return selectList;
-        }
-        private IEnumerable<SelectListItem> GetSelectListItemDesignation(IEnumerable<Designation> designation)
-        {
-            var selectList = new List<SelectListItem>();
-
-            foreach (var item in designation)
-            {
-                selectList.Add(new SelectListItem
-                {
-                    Text = item.DesignationName,
-                    Value = item.DesignationID.ToString()
-                }); 
-            }
-
-            return selectList;
-        }
-        private IEnumerable<SelectListItem> GetSelectListItemsDepartment(IEnumerable<DepartmentViewModel> department)
-        {
-            var selectList = new List<SelectListItem>();
-
-            foreach(var item in department)
-            {
-                selectList.Add(new SelectListItem
-                {
-                    Value = item.DepartmentID.ToString(),
-                    Text = item.DepartmentName
-                });
-            }
-            return selectList;
-        }
-        [CustomAuthorizeAttribute("HR")]
-        public ActionResult AddNewEmployee()
-        {
-            AdminProfileViewModel adminProfileViewModel = new AdminProfileViewModel();
-
-            var gender = genderService.GetAllGender();
-            adminProfileViewModel.GenderList= GetSelectListItemsGender(gender);
-
-            var qualification = qualificationService.GetAllQualification();
-
-            adminProfileViewModel.QualificationList = GetSelectListItemQualification(qualification);
-
-            var designation = designationService.GetAllDesignation();
-
-            adminProfileViewModel.DesignationList = GetSelectListItemDesignation(designation);
-
-            var department = departmentService.GetAllDepartment();
-
-            adminProfileViewModel.DepartmentList = GetSelectListItemsDepartment(department);
-            //adminProfileViewModel.EmployeeID = 5;
-            return View(adminProfileViewModel);
-
-        }
-        [HttpPost]
-        [CustomAuthorizeAttribute("HR")]
-        public ActionResult AddNewEmployee(AdminProfileViewModel obj)
-        {
-            if(Request.Files.Count >= 1 )
-            {
-                var File = Request.Files[0];
-                var ImgByte = new Byte[File.ContentLength + 10];
-                File.InputStream.Read(ImgByte, 0, File.ContentLength);
-                var Base64String = Convert.ToBase64String(ImgByte, 0, ImgByte.Length);
-                obj.Image = Base64String;
-            }
-            obj.GenderID = Convert.ToInt32(obj.GenderStringId);
-            obj.DepartmentID = Convert.ToInt32(obj.DepartmentStringId);
-            obj.DesignationID = Convert.ToInt32(obj.DesignationStringId);
-            obj.QualificationID = Convert.ToInt32(obj.QualificationStringId);
-            obj.ExperienceID = experienceService.GetLatestExperienceID()+1;
-            employeeService.SetNewEmployee(obj);
-            return RedirectToAction("employee");
-        }
        
+       [Authorize]
         public ActionResult UpdatePassword()
         {
             UpdatePasswordViewModel updatePasswordViewModel = new UpdatePasswordViewModel();
@@ -192,17 +101,27 @@ namespace LeaveManagementSystem.Controllers
             return View(updatePasswordViewModel);
         }
         [HttpPost]
+        [Authorize]
         public ActionResult UpdatePassword(UpdatePasswordViewModel updatePasswordViewModel)
         {
-            updatePasswordViewModel.Password = SHA256HashGenerator.GenerateHash(updatePasswordViewModel.Password);
+            if(ModelState.IsValid)
+            {
+                updatePasswordViewModel.Password = SHA256HashGenerator.GenerateHash(updatePasswordViewModel.Password);
 
-            employeeService.UpdatePassword(updatePasswordViewModel.Password, updatePasswordViewModel.EmployeeID);
-            
-
-            return RedirectToAction("UpdatePassword");
+                employeeService.UpdatePassword(updatePasswordViewModel.Password, updatePasswordViewModel.EmployeeID);
+                return RedirectToAction("UpdatePassword");
+            }
+            else
+            {
+                ModelState.AddModelError("password", "Invalid Format");
+                return RedirectToAction("UpdatePassword");
+            }
+         
         }
+        [Authorize]
         public ActionResult UpdateProfile()
         {
+           
             UpdateProfileViewModel updateProfileViewModel = new UpdateProfileViewModel();
             AdminProfileViewModel profile = (AdminProfileViewModel)Session["EmployeeObj"];
             updateProfileViewModel.EmployeeID = profile.EmployeeID;
@@ -222,130 +141,48 @@ namespace LeaveManagementSystem.Controllers
             return View(updateProfileViewModel);
         }
         [HttpPost]
+        [Authorize]
         public ActionResult UpdateProfile(UpdateProfileViewModel profile)
         {
-            if (Request.Files.Count >= 1)
+            if(ModelState.IsValid)
             {
-                var File = Request.Files[0];
-                var ImgByte = new Byte[File.ContentLength + 10];
-                File.InputStream.Read(ImgByte, 0, File.ContentLength);
-                var Base64String = Convert.ToBase64String(ImgByte, 0, ImgByte.Length);
-                profile.Image = Base64String;
-            }
-            employeeService.UpdateProfileByEmployee(profile);
-            Session["EmployeeObj"] = employeeService.GetEmployeeByID(profile.EmployeeID);
-
-            return RedirectToAction("Updateprofile");
-        }
-        private IEnumerable<SelectListItem> GetAllVacationType(IEnumerable<VacationType> vacationType)
-        {
-            var selectList = new List<SelectListItem>();
-            foreach (var item in vacationType)
-            {
-                selectList.Add(new SelectListItem
+                if (Request.Files.Count >= 1)
                 {
-                    Value = item.VacationTypeID.ToString(),
-                    Text = item.VacationName
-                });
+                    var File = Request.Files[0];
+                    var ImgByte = new Byte[File.ContentLength + 10];
+                    File.InputStream.Read(ImgByte, 0, File.ContentLength);
+                    var Base64String = Convert.ToBase64String(ImgByte, 0, ImgByte.Length);
+                    profile.Image = Base64String;
+                }
+                employeeService.UpdateProfileByEmployee(profile);
+                Session["EmployeeObj"] = employeeService.GetEmployeeByID(profile.EmployeeID);
+
+                return RedirectToAction("Updateprofile");
             }
-            return selectList;
+            else
+            {
+                ModelState.AddModelError("profile", "Invalid Details");
+                return RedirectToAction("Updateprofile");
+            }
            
         }
-        private IEnumerable<SelectListItem> ApproverList (List<AdminProfileViewModel> list)
-        {
-            var selectlist = new List<SelectListItem>();
-
-            foreach (var item in list)
-            {
-                selectlist.Add(new SelectListItem
-                {
-                    Text = item.FirstName + " "+ item.MiddleName +" "+ item.LastName,
-                    Value = item.EmployeeID.ToString()
-
-                }) ;
-            }
-            return selectlist;
-        }
-        
-        public ActionResult SendLeaveRequest()
-        {
-            
-            RequestVacationViewModel requestVacationViewModel = new RequestVacationViewModel();
-            
-            requestVacationViewModel.VacationTypeList = GetAllVacationType(vacationTypeService.GetAllVacationType());
-
-            int designationId = designationService.GetDesignationIdByName("Project Manager");
-
-            List<AdminProfileViewModel> list =     employeeService.GetEmployeesByDesignationId(designationId);
-
-            requestVacationViewModel.ApproverList = ApproverList(list);
-
-            return View(requestVacationViewModel);
-        }
-        [HttpPost]
-        public ActionResult SendLeaveRequest(RequestVacationViewModel vacationRequestViewModel)
-        {
-            vacationRequestViewModel.VacationTypeID = Convert.ToInt32(vacationRequestViewModel.VacationStringID);
-            vacationRequestViewModel.CreatedOn = DateTime.Today;
-            var employee= (AdminProfileViewModel)Session["EmployeeObj"];
-            vacationRequestViewModel.CreatedBy = employee.EmployeeID;
-          
-            vacationRequestViewModel.LeaveStatus = "Pending"; //by default
-            leaveRequestService.AddLeaveRequest(vacationRequestViewModel);
-            return RedirectToAction("SendLeaveRequest");
-        }
-
-        [CustomAuthorizeAttribute("HR")]
-        public ActionResult DeleteEmployee(int id)
-        {
-            employeeService.DeleteEmployeeByEmployeeID(id);
-            return RedirectToAction("employee");
-        }
-        [CustomAuthorizeAttribute("HR")]
-        public ActionResult AdminEditEmployee(int id)
-        {
-            AdminProfileViewModel adminProfileView =   employeeService.GetEmployeeByID(id);
-            var gender = genderService.GetAllGender();
-            adminProfileView.GenderList = GetSelectListItemsGender(gender);
-
-            var qualification = qualificationService.GetAllQualification();
-
-            adminProfileView.QualificationList = GetSelectListItemQualification(qualification);
-
-            var designation = designationService.GetAllDesignation();
-
-            adminProfileView.DesignationList = GetSelectListItemDesignation(designation);
-
-            var department = departmentService.GetAllDepartment();
-
-            adminProfileView.DepartmentList = GetSelectListItemsDepartment(department);
-            return View(adminProfileView);
-        }
-        [HttpPost]
-        public ActionResult AdminEditEmployee(UpdateEmpProfileByAdminViewModel profile)
-        {
-            profile.DepartmentID = Convert.ToInt32(profile.DepartmentStringId);
-            profile.DesignationID = Convert.ToInt32(profile.DesignationStringId);
-
-            employeeService.UpdateProfileByAdmin(profile);
-           
-            return RedirectToAction("employee");
-        }
+       
+      
+        [Authorize]
         public ActionResult Home()
         {
             AdminProfileViewModel profileViewModel = (AdminProfileViewModel)Session["EmployeeObj"];
 
-            //profileViewModel.GenderName = genderService.GetGenderById(profileViewModel.GenderID);
-
-            //profileViewModel.QualificationName = qualificationService.GetQualificationById(profileViewModel.QualificationId);
             return View(profileViewModel);
         }
         public ActionResult Unauthorized()
         {
             return View();
         }
-       public ActionResult Logout()
+        [Authorize]
+        public ActionResult Logout()
         {
+            FormsAuthentication.SignOut();
             Session["EmployeeObj"] = string.Empty;
             Session["DesignationName"] = string.Empty;
             return RedirectToAction("signin");
