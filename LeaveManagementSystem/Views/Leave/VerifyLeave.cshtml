@@ -19,11 +19,11 @@
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Designation</th>
-                @*<th scope="col">Department</th>*@
+               
                 <th scope="col">From Date</th>
                 <th scope="col">To Date</th>
                 <th scope="col">VacationType</th>
-                @*<th scope="col">comment</th>*@
+               
                 <th scope="col">Accept/Reject</th>
                 <th scope="col"></th>
             </tr>
@@ -35,11 +35,11 @@
                 <tr>
                     <td>@item.RequesterName</td>
                     <td>@item.RequesterDesignation</td>
-                    @*<td>@item.RequesterDepartment</td>*@
+                  
                     <th style="font-weight: normal;">@item.FromDate.ToShortDateString()</th>
                     <td>@item.ToDate.ToShortDateString()</td>
                     <td>@item.VacationName</td>
-                    @*<td>@item.Comments</td>*@
+                  
                     <td><a href="~/Leave/LeaveDetail/@item.RequestID" class="btn btn-info">Request Details</a></td>
                     
                 </tr>
