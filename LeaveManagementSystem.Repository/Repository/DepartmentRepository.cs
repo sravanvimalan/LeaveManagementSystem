@@ -32,7 +32,7 @@ namespace LeaveManagementSystem.Repository
             return list;
         }
 
-        public Department GetDepartmentByDepartmentID(int DepartmentID)
+        public Department GetDepartmentByID(int DepartmentID)
         {
             Department obj = Db.Department.Where(temp => temp.DepartmentID == DepartmentID).FirstOrDefault();
 

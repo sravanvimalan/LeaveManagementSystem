@@ -72,11 +72,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ViewModel\ExperienceViewModel.cs" />
+    <Compile Include="ViewModel\GenderViewModel.cs" />
     <Compile Include="ViewModel\ListAllDepartmentAndVirtualHeadViewModel.cs" />
     <Compile Include="ViewModel\NewVHViewModel.cs" />
+    <Compile Include="ViewModel\QualificationViewModel.cs" />
     <Compile Include="ViewModel\UpdateEmpProfileByAdminViewModel.cs" />
     <Compile Include="ViewModel\VacationTypeViewModel.cs" />
-    <Compile Include="ViewModel\AdminProfileViewModel.cs" />
+    <Compile Include="ViewModel\EmployeeViewModel.cs" />
     <Compile Include="ViewModel\AdminReplyViewModel.cs" />
     <Compile Include="ViewModel\RequestVacationViewModel.cs" />
     <Compile Include="ViewModel\DepartmentViewModel.cs" />
@@ -85,7 +88,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\SignInViewModel.cs" />
     <Compile Include="ViewModel\UpdatePasswordViewModel.cs" />
-    <Compile Include="ViewModel\UpdateProfileViewModel.cs" />
+    <Compile Include="ViewModel\UpdateProfileByEmployeeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

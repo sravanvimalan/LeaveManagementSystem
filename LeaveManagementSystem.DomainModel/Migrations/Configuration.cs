@@ -36,6 +36,9 @@
             context.VacationType.AddOrUpdate(new VacationType { VacationName = "Compensatory", VacationTypeID = 2 });
             context.VacationType.AddOrUpdate(new VacationType { VacationName = "Maternity", VacationTypeID = 3 });
             context.VacationType.AddOrUpdate(new VacationType { VacationName = "Paternity", VacationTypeID = 4 });
+
+
+            context.Employee.AddOrUpdate(new Employee { FirstName="sravan",LastName = "V",JoinDate=new DateTime(2020,10,05),DateOfBirth = new DateTime(1997,08,12),EmployeeStatus=true,AddressLine1="attingal",,})
         }
     }
 }

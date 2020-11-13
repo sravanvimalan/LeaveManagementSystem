@@ -91,6 +91,7 @@
     <Compile Include="IService\IGenderService.cs" />
     <Compile Include="IService\IQualificationService.cs" />
     <Compile Include="Service\LeaveRequestService.cs" />
+    <Compile Include="Service\Session\UserSessionModel.cs" />
     <Compile Include="Service\VacationTypeService.cs" />
     <Compile Include="Utility\MapperExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

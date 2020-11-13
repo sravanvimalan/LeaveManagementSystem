@@ -12,29 +12,30 @@ namespace LeaveManagementSystem.ServiceLayer
 {
     public interface IEmployeeService
     {
-        public AdminProfileViewModel GetEmployeeByID(int EmployeeID);
-        public AdminProfileViewModel GetEmployeeByEmailAndPassword(string Email, string Password);
-        public List<AdminProfileViewModel> GetAllEmployees();
+        public IEnumerable<SelectListItem> GetAllProjectManagers();
+        public EmployeeViewModel GetEmployeeByID(int EmployeeID);
+        public int AuthenticateUser(string Email, string Password);
+        public List<EmployeeViewModel> GetAllEmployees();
 
-        public void SetNewEmployee(AdminProfileViewModel obj);
+        public void SetNewEmployee(EmployeeViewModel obj);
         public void DeleteEmployeeByEmployeeID(int EmployeeID);
 
-        public List<AdminProfileViewModel> GetEmployeesByDesignationId(int DesignationId);
+        public List<EmployeeViewModel> GetEmployeesByDesignationId(int DesignationId);
 
-        public List<AdminProfileViewModel> GetAllVirtualHead();
+        public List<EmployeeViewModel> GetAllVirtualHead();
 
-        public List<AdminProfileViewModel> GetEmployeeByDepartmentID(int DepartmentId);
+        public List<EmployeeViewModel> GetEmployeeByDepartmentID(int DepartmentId);
 
         public void UpdateIsVirtualHeadFlag(int EmployeeId, bool value);
 
         public void UpdatePassword(string Password, int EmployeeID);
-        public void UpdateProfileByEmployee(UpdateProfileViewModel updateProfile);
+        public void UpdateProfileByEmployee(UpdateProfileByEmployeeViewModel updateProfile);
 
         public bool IsMobileExist(string mobile);
 
         public bool IsEmailExist(string email);
         public void UpdateProfileByAdmin(UpdateEmpProfileByAdminViewModel profile);
-        public IEnumerable<SelectListItem> ApproverList(List<AdminProfileViewModel> list);
-        public IEnumerable<SelectListItem> GetAllEmployeeOfDepartment(List<AdminProfileViewModel> employee);
+        public IEnumerable<SelectListItem> ApproverList(List<EmployeeViewModel> list);
+        public IEnumerable<SelectListItem> GetAllEmployeeOfDepartment(List<EmployeeViewModel> employee);
     }  
 }

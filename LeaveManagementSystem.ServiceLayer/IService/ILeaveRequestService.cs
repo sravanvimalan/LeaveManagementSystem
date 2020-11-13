@@ -17,16 +17,14 @@ namespace LeaveManagementSystem.ServiceLayer.IService
 
         public void UpdateLeaveRequest(RequestVacationViewModel requestVacationViewModel);
 
-        public RequestVacationViewModel GetLeaveRequestByRequestID(int RequestID);
+        public RequestVacationViewModel GetLeaveRequestByID(int RequestID);
 
         public void UpdateStatusAndResponse(string Status, string Response, int RequestId,int VerifierId);
 
         public List<RequestVacationViewModel> GetAllRequestVacation();
 
 
-        public List<RequestVacationViewModel> GetAllRequestByRequesterId(int requesterId);
-
-
-
+        public List<RequestVacationViewModel> GetAllRequestByEmployeeId(int id);
+        List<RequestVacationViewModel> GetAllLeaveRequest(string designation, string department, int departmentId, int designationId);
     }
 }

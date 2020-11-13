@@ -1,6 +1,17 @@
-﻿@model LeaveManagementSystem.ViewModel.ViewModel.UpdateProfileViewModel
+﻿@model LeaveManagementSystem.ViewModel.ViewModel.UpdateProfileByEmployeeViewModel
 @{
     ViewBag.Title = "UpdateProfile";
+}
+
+@{
+    Html.RenderPartial("_EmployeePartialView");
+}
+@if (ViewBag.Response != null)
+{
+<div class="alert alert-success">
+    <strong>Updated Successfully!</strong> 
+</div>
+
 }
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,64 +21,97 @@
 
 @using (Html.BeginForm("updateprofile", "account", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-<div class="container">
-    <h1>Update Profile</h1>
-    <p>Your current details.</p>
-    <label for="Image">Add Image</label>
-    <input type="file" name="Image" id="Image" />
-    
-    <br>
-    <br> <br> <br> <br>
-    @Html.HiddenFor(temp => temp.EmployeeID)
+    <div class="container">
+        <h3><b>Update Profile</b></h3>
+        <p>Your current details.</p>
+        <label for="Image">Add Image</label>
+        <input type="file" name="Image" id="Image" />
+
+        <br>
+        <br> <br> <br> <br>
+        @Html.HiddenFor(temp => temp.EmployeeID)
 
 
-    @Html.LabelFor(temp => temp.FirstName, "First Name")
-    @Html.TextBoxFor(temp => temp.FirstName)
+        @Html.LabelFor(temp => temp.FirstName, "First Name")
+        @Html.TextBoxFor(temp => temp.FirstName, new { @class = "form-control", required = "required" })
 
-    @Html.LabelFor(temp => temp.MiddleName, "Middle Name")
-    @Html.TextBoxFor(temp => temp.MiddleName)
-
-    @Html.LabelFor(temp => temp.LastName, "Last Name")
-    @Html.TextBoxFor(temp => temp.LastName)
-
-    @Html.LabelFor(temp => temp.DateOfBirth, "Date Of Birth")
-    @Html.TextBoxFor(model => model.DateOfBirth,
-           new { @type = "date", @Value = Model.DateOfBirth.ToString("yyyy-MM-dd") })<br /><br />
-
-    @Html.LabelFor(temp => temp.MobileNumber, "Mobile Number")
-    @Html.TextBoxFor(temp => temp.MobileNumber)
+        <div> @Html.ValidationMessageFor(temp => temp.FirstName, "", new { @class = "text-danger" }) </div>
 
 
-
-    @Html.LabelFor(temp => temp.AddressLine1, "AddressLine 1")
-    @Html.TextBoxFor(temp => temp.AddressLine1)
-
-    @Html.LabelFor(temp => temp.AddressLine2, "AddressLine 2")
-    @Html.TextBoxFor(temp => temp.AddressLine2)
-
-    @Html.LabelFor(temp => temp.AddressLine3, "AddressLine 3")
-    @Html.TextBoxFor(temp => temp.AddressLine3)
+        @Html.LabelFor(temp => temp.MiddleName, "Middle Name")
+        @Html.TextBoxFor(temp => temp.MiddleName, new { @class = "form-control" })
 
 
-    @Html.LabelFor(temp => temp.GenderID, "Gender")
-    @Html.DropDownListFor(temp => temp.GenderID, Model.GenderList, Model.GenderName)
+        @Html.LabelFor(temp => temp.LastName, "Last Name")
+        @Html.TextBoxFor(temp => temp.LastName, new { @class = "form-control", required = "required" })
+        <div>@Html.ValidationMessageFor(temp => temp.LastName, "", new { @class = "text-danger" })</div>
 
-    <br /><br />
+        @Html.LabelFor(temp => temp.DateOfBirth, "Date Of Birth")
 
 
 
 
+        @Html.TextBoxFor(model => model.DateOfBirth,
+               new { @type = "date", @Value = Model.DateOfBirth.ToString("yyyy-MM-dd"), @class = "form-control", required = "required" })
+        <div> @Html.ValidationMessageFor(temp => temp.DateOfBirth, "", new { @class = "text-danger" })</div>
+        <br /><br />
 
-    @Html.LabelFor(temp => temp.Nationality, "Nationality")
-    @Html.TextBoxFor(temp => temp.Nationality)
+        @Html.LabelFor(temp => temp.MobileNumber, "Mobile Number")
+        @Html.TextBoxFor(temp => temp.MobileNumber, new { @class = " form-control", required = "required" })
+        <div>@Html.ValidationMessageFor(temp => temp.MobileNumber, "", new { @class = "text-danger " })</div>
 
 
-    <button type="submit" class="btn btn-success">Save</button>
-</div>
+
+        @Html.LabelFor(temp => temp.AddressLine1, "Address Line 1")
+        @Html.TextBoxFor(temp => temp.AddressLine1, new { @class = " form-control", required = "required" })
+        <div>@Html.ValidationMessageFor(temp => temp.AddressLine1, "", new { @class = "text-danger" })</div>
+
+        @Html.LabelFor(temp => temp.AddressLine2, "Address Line 2")
+        @Html.TextBoxFor(temp => temp.AddressLine2, new { @class = "form-control" })
+
+
+        @Html.LabelFor(temp => temp.AddressLine3, "Address Line 3")
+        @Html.TextBoxFor(temp => temp.AddressLine3, new { @class = "form-control" })
+
+
+
+        @Html.LabelFor(temp => temp.GenderID, "Gender")
+        @Html.DropDownListFor(temp => temp.GenderID, Model.GenderList, Model.GenderName, new { @class = "form-control" })
+        <div>
+            @Html.ValidationMessageFor(temp => temp.GenderID, "", new { @class = "text-danger" })
+        </div>
+
+
+        <br /><br />
+
+
+
+
+
+        @Html.LabelFor(temp => temp.Nationality, "Nationality")
+        @Html.TextBoxFor(temp => temp.Nationality, new { @class = "form-control" })
+        <div>
+            @Html.ValidationMessageFor(temp => temp.Nationality, "", new { @class = "text-danger form - control", required = "required" })
+        </div>
+
+
+
+        <button type="submit" class="btn btn-success">Save</button>
+    </div>
+}
+
+
+<style>
+    #active {
+        background-color: grey !important;
+        color: white !important;
     }
+</style>
+<script>
 
+    $("a[href='/Account/updateprofile']").attr("id", "active");
 
-
+</script>
 
 
 

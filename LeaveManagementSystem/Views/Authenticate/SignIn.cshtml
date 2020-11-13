@@ -22,32 +22,33 @@
 </head>
 <body>
 
-        @using (Html.BeginForm("signin", "account", FormMethod.Post))
-        {
-    <div class="container">
-        <h1>Login In</h1>
-
-        <hr>
-
-        @Html.LabelFor(temp => temp.EmailID, "Email ID")
-        @Html.TextBoxFor(temp => temp.EmailID)
-        @Html.ValidationMessageFor(temp => temp.EmailID, "", new { @class = "text-danger",required="required" })
-        <br />
-        
-        @Html.LabelFor(temp => temp.Password)
-        @Html.PasswordFor(temp => temp.Password)
-        @Html.ValidationMessageFor(temp => temp.Password, "", new { @class = "text-danger", required = "required" })
+    @using (Html.BeginForm("signin", "authenticate", FormMethod.Post))
+    {
        
-        <hr>
+        <div class="container">
+            <h1>Login In</h1>
 
-        <button type="submit" class="btn btn-success" style="float:right">Sign In</button>
-        <div class="text-danger">
-            @Html.ValidationSummary()
+            <hr>
+
+            @Html.LabelFor(temp => temp.EmailID, "Email ID")
+            @Html.TextBoxFor(temp => temp.EmailID)
+            @Html.ValidationMessageFor(temp => temp.EmailID, "", new { @class = "text-danger", required = "required" })
+            <br />
+
+            @Html.LabelFor(temp => temp.Password)
+            @Html.PasswordFor(temp => temp.Password)
+            @Html.ValidationMessageFor(temp => temp.Password, "", new { @class = "text-danger", required = "required" })
+
+            <hr>
+
+            <button type="submit" class="btn btn-success" style="float:right">Sign In</button>
+            <div class="text-danger">
+                @Html.ValidationSummary()
+            </div>
+
         </div>
-       
-    </div>
-  
-        }
+
+    }
 
 </body>
 </html>

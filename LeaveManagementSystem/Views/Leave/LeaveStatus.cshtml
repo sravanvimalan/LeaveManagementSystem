@@ -2,15 +2,22 @@
 @{
     ViewBag.Title = "LeaveStatus";
 }
-@{ 
+@{
     int count = 0;
 }
-<h3>LeaveStatus</h3>
-
+@{
+    Html.RenderPartial("_EmployeePartialView");
+}
+<br />
+<br />
+<h3><b>Leave Status</b></h3>
+<br />
+<br />
 <table class="table">
     <thead>
         <tr>
             <th scope="col">#</th>
+            <th scope="col">No of Days</th>
             <th scope="col">FromDate</th>
             <th scope="col">ToDate</th>
             <th scope="col">VacationName</th>
@@ -24,6 +31,7 @@
         {
             <tr>
                 <th scope="row">@(@count+=1)</th>
+                <td align="center">@item.NoOfDays</td>
                 <td>@item.FromDate.ToShortDateString()</td>
                 <td>@item.ToDate.ToShortDateString()</td>
                 <td>@item.VacationName</td>

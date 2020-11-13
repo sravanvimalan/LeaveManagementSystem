@@ -1,103 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using LeaveManagementSystem.ViewModel;
 using LeaveManagementSystem.ServiceLayer;
-using LeaveManagementSystem.DomainModel;
-using System.Dynamic;
-using LeaveManagementSystem.ServiceLayer.IService;
-using System.Web.Mvc.Html;
 using LeaveManagementSystem.ViewModel.ViewModel;
-using System.Web.Http.Filters;
-using LeaveManagementSystem.CustomAuthorizationFilter;
-using System.Runtime.Remoting;
 using System.Web.Security;
+using LeaveManagementSystem.ServiceLayer.Service.Session;
 
 namespace LeaveManagementSystem.Controllers
-{
-
-    
+{ 
     public class AccountController : Controller
     {
         IGenderService genderService;
-        IQualificationService qualificationService;
-        IDepartmentService departmentService;
         IDesignationService designationService;
         IEmployeeService employeeService;
-        IExperienceService experienceService;
-        ILeaveRequestService leaveRequestService;
-        IVacationTypeService vacationTypeService;
 
-        public AccountController(IGenderService genderService, IQualificationService qualificationService, IDepartmentService departmentService, IDesignationService designationService, IEmployeeService employeeService, IExperienceService experienceService, ILeaveRequestService leaveRequestService, IVacationTypeService vacationTypeService)
+        public AccountController(IGenderService genderService, IDesignationService designationService, IEmployeeService employeeService)
         {
             this.genderService = genderService;
-            this.qualificationService = qualificationService;
-            this.departmentService = departmentService;
             this.designationService = designationService;
             this.employeeService = employeeService;
-            this.experienceService = experienceService;
-            this.leaveRequestService = leaveRequestService;
-            this.vacationTypeService = vacationTypeService;
         }
-        
-        public ActionResult SignIn()
-        {
-            SignInViewModel signInViewModel = new SignInViewModel();
-            return View(signInViewModel);
-        }
-        [HttpPost]
-        public ActionResult SignIn(SignInViewModel signInViewModel)
-        {
-            if (ModelState.IsValid)
-            {
 
-                signInViewModel.Password = SHA256HashGenerator.GenerateHash(signInViewModel.Password);
-                AdminProfileViewModel obj = employeeService.GetEmployeeByEmailAndPassword(signInViewModel.EmailID, signInViewModel.Password);
-
-                if (obj != null)
-                {
-                   
-                    var designation = designationService.GetDesignationByDesignationID(obj.DesignationID);
-                    obj.DesignationName = designation.DesignationName;
-                    Session["EmployeeObj"] = obj;
-                    Session["EmployeeEmail"] = obj.EmailID;
-                    Session["DesignationName"] = designation.DesignationName;
-                    if (obj.IsVirtualTeamHead == true)
-                    {
-                        Session["VirtualHead"] = "VirtualHead";
-                    }
-                    if (obj.IsSpecialPermission == true)
-                    {
-                        Session["HR"] = "HR";
-                    }
-                    FormsAuthentication.SetAuthCookie(Convert.ToString(Session["EmployeeEmail"]), false);
-            
-                    return RedirectToAction("home");
-                }
-                else
-                {
-                    ModelState.AddModelError("signin", "Invalid email or password");
-                    return View("SignIn", signInViewModel);
-                }
-               
-            }
-            else
-            {
-                ModelState.AddModelError("signin", "Invalid email or password");
-                return View("SignIn", signInViewModel);
-            }
-         
-        }
-      
+       
        
        [Authorize]
         public ActionResult UpdatePassword()
         {
+            ViewBag.Response = TempData["Response"];
             UpdatePasswordViewModel updatePasswordViewModel = new UpdatePasswordViewModel();
-            AdminProfileViewModel adminProfileViewModel = (AdminProfileViewModel)Session["EmployeeObj"];
-            updatePasswordViewModel.EmployeeID = adminProfileViewModel.EmployeeID;
+           
+            updatePasswordViewModel.EmployeeID = Convert.ToInt32(Session["EmployeeID"]);
             return View(updatePasswordViewModel);
         }
         [HttpPost]
@@ -109,40 +41,43 @@ namespace LeaveManagementSystem.Controllers
                 updatePasswordViewModel.Password = SHA256HashGenerator.GenerateHash(updatePasswordViewModel.Password);
 
                 employeeService.UpdatePassword(updatePasswordViewModel.Password, updatePasswordViewModel.EmployeeID);
+                TempData["Response"] = "Updated Successfuly";
                 return RedirectToAction("UpdatePassword");
             }
             else
             {
-                ModelState.AddModelError("password", "Invalid Format");
-                return RedirectToAction("UpdatePassword");
+              
+                return View(updatePasswordViewModel);
             }
          
         }
         [Authorize]
         public ActionResult UpdateProfile()
         {
-           
-            UpdateProfileViewModel updateProfileViewModel = new UpdateProfileViewModel();
-            AdminProfileViewModel profile = (AdminProfileViewModel)Session["EmployeeObj"];
-            updateProfileViewModel.EmployeeID = profile.EmployeeID;
-            updateProfileViewModel.FirstName = profile.FirstName;
-            updateProfileViewModel.MiddleName = profile.MiddleName;
-            updateProfileViewModel.LastName = profile.LastName;
-            updateProfileViewModel.Image = profile.Image;
-            updateProfileViewModel.AddressLine1 = profile.AddressLine1;
-            updateProfileViewModel.AddressLine2 = profile.AddressLine2;
-            updateProfileViewModel.AddressLine3 = profile.AddressLine3;
-            updateProfileViewModel.Nationality = profile.Nationality;
-            updateProfileViewModel.MobileNumber = profile.MobileNumber;
-            updateProfileViewModel.DateOfBirth = profile.DateOfBirth;
-            updateProfileViewModel.GenderID = profile.GenderID;
-            updateProfileViewModel.GenderList = genderService.GenderList();
-            updateProfileViewModel.GenderName = genderService.GetGenderById(profile.GenderID);
-            return View(updateProfileViewModel);
+            ViewBag.Response = TempData["Response"];
+            UpdateProfileByEmployeeViewModel updateProfileByEmployeeViewModel = new UpdateProfileByEmployeeViewModel();
+
+            EmployeeViewModel employeeViewModel = employeeService.GetEmployeeByID(Convert.ToInt32(Session["EmployeeID"]));
+
+            updateProfileByEmployeeViewModel.EmployeeID = Convert.ToInt32(Session["EmployeeID"]);
+            updateProfileByEmployeeViewModel.Image = employeeViewModel.Image;
+            updateProfileByEmployeeViewModel.FirstName = employeeViewModel.FirstName;
+            updateProfileByEmployeeViewModel.MiddleName = employeeViewModel.MiddleName;
+            updateProfileByEmployeeViewModel.LastName = employeeViewModel.LastName;
+            updateProfileByEmployeeViewModel.AddressLine1 = employeeViewModel.AddressLine1;
+            updateProfileByEmployeeViewModel.AddressLine2 = employeeViewModel.AddressLine2;
+            updateProfileByEmployeeViewModel.AddressLine3 = employeeViewModel.AddressLine3;
+            updateProfileByEmployeeViewModel.Nationality = employeeViewModel.Nationality;
+            updateProfileByEmployeeViewModel.MobileNumber = employeeViewModel.MobileNumber;
+            updateProfileByEmployeeViewModel.DateOfBirth = employeeViewModel.DateOfBirth;
+            updateProfileByEmployeeViewModel.GenderID = employeeViewModel.GenderID;
+            updateProfileByEmployeeViewModel.GenderList = genderService.GenderList();
+            updateProfileByEmployeeViewModel.GenderName = employeeViewModel.GenderName;
+            return View(updateProfileByEmployeeViewModel);
         }
         [HttpPost]
         [Authorize]
-        public ActionResult UpdateProfile(UpdateProfileViewModel profile)
+        public ActionResult UpdateProfile(UpdateProfileByEmployeeViewModel updateProfileByEmployeeViewModel)
         {
             if(ModelState.IsValid)
             {
@@ -152,28 +87,28 @@ namespace LeaveManagementSystem.Controllers
                     var ImgByte = new Byte[File.ContentLength + 10];
                     File.InputStream.Read(ImgByte, 0, File.ContentLength);
                     var Base64String = Convert.ToBase64String(ImgByte, 0, ImgByte.Length);
-                    profile.Image = Base64String;
+                    updateProfileByEmployeeViewModel.Image = Base64String;
                 }
-                employeeService.UpdateProfileByEmployee(profile);
-                Session["EmployeeObj"] = employeeService.GetEmployeeByID(profile.EmployeeID);
-
-                return RedirectToAction("Updateprofile");
+                Session["EmployeeImage"] = updateProfileByEmployeeViewModel.Image;
+                employeeService.UpdateProfileByEmployee(updateProfileByEmployeeViewModel);
+                TempData["Response"] = "Updated Successfuly";
+                return RedirectToAction("updateprofile");
             }
             else
-            {
+            { 
                 ModelState.AddModelError("profile", "Invalid Details");
-                return RedirectToAction("Updateprofile");
+                updateProfileByEmployeeViewModel.GenderList = genderService.GenderList();
+                return View(updateProfileByEmployeeViewModel);
             }
            
         }
        
       
         [Authorize]
-        public ActionResult Home()
+        public ActionResult Home(EmployeeViewModel employeeViewModel)
         {
-            AdminProfileViewModel profileViewModel = (AdminProfileViewModel)Session["EmployeeObj"];
-
-            return View(profileViewModel);
+            employeeViewModel = employeeService.GetEmployeeByID(Convert.ToInt32(Session["EmployeeID"]));
+            return View(employeeViewModel);
         }
         public ActionResult Unauthorized()
         {
@@ -183,10 +118,11 @@ namespace LeaveManagementSystem.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            Session["EmployeeObj"] = string.Empty;
-            Session["DesignationName"] = string.Empty;
-            return RedirectToAction("signin");
+            Session.Clear();
+            return RedirectToAction("signin","authenticate");
         }
-       
+
+      
+
     }
 }

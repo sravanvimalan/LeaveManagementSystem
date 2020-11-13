@@ -13,7 +13,7 @@ namespace LeaveManagementSystem.DomainModel.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202010310927386_initial"; }
+            get { return "202011131648242_initial"; }
         }
         
         string IMigrationMetadata.Source

@@ -33,7 +33,7 @@ namespace LeaveManagementSystem.Controllers
         [CustomAuthorizeAttribute("HR")]
         public ActionResult ListEmployee(string Search = "")
         {
-            List<AdminProfileViewModel> list = employeeService.GetAllEmployees();
+            List<EmployeeViewModel> list = employeeService.GetAllEmployees();
             list = list.Where(temp => temp.FirstName.Contains(Search)).ToList();
             return View(list);
         }
@@ -41,7 +41,7 @@ namespace LeaveManagementSystem.Controllers
         [CustomAuthorizeAttribute("HR")]
         public ActionResult AddNewEmployee()
         {
-            AdminProfileViewModel adminProfileViewModel = new AdminProfileViewModel();
+            EmployeeViewModel adminProfileViewModel = new EmployeeViewModel();
 
             var gender = genderService.GetAllGender();
             adminProfileViewModel.GenderList =genderService.GetSelectListItemsGender(gender);
@@ -63,7 +63,7 @@ namespace LeaveManagementSystem.Controllers
         }
         [HttpPost]
         [CustomAuthorizeAttribute("HR")]
-        public ActionResult AddNewEmployee(AdminProfileViewModel obj)
+        public ActionResult AddNewEmployee(EmployeeViewModel obj)
         {
             if (ModelState.IsValid)
             {
@@ -75,11 +75,11 @@ namespace LeaveManagementSystem.Controllers
                     var Base64String = Convert.ToBase64String(ImgByte, 0, ImgByte.Length);
                     obj.Image = Base64String;
                 }
-                obj.GenderID = Convert.ToInt32(obj.GenderStringId);
-                obj.DepartmentID = Convert.ToInt32(obj.DepartmentStringId);
-                obj.DesignationID = Convert.ToInt32(obj.DesignationStringId);
-                obj.QualificationID = Convert.ToInt32(obj.QualificationStringId);
-                obj.ExperienceID = experienceService.GetLatestExperienceID() + 1;
+                //obj.GenderID = Convert.ToInt32(obj.GenderStringId);
+                //obj.DepartmentID = Convert.ToInt32(obj.DepartmentStringId);
+                //obj.DesignationID = Convert.ToInt32(obj.DesignationStringId);
+                //obj.QualificationID = Convert.ToInt32(obj.QualificationStringId);
+                //obj.ExperienceID = experienceService.GetLatestExperienceID() + 1;
                 employeeService.SetNewEmployee(obj);
                 return RedirectToAction("employee");
             }
@@ -102,7 +102,7 @@ namespace LeaveManagementSystem.Controllers
         [Authorize]
         public ActionResult AdminEditEmployee(int id)
         {
-            AdminProfileViewModel adminProfileView = employeeService.GetEmployeeByID(id);
+            EmployeeViewModel adminProfileView = employeeService.GetEmployeeByID(id);
             var gender = genderService.GetAllGender();
             adminProfileView.GenderList =genderService.GetSelectListItemsGender(gender);
 

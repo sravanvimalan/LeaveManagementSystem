@@ -1,0 +1,35 @@
+﻿
+@{ 
+    var employee = (LeaveManagementSystem.ServiceLayer.Service.Session.UserSessionModel)Session["EmployeeDetails"];
+}
+
+
+
+@if (employee.Image == "AAAAAAAAAAAAAA==" || employee.Image == null)
+{
+    <img src="~/Image/person.jpg" alt="Image" width="80px" />
+}
+else
+{
+    <img src="data:image/png;base64,@Session["EmployeeImage"]" alt="Image" width="80px" />
+}
+
+
+
+
+
+<h2>@employee.FirstName @employee.MiddleName @employee.LastName</h2>
+
+<h5><span><i class='far fa-calendar'></i></span>@employee.JoinDate.ToShortDateString()</h5>
+<h5>@employee.DesignationName</h5>
+<h5>@employee.DepartmentName</h5>
+@if (employee.HasAdminPermission)
+{
+
+    <h5> <span class="label label-danger"> Admin</span></h5>
+
+}
+<h5>
+    <span class="label label-success">Active</span>
+</h5>
+<p>

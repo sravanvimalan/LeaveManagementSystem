@@ -3,6 +3,7 @@ using LeaveManagementSystem.DomainModel;
 using LeaveManagementSystem.Repository;
 using LeaveManagementSystem.ServiceLayer.IService;
 using LeaveManagementSystem.ViewModel;
+using LeaveManagementSystem.ViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,17 +33,19 @@ namespace LeaveManagementSystem.ServiceLayer.Service
             });
             IMapper mapper = config.CreateMapper();
             requestVacation = mapper.Map<RequestVacationViewModel, RequestVacation>(requestVacationViewModel);
-            RequestVacationRepository.SetNewRequestVacation(requestVacation);
-            
+            RequestVacationRepository.AddRequestVacation(requestVacation);
+
         }
 
-        public List<RequestVacationViewModel> GetAllRequestByRequesterId(int requesterId)
+        public List<RequestVacationViewModel> GetAllRequestByEmployeeId(int id)
         {
-            List<RequestVacation> vacations = RequestVacationRepository.GetAllRequestByRequesterId(requesterId);
+            List<RequestVacation> vacations = RequestVacationRepository.GetAllRequestByEmployeeId(id);
             List<RequestVacationViewModel> requestVacations = null;
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<RequestVacation, RequestVacationViewModel>();
+                cfg.CreateMap<VacationType, VacationTypeViewModel>();
+                cfg.CreateMap<Employee, EmployeeViewModel>();
                 cfg.IgnoreUnmapped();
             });
             IMapper mapper = config.CreateMapper();
@@ -88,7 +91,7 @@ namespace LeaveManagementSystem.ServiceLayer.Service
 
         }
 
-        public RequestVacationViewModel GetLeaveRequestByRequestID(int RequestID)
+        public RequestVacationViewModel GetLeaveRequestByID(int RequestID)
         {
             RequestVacation requestVacation = RequestVacationRepository.GetLeaveRequestByRequestID(RequestID);
 
@@ -104,6 +107,8 @@ namespace LeaveManagementSystem.ServiceLayer.Service
             return requestVacationViewModel;
         }
 
+
+
         public void UpdateLeaveRequest(RequestVacationViewModel requestVacationViewModel)
         {
             RequestVacation requestVacation = null;
@@ -118,9 +123,66 @@ namespace LeaveManagementSystem.ServiceLayer.Service
             RequestVacationRepository.UpdateLeaveRequest(requestVacation);
         }
 
-        public void UpdateStatusAndResponse(string Status, string Response, int RequestId,int VerifierId)
+        public void UpdateStatusAndResponse(string Status, string Response, int RequestId, int VerifierId)
         {
             RequestVacationRepository.UpdateStatusAndResponse(Status, Response, RequestId, VerifierId);
         }
-    }
+        //------------------------------------------------------------
+        public List<RequestVacationViewModel> GetAllLeaveRequest(string designation, string department, int departmentId, int employeeId)
+        {
+            if (department == "HR")
+            {
+                return MapRequestDV(RequestVacationRepository.GetAllLeaveRequestForHR());
+            }
+            if (designation == "Project Manager")
+            {
+               var leaveRequests =  MapRequestDV(RequestVacationRepository.GetAllLeaveRequestForProjectManager(employeeId));
+               
+            }
+            return MapRequestDV(RequestVacationRepository.GetAllLeaveRequestForVirtualHead(departmentId));
+        }
+
+
+        public List<RequestVacationViewModel> MapRequestDV(List<RequestVacation> requestVacation)
+        {
+            List<RequestVacationViewModel> requestVacationViewModel = null;
+            var config = new MapperConfiguration(cfg =>
+            { 
+
+                cfg.CreateMap<RequestVacation, RequestVacationViewModel>();
+                cfg.CreateMap<Employee, EmployeeViewModel>();
+                cfg.CreateMap<Department, DepartmentViewModel>();
+                cfg.CreateMap<Designation, DesignationViewModel>();
+                cfg.CreateMap<Gender, GenderViewModel>();
+                cfg.CreateMap<Qualification, QualificationViewModel>();
+                cfg.CreateMap<Experience, ExperienceViewModel>();
+                cfg.CreateMap<VacationType, VacationTypeViewModel>();
+                cfg.IgnoreUnmapped();
+            });
+            IMapper mapper = config.CreateMapper();
+            requestVacationViewModel = mapper.Map<List<RequestVacation>, List<RequestVacationViewModel>>(requestVacation);
+
+            return requestVacationViewModel;
+        }
+    }      
+       
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

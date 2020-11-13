@@ -5,13 +5,29 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using LeaveManagementSystem.DomainModel;
+using LeaveManagementSystem.DomainModel.DTOClasses;
 
 namespace LeaveManagementSystem.Repository
 {
     public interface IEmployeeRespository
     {
         public Employee GetEmployeeByID(int EmployeeID);
-        public Employee GetEmployeeByEmailAndPassword(string Email, string Password);
+        public int AuthenticateUser(string Email, string Password);
+
+        public List<ProjectManagerDTO> GetAllProjectManagers();
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// consider above functions 
+        /// </summary>
+        /// <returns></returns>
+
         public List<Employee> GetAllEmployees();
 
         public void SetNewEmployee(Employee obj,Experience exp);

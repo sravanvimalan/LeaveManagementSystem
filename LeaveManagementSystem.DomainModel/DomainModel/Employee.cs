@@ -56,9 +56,8 @@ namespace LeaveManagementSystem.DomainModel
         [MaxLength(150)]
         [Required]
         public string EmailID { get; set; }
-        [Column("CurrentStatus ", Order = 14,TypeName = "bit")]
-        
-        public bool CurrentStatus { get; set; }
+       
+
         [Column(" GenderID", Order = 15, TypeName = "int")]
         [Required]
         public int? GenderID { get; set; }
@@ -78,13 +77,13 @@ namespace LeaveManagementSystem.DomainModel
         [Column("CreatedBy", Order = 20, TypeName = "int")]
         [Required]
         public int? CreatedBy { get; set; }
-        //[Column("CreatedOn", Order = 21, TypeName = "datetime")]
-        //[Required]
-        //public DateTime? CreatedOn { get; set; }
+        [Column("CreatedOn", Order = 21, TypeName = "datetime")]
+        [Required]
+        public DateTime? CreatedOn { get; set; }
         [Column("ModifiedBy", Order = 22, TypeName = "int")]
         public int? ModifiedBy { get; set; }
-        //[Column("ModifiedOn", Order = 23, TypeName = "datetime")]
-        //public DateTime? ModifiedOn { get; set; }
+        [Column("ModifiedOn", Order = 23, TypeName = "datetime")]
+        public DateTime? ModifiedOn { get; set; }
         [Column("Password", Order = 24)]
         [MaxLength(150)]
         [Required]

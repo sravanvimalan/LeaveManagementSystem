@@ -72,3 +72,12 @@ a {
     padding: 10px;
     margin-top: 100px
 }
+
+.validation-summary-errors
+{
+   color:red !important;
+}
+#active{
+    background-color:grey !important;
+    color:white !important;
+}

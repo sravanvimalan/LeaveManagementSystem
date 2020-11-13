@@ -131,11 +131,12 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\download.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\CustomStyleSheet.css" />
+    <Content Include="Content\LayoutStyleSheet1.css" />
     <Content Include="Content\StyleSheetSignIn.css" />
     <Content Include="Global.asax" />
+    <Content Include="Image\person.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -250,6 +251,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AuthenticateController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DesignationController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
@@ -269,7 +271,7 @@
     <Content Include="Views\Account\UpdatePassword.cshtml" />
     <Content Include="Views\Account\UpdateProfile.cshtml" />
     <Content Include="Views\Leave\SendLeaveRequest.cshtml" />
-    <Content Include="Views\Account\SignIn.cshtml" />
+    <Content Include="Views\Authenticate\SignIn.cshtml" />
     <Content Include="Views\Employee\AddNewEmployee.cshtml" />
     <Content Include="Views\Employee\ListEmployee.cshtml" />
     <Content Include="Views\Employee\AdminEditEmployee.cshtml" />
@@ -292,6 +294,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Leave\LeaveStatus.cshtml" />
     <Content Include="Views\Account\Unauthorized.cshtml" />
+    <Content Include="Views\Shared\_EmployeePartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -301,6 +304,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="IntegrationTest\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

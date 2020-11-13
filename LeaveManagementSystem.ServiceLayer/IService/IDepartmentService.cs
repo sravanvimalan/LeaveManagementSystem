@@ -16,7 +16,7 @@ namespace LeaveManagementSystem.ServiceLayer
 
         public void AddDepartment(DepartmentViewModel obj);
         public int GetDepartmentIdByName(string DepartmentName);
-        public DepartmentViewModel GetDepartmentByDepartmentID(int DepartmentID);
+        public DepartmentViewModel GetDepartmentByID(int DepartmentID);
 
         public bool IsDepartmentExist(string department);
 

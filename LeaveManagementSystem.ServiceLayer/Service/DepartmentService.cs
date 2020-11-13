@@ -39,9 +39,9 @@ namespace LeaveManagementSystem.ServiceLayer
 
         }
 
-        public DepartmentViewModel GetDepartmentByDepartmentID(int DepartmentID)
+        public DepartmentViewModel GetDepartmentByID(int DepartmentID)
         {
-            Department department = departmentRepository.GetDepartmentByDepartmentID(DepartmentID);
+            Department department = departmentRepository.GetDepartmentByID(DepartmentID);
 
             var config = new MapperConfiguration(cfg =>
             {

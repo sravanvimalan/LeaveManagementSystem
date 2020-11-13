@@ -3,69 +3,123 @@
     ViewBag.Title = "SendLeaveRequest";
 }
 @{
-    var emp = (LeaveManagementSystem.ViewModel.AdminProfileViewModel)Session["EmployeeObj"];
+    var emp = (LeaveManagementSystem.ServiceLayer.Service.Session.UserSessionModel)Session["EmployeeDetails"];
+}
+@{
+    Html.RenderPartial("_EmployeePartialView");
+}
+@if (ViewBag.Response != null)
+{
+    <script>
+        alert("@ViewBag.Response");
+    </script>
+
 }
 <link rel="stylesheet" href="~/Content/CustomStyleSheet.css">
 
 
 
-@if (emp.IsSpecialPermission || emp.DesignationName == "Project Manager" || emp.IsVirtualTeamHead == true)
+@if (emp.CanApproveLeaveRequest || emp.DesignationName == "Project Manager" || emp.HasAdminPermission == true)
 {
     <style>
         .hide-element {
             visibility: visible !important;
         }
+
         .hide-leavestatus {
             visibility: hidden;
         }
     </style>
 }
-<a href="~/Leave/verifyleave" class="btn btn-primary hide-element">Verify Request</a>
-<a href="~/Leave/Leavestatus" class="btn btn-primary hide-leavestatus" style="float:right;">Leave Status</a>
+<a href="~/Leave/verifyleave" class="btn btn-primary @*hide-element*@">Verify Request</a>
+<a href="~/Leave/Leavestatus" class="btn btn-primary @*hide-leavestatus*@" style="float:right;">Leave Status</a>
 <form action="~/leave/sendleaverequest" method="post">
     <div class="container">
-        <h1>Leave Request</h1>
+        <h3>Leave Request</h3>
         <p>Please fill in this form to request a leave.</p>
         <hr>
+        @Html.LabelFor(temp => temp.NoOfDays, "No of Days")
+        @Html.TextBoxFor(temp => temp.NoOfDays, new { @class = "form-control", required = "required" });
+        <div> @Html.ValidationMessageFor(temp => temp.NoOfDays, "", new { @class = "text-danger" })</div>
 
-        <label for="fromdate"><b>From Date</b></label>
-        <input type="date" name="FromDate" id="fromdate" required>
-        <div style="float:right;">
-            <label for="todate"><b>To Date</b></label>
-            <input type="date" name="ToDate" id="todate" required>
-            <br /><br />
-            <label for="Am">Am</label>
-            <input type="checkbox" value="true" id="Am" name="AmOnly" />
-            <label for="Pm">Pm</label>
-            <input type="checkbox" value="true" id="Pm" name="PmOnly" />
-        </div><br><br>
+
+
+        @Html.LabelFor(temp => temp.FromDate)
+        @Html.TextBoxFor(model => model.ToDate,
+               new { @type = "date", @Value = Model.ToDate.ToString("yyyy-MM-dd"), @class = "form-control", required = "required" })
+        <div> @Html.ValidationMessageFor(temp => temp.ToDate, "", new { @class = "text-danger" })</div>
+
+        @Html.LabelFor(temp => temp.ToDate)
+        @Html.TextBoxFor(model => model.FromDate,
+              new { @type = "date", @Value = Model.FromDate.ToString("yyyy-MM-dd"), @class = "form-control", required = "required" })
+        <div> @Html.ValidationMessageFor(temp => temp.FromDate, "", new { @class = "text-danger" })</div>
+
+        <br /><br />
+        <div class="form-row">
+            <div>
+
+            </div>
+        </div>
+
+        <div class=" form-row">
+
+
+            <div class="form-group col-sm-1">
+                @Html.LabelFor(temp => temp.AmOnly, "Am ")
+                @Html.CheckBoxFor(temp => temp.AmOnly, new { @class = "form-control" })
+            </div>
+
+
+            <div class="form-group col-sm-1">
+                @Html.LabelFor(temp => temp.PmOnly, "Pm ")
+                @Html.CheckBoxFor(temp => temp.PmOnly, new { @class = "form-control" })
+
+            </div>
+
+        </div>
+
+        <br /><br />
 
 
 
         @Html.LabelFor(temp => temp.VacationStringID, "VacationID")
-        @Html.DropDownListFor(temp => temp.VacationStringID, Model.VacationTypeList, "Select Vacation")
-
+        @Html.DropDownListFor(temp => temp.VacationStringID, Model.VacationTypeList, "Select Vacation", new { @class = "form-control", required = "required" })
+        <div> @Html.ValidationMessageFor(temp => temp.VacationStringID, "", new { @class = "text-danger" })</div>
 
         <br /><br />
-        <div style="float:right;">
+        <div>
 
 
-            @Html.LabelFor(temp => temp.ApproverID)
-            @Html.DropDownListFor(temp => temp.ApproverID, Model.ApproverList, "--------------")
-
+            @Html.LabelFor(temp => temp.ApproverID, "Approver Name")
+            @Html.DropDownListFor(temp => temp.ApproverID, Model.ApproverList, "--------------", new { @class = "form-control", required = "required" })
+            <div> @Html.ValidationMessageFor(temp => temp.ApproverID, "", new { @class = "text-danger" })</div>
 
         </div>
         <br><br>
 
 
-        <label for="comment"><b>Comment</b></label>
-<textarea id="comment" name="Comments" rows="4" cols="50">
+        @Html.LabelFor(temp => temp.Comments)
+        @Html.TextAreaFor(temp => temp.Comments, new { @class = "form-control", required = "required" })
+        <div> @Html.ValidationMessageFor(temp => temp.Comments, "", new { @class = "text-danger" })</div>
 
-  </textarea>
 
 
-        <button type="submit" class="registerbtn">Send Request</button>
+
+        <br /><br />
+        <button type="submit" class="btn btn-primary">Send Request</button>
     </div>
 
 
 </form>
+
+<style>
+    #active {
+        background-color: grey !important;
+        color: white !important;
+    }
+</style>
+<script>
+
+    $("a[href='/leave/sendleaverequest']").attr("id", "active");
+
+</script>

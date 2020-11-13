@@ -21,15 +21,15 @@ namespace LeaveManagementSystem.Controllers
             this.departmentService = departmentService;
             this.employeeService = employeeService;
         }
-      
+
 
         [CustomAuthorizeAttribute("HR")]
         public ActionResult Index()
         {
-         
+
             List<ListAllDepartmentAndVirtualHeadViewModel> listAllVirutalHead = new List<ListAllDepartmentAndVirtualHeadViewModel>();
 
-            List<AdminProfileViewModel> virtualHeadList = employeeService.GetAllVirtualHead();
+            List<EmployeeViewModel> virtualHeadList = employeeService.GetAllVirtualHead();
 
             foreach (var item in virtualHeadList)
             {
@@ -38,91 +38,91 @@ namespace LeaveManagementSystem.Controllers
                     EmployeeID = item.EmployeeID,
                     DepartmentID = item.DepartmentID,
                     VirtualHeadName = item.FirstName + " " + item.MiddleName + " " + item.LastName,
-                    DepartmentName = item.Department.DepartmentName
-                }) ;
+                    DepartmentName = item.DepartmentName
+                });
             }
-             
+
 
             return View(listAllVirutalHead);
 
-        }
-       
-        [CustomAuthorizeAttribute("HR")]
-        public ActionResult ChangeVirtualHead(int Id)
-        {
-            AdminProfileViewModel existingVH = employeeService.GetEmployeeByID(Id);
-            List<AdminProfileViewModel> employeeList = employeeService.GetEmployeeByDepartmentID(existingVH.DepartmentID);
+    }
 
-            AdminProfileViewModel newVitualHead = new AdminProfileViewModel();
+    [CustomAuthorizeAttribute("HR")]
+    public ActionResult ChangeVirtualHead(int Id)
+    {
+        EmployeeViewModel existingVH = employeeService.GetEmployeeByID(Id);
+        List<EmployeeViewModel> employeeList = employeeService.GetEmployeeByDepartmentID(existingVH.DepartmentID);
 
-            existingVH.EmployeeList = employeeService.GetAllEmployeeOfDepartment(employeeList);
+        EmployeeViewModel newVitualHead = new EmployeeViewModel();
 
-            return View(existingVH);
+        existingVH.EmployeeList = employeeService.GetAllEmployeeOfDepartment(employeeList);
 
+        return View(existingVH);
 
-
-        }
-        [HttpPost]
-        [CustomAuthorizeAttribute("HR")]
-        public ActionResult ChangeVirtualHead(NewVHViewModel newVirtualHead)
-        {
-            if(ModelState.IsValid)
-            {
-                newVirtualHead.NewVirtualTeamHeadIntId = Convert.ToInt32(newVirtualHead.NewVirtualTeamHeadID);
-
-                employeeService.UpdateIsVirtualHeadFlag(newVirtualHead.EmployeeID, false);
-
-                employeeService.UpdateIsVirtualHeadFlag(newVirtualHead.NewVirtualTeamHeadIntId, true);
-
-                return RedirectToAction("index");
-
-            }
-            else
-            {
-                ModelState.AddModelError("Error", "Error Occured");
-                return RedirectToAction("index");
-            }
-
-        }
-        [CustomAuthorizeAttribute("HR")]
-        public ActionResult AddDepartment()
-        {
-            DepartmentViewModel department = new DepartmentViewModel();
-            return View(department);
-        }
-        [HttpPost]
-        [CustomAuthorizeAttribute("HR")]
-        public ActionResult AddDepartment(DepartmentViewModel department)
-        {
-            if (ModelState.IsValid)
-            {
-                departmentService.AddDepartment(department);
-                return RedirectToAction("AddDepartment");
-               
-            }
-            else
-            {
-
-                ModelState.AddModelError("error", "Insertion failed");
-                return View(department);
-            }
-            
-               
-            
-            
-        }
-        public string GetDepartment(string department)
-        {
-            if (departmentService.IsDepartmentExist(department))
-            {
-                return "found";
-            }
-            else
-            {
-                return "not found";
-            }
-        }
 
 
     }
+    [HttpPost]
+    [CustomAuthorizeAttribute("HR")]
+    public ActionResult ChangeVirtualHead(NewVHViewModel newVirtualHead)
+    {
+        if (ModelState.IsValid)
+        {
+            newVirtualHead.NewVirtualTeamHeadIntId = Convert.ToInt32(newVirtualHead.NewVirtualTeamHeadID);
+
+            employeeService.UpdateIsVirtualHeadFlag(newVirtualHead.EmployeeID, false);
+
+            employeeService.UpdateIsVirtualHeadFlag(newVirtualHead.NewVirtualTeamHeadIntId, true);
+
+            return RedirectToAction("index");
+
+        }
+        else
+        {
+            ModelState.AddModelError("Error", "Error Occured");
+            return RedirectToAction("index");
+        }
+
+    }
+    [CustomAuthorizeAttribute("HR")]
+    public ActionResult AddDepartment()
+    {
+        DepartmentViewModel department = new DepartmentViewModel();
+        return View(department);
+    }
+    [HttpPost]
+    [CustomAuthorizeAttribute("HR")]
+    public ActionResult AddDepartment(DepartmentViewModel department)
+    {
+        if (ModelState.IsValid)
+        {
+            departmentService.AddDepartment(department);
+            return RedirectToAction("AddDepartment");
+
+        }
+        else
+        {
+
+            ModelState.AddModelError("error", "Insertion failed");
+            return View(department);
+        }
+
+
+
+
+    }
+    public string GetDepartment(string department)
+    {
+        if (departmentService.IsDepartmentExist(department))
+        {
+            return "found";
+        }
+        else
+        {
+            return "not found";
+        }
+    }
+
+
+}
 }

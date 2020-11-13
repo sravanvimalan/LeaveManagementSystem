@@ -16,9 +16,9 @@ namespace LeaveManagementSystem.Repository
             Db = new LeaveManagementSystemDbcontext();
         }
 
-        public List<RequestVacation> GetAllRequestByRequesterId(int requesterId)
+        public List<RequestVacation> GetAllRequestByEmployeeId(int id)
         {
-            List<RequestVacation> requestVacations = Db.RequestVacation.Where(temp => temp.CreatedBy == requesterId).ToList();
+            List<RequestVacation> requestVacations = Db.RequestVacation.Where(temp => temp.CreatorID == id).ToList();
             return requestVacations;
         }
 
@@ -48,9 +48,9 @@ namespace LeaveManagementSystem.Repository
             return obj;
         }
 
-        public void SetNewRequestVacation(RequestVacation obj)
+        public void AddRequestVacation(RequestVacation requestVacation)
         {
-            Db.RequestVacation.Add(obj);
+            Db.RequestVacation.Add(requestVacation);
             Db.SaveChanges();
         }
 
@@ -70,6 +70,24 @@ namespace LeaveManagementSystem.Repository
             requestVacation.Response = Response;
             requestVacation.ApproverID = VerifierId;
             Db.SaveChanges();
+        }
+
+        public List<RequestVacation> GetAllLeaveRequestForVirtualHead(int departmentId)
+        {
+            //List<RequestVacation> requestVacations = Db.RequestVacation.Where(temp => temp.Employee.DepartmentID == departmentId).ToList();
+
+            //return requestVacations;
+            return null;
+        }
+        public List<RequestVacation> GetAllLeaveRequestForProjectManager(int employeeId)
+        {
+            List<RequestVacation> requestVacations = Db.RequestVacation.Where(temp => temp.ApproverID == employeeId).ToList();
+            return requestVacations;
+        }
+        public List<RequestVacation> GetAllLeaveRequestForHR()
+        {
+            List<RequestVacation> requestVacations = Db.RequestVacation.Where(temp => temp.LeaveStatus == "Pending").ToList();
+            return requestVacations;
         }
     }
 }

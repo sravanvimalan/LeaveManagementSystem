@@ -1,5 +1,7 @@
-﻿@{
-    var emp =(LeaveManagementSystem.ViewModel.AdminProfileViewModel) Session["EmployeeObj"];
+﻿@*@model LeaveManagementSystem.ServiceLayer.Service.Session.UserSessionModel*@
+@{
+
+   
 }
 <html lang="en">
 <head>
@@ -23,57 +25,34 @@
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <script src="~/Scripts/jquery.validate.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <link rel="stylesheet" href="~/Content/LayoutStyleSheet1.css" />
+    
 
 
-    <style>
-    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-    .row.content {height: 2000px}
-
-    /* Set gray background color and 100% height */
-    .sidenav {
-      background-color: #f1f1f1;
-      height: 100%;
-    }
-
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-    }
-        textarea {
-            overflow-y: scroll;
-
-        }
-        .hide-element {
-            visibility: hidden;
-        }
-   
-    </style>
 </head>
 <body>
-    @if (emp.IsSpecialPermission || emp.DesignationName == "Project Manager" || emp.IsVirtualTeamHead == true)
+    @*@if( (Model.IsSpecialPermission || Model.DesignationName == "Project Manager" || Model.IsVirtualTeamHead == true)
     {
         <style>
             .hide-element {
                 visibility: visible !important;
             }
         </style>
-    }
+    }*@
     <div class="container-fluid">
         <div class="row content">
-            <div class="col-sm-3 sidenav">
+            <div class="col-sm-3 sidenav nav-tabs">
                 <br />
                 <h6 class="btn btn-success">Leave Management System</h6>
                 <br /><br />
-                <ul class="nav nav-pills nav-stacked ">
+                <ul style="list-style-type:none" class="nav flex-column">
                     <li><a href="/account/home">Home</a></li>
                     <li><a href="/leave/sendleaverequest">Leave Request</a></li>
                     <li><a href="/Account/updateprofile">Profile</a></li>
                     <li><a href="/Account/updatepassword">Password</a></li>
-                    <li class="hide-element"><a href="/employee/listEmployee">Employee</a></li>
-                    <li class="hide-element" ><a href="/designation/adddesignation"> Designation</a></li>
-                    <li class="hide-element"><a href="/department/index">Department</a></li>
+                    <li @*class="hide-element"*@><a href="/employee/listEmployee">Employee</a></li>
+                    <li @*class="hide-element"*@ ><a href="/designation/adddesignation"> Designation</a></li>
+                    <li @*class="hide-element"*@><a href="/department/index">Department</a></li>
 
                 </ul><br>
 
@@ -82,30 +61,9 @@
             <div class="col-sm-9">
 
                 <hr>
-                <a href="/account/logout" class="btn btn-warning" style="float:right">Log out</a>
+                <a href="/account/logout" class="btn btn-danger" style="float:right">Log out</a>
 
-                <img src="data:image/png;base64,@emp.Image" alt="Image" />
-
-
-
-
-
-
-                <h2> @emp.FirstName @emp.MiddleName @emp.LastName</h2>
-
-                <h5><span><i class='far fa-calendar'></i></span>@emp.JoinDate.ToShortDateString()</h5>
-                <h5>@emp.DesignationName</h5>
-                <h5>@emp.Department.DepartmentName</h5>
-                @if (emp.IsSpecialPermission || emp.DesignationName == "Project Manager" || emp.IsVirtualTeamHead == true)
-                {
-
-                    <h5> <span class="label label-danger"> Admin</span></h5>
-
-                }
-                <h5>
-                    <span class="label label-success">Active</span>
-                </h5>
-                <p>
+             
 
                     @RenderBody()
 

@@ -18,18 +18,18 @@ namespace LeaveManagementSystem.Controllers
             this.employeeService = employeeService;
         }
 
-        [HttpGet]
-        public JsonResult IsMailExist(string password, string email)
-        {
+        //[HttpGet]
+        //public JsonResult IsMailExist(string password, string email)
+        //{
 
-            bool isExist = false;
-            AdminProfileViewModel employee = employeeService.GetEmployeeByEmailAndPassword(email, password);
-            if(employee != null)
-            {
-                isExist = true;
-            }
-            return Json(isExist, JsonRequestBehavior.AllowGet);
-        }
+        //    bool isExist = false;
+        //    EmployeeViewModel employee = employeeService.AuthenticateUser(email, password);
+        //    if(employee != null)
+        //    {
+        //        isExist = true;
+        //    }
+        //    return Json(isExist, JsonRequestBehavior.AllowGet);
+        //}
         //To check only EmpName   
         //[HttpGet]
         //public JsonResult IsEmpNameExist(string Empname)

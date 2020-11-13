@@ -12,7 +12,7 @@ namespace LeaveManagementSystem.Repository
         public RequestVacation GetRequestVacationByID(int RequestVacationID);
         public List<RequestVacation> GetAllRequestVacation();
 
-        public void SetNewRequestVacation(RequestVacation obj);
+        public void AddRequestVacation(RequestVacation requestVacation);
 
         public List<RequestVacation> GetLeaveRequestByApproveId(int EmployeeId);
 
@@ -22,7 +22,10 @@ namespace LeaveManagementSystem.Repository
 
         public void UpdateStatusAndResponse(string Status, string Response, int RequestId,int VerifierId);
 
-        public List<RequestVacation> GetAllRequestByRequesterId(int requesterId);
+        public List<RequestVacation> GetAllRequestByEmployeeId(int id);
 
+        public List<RequestVacation> GetAllLeaveRequestForVirtualHead(int departmentId);
+        List<RequestVacation> GetAllLeaveRequestForProjectManager(int employeeId);
+        List<RequestVacation> GetAllLeaveRequestForHR();
     }
 }

@@ -1,10 +1,16 @@
-﻿@model LeaveManagementSystem.ViewModel.AdminProfileViewModel
+﻿@model LeaveManagementSystem.ViewModel.EmployeeViewModel
 @{
     ViewBag.Title = "Home";
 }
 
+@{
+    Html.RenderPartial("_EmployeePartialView");
+}
 
-<br /><br /><br />
+
+<br />
+<br />
+<br />
 <table class="table table-bordered">
     <tbody>
         <tr>
@@ -24,7 +30,7 @@
         </tr>
         <tr>
             @*<th scope="row">Gender</th>
-            <td>@Model.GenderName</td>*@
+                <td>@Model.GenderName</td>*@
 
         </tr>
         <tr>
@@ -34,7 +40,7 @@
         </tr>
         <tr>
             @*<th scope="row">Qualification</th>
-            <td>@Model.QualificationName</td>*@
+                <td>@Model.QualificationName</td>*@
 
         </tr>
         <tr>
@@ -47,8 +53,19 @@
             <td>@Model.AddressLine1 @Model.AddressLine2 @Model.AddressLine3</td>
 
         </tr>
-   
 
 
-        </tbody>
+
+    </tbody>
 </table>
+<style>
+    #active {
+        background-color: grey !important;
+        color: white !important;
+    }
+</style>
+<script>
+
+    $("a[href='/account/home']").attr("id","active");
+   
+</script>

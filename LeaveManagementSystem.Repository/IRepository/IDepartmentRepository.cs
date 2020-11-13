@@ -10,7 +10,7 @@ namespace LeaveManagementSystem.Repository
     public interface IDepartmentRepository
     {
         public List<Department> GetAllDepartments();
-        public Department GetDepartmentByDepartmentID(int DepartmentID);
+        public Department GetDepartmentByID(int DepartmentID);
 
         public void AddDepartment(Department obj);
         public void DeleteDepartmentByDepartmentID(int DepartmentID);
