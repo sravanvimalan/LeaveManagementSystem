@@ -26,19 +26,21 @@
     <script src="~/Scripts/jquery.validate.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
     <link rel="stylesheet" href="~/Content/LayoutStyleSheet1.css" />
-    
+
 
 
 </head>
+
 <body>
+   
     @*@if( (Model.IsSpecialPermission || Model.DesignationName == "Project Manager" || Model.IsVirtualTeamHead == true)
-    {
-        <style>
-            .hide-element {
-                visibility: visible !important;
-            }
-        </style>
-    }*@
+        {
+            <style>
+                .hide-element {
+                    visibility: visible !important;
+                }
+            </style>
+        }*@
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-3 sidenav nav-tabs">
@@ -51,7 +53,7 @@
                     <li><a href="/Account/updateprofile">Profile</a></li>
                     <li><a href="/Account/updatepassword">Password</a></li>
                     <li @*class="hide-element"*@><a href="/employee/listEmployee">Employee</a></li>
-                    <li @*class="hide-element"*@ ><a href="/designation/adddesignation"> Designation</a></li>
+                    <li @*class="hide-element"*@><a href="/designation/ListDesignation"> Designation</a></li>
                     <li @*class="hide-element"*@><a href="/department/index">Department</a></li>
 
                 </ul><br>
@@ -63,11 +65,13 @@
                 <hr>
                 <a href="/account/logout" class="btn btn-danger" style="float:right">Log out</a>
 
-             
 
-                    @RenderBody()
+                @{
+                    Html.RenderPartial("_EmployeePartialView");
+                }
+                @RenderBody()
 
-                    @*---------------------renderbody---------------------------------*@
+                @*---------------------renderbody---------------------------------*@
 
 
 

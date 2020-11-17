@@ -37,6 +37,10 @@ namespace LeaveManagementSystem.ServiceLayer
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Employee, EmployeeViewModel>();
+                cfg.CreateMap<Qualification, QualificationViewModel>();
+                cfg.CreateMap<Experience, ExperienceViewModel>();
+                cfg.CreateMap<Gender, GenderViewModel>();
+                cfg.CreateMap<Designation, DesignationViewModel>();
                 cfg.CreateMap<Department, DepartmentViewModel>();
                
                 cfg.IgnoreUnmapped();
@@ -52,13 +56,17 @@ namespace LeaveManagementSystem.ServiceLayer
 
         public List<EmployeeViewModel> GetAllVirtualHead()
         {
-            List<Employee> list = employeeRespository.GetAllVirtualHead();
-
+            //List<Employee> list = employeeRespository.GetAllVirtualHead();
+            List<Employee> list = null;
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Employee, EmployeeViewModel>();
+                cfg.CreateMap<Qualification, QualificationViewModel>();
+                cfg.CreateMap<Experience, ExperienceViewModel>();
+                cfg.CreateMap<Gender, GenderViewModel>();
+                cfg.CreateMap<Designation, DesignationViewModel>();
                 cfg.CreateMap<Department, DepartmentViewModel>();
-               
+
                 cfg.IgnoreUnmapped();
             });
 
@@ -71,22 +79,26 @@ namespace LeaveManagementSystem.ServiceLayer
 
         }
 
-        public List<EmployeeViewModel> GetEmployeeByDepartmentID(int DepartmentId)
+        public IEnumerable<SelectListItem> GetAllEmployeeByDepartmentID(int DepartmentId)
         {
             List<Employee> employeelist = employeeRespository.GetEmployeeByDepartmentID(DepartmentId);
 
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Employee, EmployeeViewModel>();
+                cfg.CreateMap<Qualification, QualificationViewModel>();
+                cfg.CreateMap<Experience, ExperienceViewModel>();
+                cfg.CreateMap<Gender, GenderViewModel>();
+                cfg.CreateMap<Designation, DesignationViewModel>();
                 cfg.CreateMap<Department, DepartmentViewModel>();
-                
+
                 cfg.IgnoreUnmapped();
             });
             IMapper mapper = config.CreateMapper();
 
             List<EmployeeViewModel> emplist = mapper.Map<List<Employee>, List<EmployeeViewModel>>(employeelist);
 
-            return emplist;
+            return GetAllEmployeeOfDepartment(emplist);
         }
 
         public int AuthenticateUser(string Email, string Password)
@@ -147,30 +159,34 @@ namespace LeaveManagementSystem.ServiceLayer
             return employeeRespository.IsMobileExist(mobile);
         }
 
-        public void SetNewEmployee(EmployeeViewModel obj)
+        public void AddEmployee(AddEmployeeViewModel addEmployeeViewModel)
         {
-            //obj.Password = SHA256HashGenerator.GenerateHash(obj.Password);
+            addEmployeeViewModel.Password = SHA256HashGenerator.GenerateHash(addEmployeeViewModel.Password);
+            addEmployeeViewModel.GenderID = Convert.ToInt32(addEmployeeViewModel.SelectedGenderId);
+            addEmployeeViewModel.DepartmentID = Convert.ToInt32(addEmployeeViewModel.SelectedDepartmentId);
+            addEmployeeViewModel.DesignationID = Convert.ToInt32(addEmployeeViewModel.SelectedDesignationId);
+            addEmployeeViewModel.QualificationID = Convert.ToInt32(addEmployeeViewModel.SelectedQualificationId);
+
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<EmployeeViewModel, Employee>();
-
-                cfg.CreateMap<EmployeeViewModel, Experience>();
-               
-
+                cfg.CreateMap<AddEmployeeViewModel, Employee>();
+                cfg.CreateMap<ExperienceViewModel, Experience>();
+                cfg.CreateMap<GenderViewModel, Gender>();
+                cfg.CreateMap<DesignationViewModel, Designation>();
+                cfg.CreateMap<DepartmentViewModel, Department>();
+                cfg.CreateMap<QualificationViewModel, Qualification>();
                 cfg.IgnoreUnmapped();
             });
             IMapper mapper = config.CreateMapper();
 
-            Employee ed = mapper.Map<EmployeeViewModel, Employee>(obj);
-
-            Experience exp = mapper.Map<EmployeeViewModel, Experience>(obj);
-            employeeRespository.SetNewEmployee(ed,exp);
+            Employee employee = mapper.Map<AddEmployeeViewModel, Employee>(addEmployeeViewModel);
+            employeeRespository.AddEmployee(employee);
 
         }
 
-        public void UpdateIsVirtualHeadFlag(int EmployeeId, bool value)
+        public void UpdateIsVirtualHead(int EmployeeId, bool value)
         {
-            employeeRespository.UpdateIsVirtualHeadFlag(EmployeeId, value);
+            employeeRespository.UpdateIsVirtualHead(EmployeeId, value);
         }
 
         public void UpdatePassword(string Password, int EmployeeID)
@@ -178,16 +194,17 @@ namespace LeaveManagementSystem.ServiceLayer
             employeeRespository.UpdatePassword(Password, EmployeeID);
         }
 
-        public void UpdateProfileByAdmin(UpdateEmpProfileByAdminViewModel profile)
+        public void UpdateProfileByAdmin(EmployeeViewModel profile)
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<UpdateEmpProfileByAdminViewModel, Employee>();
+                cfg.CreateMap<EmployeeViewModel, Employee>();
+                cfg.CreateMap<ExperienceViewModel, Experience>();
                 cfg.IgnoreUnmapped();
             });
             IMapper mapper = config.CreateMapper();
 
-            Employee employee = mapper.Map<UpdateEmpProfileByAdminViewModel, Employee>(profile);
+            Employee employee = mapper.Map<EmployeeViewModel, Employee>(profile);
 
             employeeRespository.UpdateProfileByAdmin(employee);
         }

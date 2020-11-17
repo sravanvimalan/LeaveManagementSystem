@@ -1,4 +1,4 @@
-﻿@model List<LeaveManagementSystem.ViewModel.ListAllDepartmentAndVirtualHeadViewModel>
+﻿@model List<LeaveManagementSystem.ViewModel.DepartmentWithVirtualHeadViewModel>
 @{
     ViewBag.Title = "Department";
 }
@@ -35,10 +35,10 @@
                                  {
                                 <tr>
                                     <td>@item.DepartmentName</td>
-                                    <td>@item.VirtualHeadName</td>
+                                    <td>@item.EmployeeName</td>
 
                                     <td>
-                                        <a href="~/department/ChangeVirtualHead/@item.EmployeeID"
+                                        <a href="~/department/ChangeVirtualHead?deptId=@item.DepartmentID&empId=@item.EmployeeID&deptName=@item.DepartmentName&existVTName=@item.EmployeeName"
                                            class="btn btn-success">
                                             <i class="fas fa-user-edit ml-2"></i>
                                         </a>

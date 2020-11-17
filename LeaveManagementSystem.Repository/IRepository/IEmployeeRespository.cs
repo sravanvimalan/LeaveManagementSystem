@@ -30,16 +30,16 @@ namespace LeaveManagementSystem.Repository
 
         public List<Employee> GetAllEmployees();
 
-        public void SetNewEmployee(Employee obj,Experience exp);
+        public void AddEmployee(Employee employee);
         public void DeleteEmployeeByEmployeeID(int EmployeeID);
 
         public List<Employee> GetEmployeesByDesignationId(int DesignationId);
 
-        public List<Employee> GetAllVirtualHead();
+       
 
         public List<Employee> GetEmployeeByDepartmentID(int DepartmentId);
 
-        public void UpdateIsVirtualHeadFlag(int EmployeeId,bool value);
+        public void UpdateIsVirtualHead(int EmployeeId,bool value);
 
         public void UpdatePassword(string Password,int EmployeeID);
 

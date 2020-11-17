@@ -9,7 +9,7 @@
 
 
     <div class="container">
-        <h3>Register new designation</h3>
+
 
         <hr>
         @using (Html.BeginForm("adddesignation", "designation", FormMethod.Post))
@@ -21,7 +21,7 @@
             <div class="invalid-feedback">Not good</div>
             <small class="designation-exist text-danger"></small>
             <button type="submit" style="float:right;" class="btn btn-primary">Add</button>
-
+            <a href="~/designation/listdesignation" style="float:left;" class="btn btn-primary">Back</a>
         }
 
 

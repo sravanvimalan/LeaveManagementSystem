@@ -17,16 +17,16 @@ namespace LeaveManagementSystem.ServiceLayer
         public int AuthenticateUser(string Email, string Password);
         public List<EmployeeViewModel> GetAllEmployees();
 
-        public void SetNewEmployee(EmployeeViewModel obj);
+        public void AddEmployee(AddEmployeeViewModel obj);
         public void DeleteEmployeeByEmployeeID(int EmployeeID);
 
         public List<EmployeeViewModel> GetEmployeesByDesignationId(int DesignationId);
 
         public List<EmployeeViewModel> GetAllVirtualHead();
 
-        public List<EmployeeViewModel> GetEmployeeByDepartmentID(int DepartmentId);
+        public IEnumerable<SelectListItem> GetAllEmployeeByDepartmentID(int DepartmentId);
 
-        public void UpdateIsVirtualHeadFlag(int EmployeeId, bool value);
+        public void UpdateIsVirtualHead(int EmployeeId, bool value);
 
         public void UpdatePassword(string Password, int EmployeeID);
         public void UpdateProfileByEmployee(UpdateProfileByEmployeeViewModel updateProfile);
@@ -34,7 +34,7 @@ namespace LeaveManagementSystem.ServiceLayer
         public bool IsMobileExist(string mobile);
 
         public bool IsEmailExist(string email);
-        public void UpdateProfileByAdmin(UpdateEmpProfileByAdminViewModel profile);
+        public void UpdateProfileByAdmin(EmployeeViewModel profile);
         public IEnumerable<SelectListItem> ApproverList(List<EmployeeViewModel> list);
         public IEnumerable<SelectListItem> GetAllEmployeeOfDepartment(List<EmployeeViewModel> employee);
     }  

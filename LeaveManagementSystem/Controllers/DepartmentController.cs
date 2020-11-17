@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using LeaveManagementSystem.ServiceLayer;
 using LeaveManagementSystem.DomainModel;
 using LeaveManagementSystem.ViewModel;
+using LeaveManagementSystem.ViewModel.ViewModel;
 using LeaveManagementSystem.CustomAuthorizationFilter;
 
 namespace LeaveManagementSystem.Controllers
@@ -23,75 +24,57 @@ namespace LeaveManagementSystem.Controllers
         }
 
 
-        [CustomAuthorizeAttribute("HR")]
+        //[CustomAuthorizeAttribute("HR")]
         public ActionResult Index()
         {
 
-            List<ListAllDepartmentAndVirtualHeadViewModel> listAllVirutalHead = new List<ListAllDepartmentAndVirtualHeadViewModel>();
+          
 
-            List<EmployeeViewModel> virtualHeadList = employeeService.GetAllVirtualHead();
+            List<DepartmentWithVirtualHeadViewModel> virtualHeadList = departmentService.GetAllDepartmentWithVirtualHead();
 
-            foreach (var item in virtualHeadList)
-            {
-                listAllVirutalHead.Add(new ListAllDepartmentAndVirtualHeadViewModel
-                {
-                    EmployeeID = item.EmployeeID,
-                    DepartmentID = item.DepartmentID,
-                    VirtualHeadName = item.FirstName + " " + item.MiddleName + " " + item.LastName,
-                    DepartmentName = item.DepartmentName
-                });
-            }
+            return View(virtualHeadList);
+
+        }
+      
 
 
-            return View(listAllVirutalHead);
-
-    }
-
-    [CustomAuthorizeAttribute("HR")]
-    public ActionResult ChangeVirtualHead(int Id)
+    //[CustomAuthorizeAttribute("HR")]
+    public ActionResult ChangeVirtualHead(int deptId,int empId,string deptName,string existVTName)
     {
-        EmployeeViewModel existingVH = employeeService.GetEmployeeByID(Id);
-        List<EmployeeViewModel> employeeList = employeeService.GetEmployeeByDepartmentID(existingVH.DepartmentID);
+           IEnumerable<SelectListItem> employeeList = employeeService.GetAllEmployeeByDepartmentID(deptId);
 
-        EmployeeViewModel newVitualHead = new EmployeeViewModel();
-
-        existingVH.EmployeeList = employeeService.GetAllEmployeeOfDepartment(employeeList);
-
-        return View(existingVH);
-
-
+           ChangeVHViewModel changeVHViewModel = new ChangeVHViewModel();
+           changeVHViewModel.ExistVirtualHeadID = empId;
+           changeVHViewModel.ListOfAllEmployee = employeeList;
+            changeVHViewModel.DepartmentName = deptName;
+            changeVHViewModel.ExistVirtualHeadName = existVTName;
+           return View(changeVHViewModel); 
 
     }
     [HttpPost]
-    [CustomAuthorizeAttribute("HR")]
-    public ActionResult ChangeVirtualHead(NewVHViewModel newVirtualHead)
+    //[CustomAuthorizeAttribute("HR")]
+    public ActionResult ChangeVirtualHead(ChangeVHViewModel VirtualHead)
     {
-        if (ModelState.IsValid)
-        {
-            newVirtualHead.NewVirtualTeamHeadIntId = Convert.ToInt32(newVirtualHead.NewVirtualTeamHeadID);
-
-            employeeService.UpdateIsVirtualHeadFlag(newVirtualHead.EmployeeID, false);
-
-            employeeService.UpdateIsVirtualHeadFlag(newVirtualHead.NewVirtualTeamHeadIntId, true);
+            if(VirtualHead.NewVirtualTeamHeadID != null)
+            {
+                employeeService.UpdateIsVirtualHead(VirtualHead.ExistVirtualHeadID, false);
+                employeeService.UpdateIsVirtualHead(Convert.ToInt32(VirtualHead.NewVirtualTeamHeadID), true);
+            }
+           
 
             return RedirectToAction("index");
 
-        }
-        else
-        {
-            ModelState.AddModelError("Error", "Error Occured");
-            return RedirectToAction("index");
-        }
+       
 
     }
-    [CustomAuthorizeAttribute("HR")]
+    //[CustomAuthorizeAttribute("HR")]
     public ActionResult AddDepartment()
     {
         DepartmentViewModel department = new DepartmentViewModel();
         return View(department);
     }
     [HttpPost]
-    [CustomAuthorizeAttribute("HR")]
+    //[CustomAuthorizeAttribute("HR")]
     public ActionResult AddDepartment(DepartmentViewModel department)
     {
         if (ModelState.IsValid)

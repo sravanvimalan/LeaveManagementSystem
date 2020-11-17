@@ -42,10 +42,14 @@ namespace LeaveManagementSystem.ViewModel
         public DateTime EndDate { get; set; }
         public string GenderName { get; set; }
         public int GenderID { get; set; }
+        public string SelectedGenderID { get; set; }
         public string QualificationName { get; set; }
+        public string SelectedQualificationID { get; set; }
         public int DepartmentID { get; set; }
         public string DepartmentName { get; set; }
+        public string SelectedDepartmentID { get; set; }
         public int DesignationID { get; set; }
+        public string SelectedDesignationID { get; set; }
         public string DesignationName { get; set; }
         public bool CurrentStatus { get; set; }
         public IEnumerable<SelectListItem> GenderList { get; set; }
@@ -60,10 +64,10 @@ namespace LeaveManagementSystem.ViewModel
         public virtual QualificationViewModel Qualification { get; set; }
         
         public virtual ExperienceViewModel Experience { get; set; }
-
-
         
-      
+
+
+
 
     }
 }

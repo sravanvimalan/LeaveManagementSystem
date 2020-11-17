@@ -6,9 +6,9 @@
 
 
 
-@{
+@*@{
     ViewBag.Title = "VerifyRequest";
-}
+}*@
 <br />
 <h4>VerifyRequest</h4>
 <br />
@@ -19,11 +19,11 @@
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Designation</th>
-               
+                <th scope="col">No Of Days</th>
                 <th scope="col">From Date</th>
                 <th scope="col">To Date</th>
                 <th scope="col">VacationType</th>
-               
+
                 <th scope="col">Accept/Reject</th>
                 <th scope="col"></th>
             </tr>
@@ -33,17 +33,25 @@
             @foreach (var item in Model)
             {
                
-                <tr>
-                    <td>@item.Creator.FirstName @item.Creator.MiddleName @item.Creator.LastName</td>
-                    <td>@item.Creator.Designation.DesignationName</td>
-                  
-                    <th style="font-weight: normal;">@item.FromDate.ToShortDateString()</th>
-                    <td>@item.ToDate.ToShortDateString()</td>
-                    <td>@item.VacationType.VacationName</td>
-                  
+            <tr>
+                <td>@item.Creater.FirstName @item.Creater.MiddleName @item.Creater.LastName</td>
+                <td>@item.Creater.Designation.DesignationName</td>
+                <td align="center">@item.NoOfDays</td>
+
+                <th style="font-weight: normal;">@item.FromDate.ToShortDateString()</th>
+                <td>@item.ToDate.ToShortDateString()</td>
+                <td>@item.VacationType.VacationName</td>
+                @if(item.LeaveStatus == "Pending")
+                {
                     <td><a href="~/Leave/LeaveDetail/@item.RequestID" class="btn btn-info">Request Details</a></td>
-                    
-                </tr>
+                }
+                else
+                {
+                    <td>@item.LeaveStatus</td>
+                }
+
+
+            </tr>
             }
 
 

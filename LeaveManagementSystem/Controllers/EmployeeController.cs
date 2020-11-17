@@ -7,6 +7,7 @@ using LeaveManagementSystem.CustomAuthorizationFilter;
 using LeaveManagementSystem.ServiceLayer;
 using LeaveManagementSystem.ServiceLayer.IService;
 using LeaveManagementSystem.ViewModel;
+using LeaveManagementSystem.ViewModel.ViewModel;
 
 namespace LeaveManagementSystem.Controllers
 {
@@ -30,7 +31,7 @@ namespace LeaveManagementSystem.Controllers
             this.departmentService = departmentService;
         }
 
-        [CustomAuthorizeAttribute("HR")]
+        //[CustomAuthorizeAttribute("HR")]
         public ActionResult ListEmployee(string Search = "")
         {
             List<EmployeeViewModel> list = employeeService.GetAllEmployees();
@@ -38,32 +39,23 @@ namespace LeaveManagementSystem.Controllers
             return View(list);
         }
 
-        [CustomAuthorizeAttribute("HR")]
+        //[CustomAuthorizeAttribute("HR")]
         public ActionResult AddNewEmployee()
         {
-            EmployeeViewModel adminProfileViewModel = new EmployeeViewModel();
+            AddEmployeeViewModel addEmployeeViewModel = new AddEmployeeViewModel();
 
-            var gender = genderService.GetAllGender();
-            adminProfileViewModel.GenderList =genderService.GetSelectListItemsGender(gender);
-
-            var qualification = qualificationService.GetAllQualification();
-
-            adminProfileViewModel.QualificationList =qualificationService. GetSelectListItemQualification(qualification);
-
-            var designation = designationService.GetAllDesignation();
-
-            adminProfileViewModel.DesignationList =designationService.GetSelectListItemDesignation(designation);
-
-            var department = departmentService.GetAllDepartment();
-
-            adminProfileViewModel.DepartmentList =departmentService. GetSelectListItemsDepartment(department);
+           
+            addEmployeeViewModel.GenderList =genderService.GenderList();
+            addEmployeeViewModel.QualificationList =qualificationService. GetSelectListItemQualification();
+            addEmployeeViewModel.DesignationList =designationService.GetSelectListItemDesignation();
+            addEmployeeViewModel.DepartmentList =departmentService. GetSelectListItemsDepartment();
             
-            return View(adminProfileViewModel);
+            return View(addEmployeeViewModel);
 
         }
         [HttpPost]
-        [CustomAuthorizeAttribute("HR")]
-        public ActionResult AddNewEmployee(EmployeeViewModel obj)
+        //[CustomAuthorizeAttribute("HR")]
+        public ActionResult AddNewEmployee(AddEmployeeViewModel addEmployeeViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -73,89 +65,91 @@ namespace LeaveManagementSystem.Controllers
                     var ImgByte = new Byte[File.ContentLength + 10];
                     File.InputStream.Read(ImgByte, 0, File.ContentLength);
                     var Base64String = Convert.ToBase64String(ImgByte, 0, ImgByte.Length);
-                    obj.Image = Base64String;
+                    addEmployeeViewModel.Image = Base64String;
                 }
-                //obj.GenderID = Convert.ToInt32(obj.GenderStringId);
-                //obj.DepartmentID = Convert.ToInt32(obj.DepartmentStringId);
-                //obj.DesignationID = Convert.ToInt32(obj.DesignationStringId);
-                //obj.QualificationID = Convert.ToInt32(obj.QualificationStringId);
-                //obj.ExperienceID = experienceService.GetLatestExperienceID() + 1;
-                employeeService.SetNewEmployee(obj);
-                return RedirectToAction("employee");
+                
+                employeeService.AddEmployee(addEmployeeViewModel);
+                return RedirectToAction("ListEmployee");
             }
             else
             {
                 ModelState.AddModelError("newemployee", "Invalid employee details, please check and try again");
-                return RedirectToAction("addnewemployee");
+                addEmployeeViewModel.GenderList = genderService.GenderList();
+                addEmployeeViewModel.QualificationList = qualificationService.GetSelectListItemQualification();
+                addEmployeeViewModel.DesignationList = designationService.GetSelectListItemDesignation();
+                addEmployeeViewModel.DepartmentList = departmentService.GetSelectListItemsDepartment();
+                return View(addEmployeeViewModel);
             }
 
         }
 
-        [CustomAuthorizeAttribute("HR")]
+        //[CustomAuthorizeAttribute("HR")]
         [Authorize]
         public ActionResult DeleteEmployee(int id)
         {
             employeeService.DeleteEmployeeByEmployeeID(id);
             return RedirectToAction("employee");
         }
-        [CustomAuthorizeAttribute("HR")]
-        [Authorize]
+        //[CustomAuthorizeAttribute("HR")]
+        //[Authorize]
         public ActionResult AdminEditEmployee(int id)
         {
-            EmployeeViewModel adminProfileView = employeeService.GetEmployeeByID(id);
-            var gender = genderService.GetAllGender();
-            adminProfileView.GenderList =genderService.GetSelectListItemsGender(gender);
-
-            var qualification = qualificationService.GetAllQualification();
-
-            adminProfileView.QualificationList = qualificationService.GetSelectListItemQualification(qualification);
-
-            var designation = designationService.GetAllDesignation();
-
-            adminProfileView.DesignationList =designationService.GetSelectListItemDesignation(designation);
-
-            var department = departmentService.GetAllDepartment();
-
-            adminProfileView.DepartmentList =departmentService.GetSelectListItemsDepartment(department);
-            return View(adminProfileView);
+            EmployeeViewModel EmployeeViewModel = employeeService.GetEmployeeByID(id);
+            EmployeeViewModel.GenderList = genderService.GenderList();
+            EmployeeViewModel.QualificationList = qualificationService.GetSelectListItemQualification();
+            EmployeeViewModel.DesignationList = designationService.GetSelectListItemDesignation();
+            EmployeeViewModel.DepartmentList = departmentService.GetSelectListItemsDepartment();
+            return View(EmployeeViewModel);
         }
         [HttpPost]
-        [Authorize]
-        public ActionResult AdminEditEmployee(UpdateEmpProfileByAdminViewModel profile)
+        //[Authorize]
+        public ActionResult AdminEditEmployee(EmployeeViewModel employeeViewModel)
         {
+
             if (ModelState.IsValid)
             {
-                profile.DepartmentID = Convert.ToInt32(profile.DepartmentStringId);
-                profile.DesignationID = Convert.ToInt32(profile.DesignationStringId);
+                if (Request.Files.Count >= 1)
+                {
+                    var File = Request.Files[0];
+                    var ImgByte = new Byte[File.ContentLength + 10];
+                    File.InputStream.Read(ImgByte, 0, File.ContentLength);
+                    var Base64String = Convert.ToBase64String(ImgByte, 0, ImgByte.Length);
+                    employeeViewModel.Image = Base64String;
+                }
 
-                employeeService.UpdateProfileByAdmin(profile);
-
-                return RedirectToAction("employee");
+                employeeService.UpdateProfileByAdmin(employeeViewModel);
+                return RedirectToAction("ListEmployee");
             }
             else
             {
-                ModelState.AddModelError("profile", "Updation fail");
-                return RedirectToAction("employee");
+                ModelState.AddModelError("newemployee", "Invalid employee details, please check and try again");
+                //employeeViewModel = employeeService.GetEmployeeByID(employeeViewModel.EmployeeID);
+                employeeViewModel.GenderList = genderService.GenderList();
+                employeeViewModel.QualificationList = qualificationService.GetSelectListItemQualification();
+                employeeViewModel.DesignationList = designationService.GetSelectListItemDesignation();
+                employeeViewModel.DepartmentList = departmentService.GetSelectListItemsDepartment();
+                return View(employeeViewModel);
             }
 
         }
        
-
-        public string GetMobile(string mobile)
+        [HttpGet]
+        public JsonResult GetMobile(string mobile)
         {
 
             bool value =  employeeService.IsMobileExist(mobile);
 
             if(value)
             {
-                return "found";
+                return Json(new { msg = " found" }, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                return "not found";
+                return Json(new { msg = " not found" }, JsonRequestBehavior.AllowGet);
             }
 
         }
+        [HttpGet]
         public string GetEmail(string email)
         {
             bool value = employeeService.IsEmailExist(email);

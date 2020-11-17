@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace LeaveManagementSystem.ServiceLayer
 {
+
     public class DesignationService : IDesignationService
     {
         IDesignationRepository designationRepository;
@@ -22,48 +23,6 @@ namespace LeaveManagementSystem.ServiceLayer
            
         }
 
-        public List<Designation> GetAllDesignation()
-        {
-            List<Designation> designation = designationRepository.GetAllDesignations();
-            //List<DesignationViewModel> dvm = null;
-
-            //var config = new MapperConfiguration(cfg =>
-            //{
-            //    cfg.CreateMap<Designation, DesignationViewModel>();
-            //    cfg.IgnoreUnmapped();
-            //});
-            //IMapper mapper = config.CreateMapper();
-
-            //dvm = mapper.Map<List<Designation>,List<DesignationViewModel>>(d);
-
-            return designation;
-        }
-
-        public DesignationViewModel GetDesignationByDesignationID(int DesignationID)
-        {
-            Designation designation = designationRepository.GetDesignationByDesignationID(DesignationID);
-
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Designation, DesignationViewModel>();
-                cfg.IgnoreUnmapped();
-            });
-            IMapper mapper = config.CreateMapper();
-
-            DesignationViewModel designationViewModel = mapper.Map<Designation, DesignationViewModel>(designation);
-
-            return designationViewModel;
-        }
-
-        public int GetDesignationIdByName(string DesignationName)
-        {
-            return designationRepository.GetDesignationIdByName(DesignationName);
-        }
-
-        //public int GetLatestDesignationId()
-        //{
-        //    return designationRepository.GetLatestDesignationId();
-        //}
 
         public void AddDesignation(DesignationViewModel obj)
         {
@@ -76,13 +35,7 @@ namespace LeaveManagementSystem.ServiceLayer
 
             Designation designation = mapper.Map<DesignationViewModel, Designation>(obj);
 
-            designationRepository.AddDesignation(designation);
-           
-
-           
-            
-
-          
+            designationRepository.AddDesignation(designation); 
         }
 
         public bool IsDesignationExist(string designation)
@@ -91,8 +44,9 @@ namespace LeaveManagementSystem.ServiceLayer
         }
 
 
-       public IEnumerable<SelectListItem> GetSelectListItemDesignation(IEnumerable<Designation> designation)
+       public IEnumerable<SelectListItem> GetSelectListItemDesignation()
         {
+            var designation = designationRepository.GetAllDesignations();
             var selectList = new List<SelectListItem>();
 
             foreach (var item in designation)
@@ -105,6 +59,21 @@ namespace LeaveManagementSystem.ServiceLayer
             }
 
             return selectList;
+        }
+
+        public List<DesignationViewModel> GetAllDesignations()
+        {
+            var designations = designationRepository.GetAllDesignations();
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Designation, DesignationViewModel>();
+                cfg.IgnoreUnmapped();
+            });
+            IMapper mapper = config.CreateMapper();
+
+            List<DesignationViewModel> designationViewModel = mapper.Map<List<Designation>,List< DesignationViewModel>>(designations);
+
+            return designationViewModel;
         }
     }
 }

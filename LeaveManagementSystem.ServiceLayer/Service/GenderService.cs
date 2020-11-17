@@ -20,34 +20,10 @@ namespace LeaveManagementSystem.ServiceLayer
         {
             this.genderrepo = genderrepo;
         }
-
-        public List<Gender> GetAllGender()
+       
+     public IEnumerable<SelectListItem> GenderList()
         {
-           
-            //List <GenderViewModel> gvm = null;
-            //var config = new MapperConfiguration(cfg =>
-            //{
-            //    cfg.CreateMap<Gender, GenderViewModel>();
-            //});
-
-            //IMapper mapper = config.CreateMapper();
-
-            //gvm = mapper.Map<List<Gender>, List<GenderViewModel>>(g);
-
-            return genderrepo.GetGenders();
-
-
-
-        }
-
-        public IEnumerable<SelectListItem> GenderList()
-        {
-            return GetSelectListItemsGender(genderrepo.GetGenders());
-        }
-        
-     public IEnumerable<SelectListItem> GetSelectListItemsGender(IEnumerable<Gender> genders)
-        {
-
+            var genders = genderrepo.GetGenders();
             var selectList = new List<SelectListItem>();
 
 
@@ -63,9 +39,6 @@ namespace LeaveManagementSystem.ServiceLayer
             return selectList;
         }
 
-        public string GetGenderById(int GenderId)
-        {
-            return genderrepo.GetGenderByID(GenderId);
-        }
+       
     }
 }

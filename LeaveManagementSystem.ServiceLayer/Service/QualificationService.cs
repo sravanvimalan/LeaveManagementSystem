@@ -21,17 +21,9 @@ namespace LeaveManagementSystem.ServiceLayer
             this.qualificationRepository = qualificationRepository;
         }
 
-        public List<Qualification> GetAllQualification()
+       public IEnumerable<SelectListItem> GetSelectListItemQualification()
         {
-            return qualificationRepository.GetAllQualification(); 
-        }
-
-        public string GetQualificationById(int QualificationId)
-        {
-            return qualificationRepository.GetQualificationById(QualificationId);
-        }
-       public IEnumerable<SelectListItem> GetSelectListItemQualification(IEnumerable<Qualification> qualification)
-        {
+            var qualification = qualificationRepository.GetAllQualification();
             var selectList = new List<SelectListItem>();
 
             foreach (var item in qualification)

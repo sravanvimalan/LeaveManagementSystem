@@ -1,4 +1,4 @@
-﻿@model LeaveManagementSystem.ViewModel.AdminProfileViewModel
+﻿@model LeaveManagementSystem.ViewModel.ChangeVHViewModel
 @{
     ViewBag.Title = "ChangeVirtualHead";
 }
@@ -15,14 +15,13 @@
 
             <hr>
 
-            <label for="Department"><b>Department Name</b></label>
-            <input value="@Model.Department.DepartmentName" id="Department" required readonly>
+            @Html.LabelFor(Model => Model.DepartmentName, "Department Name")
+            @Html.TextBoxFor(Model => Model.DepartmentName, new { @value = Model.DepartmentName, @readonly = true })
             <br /> <br />
-            @Html.HiddenFor(temp=>temp.EmployeeID)
+            @Html.HiddenFor(temp=>temp.ExistVirtualHeadID)
 
             @Html.LabelFor(temp => temp.NewVirtualTeamHeadID, "Vitual Head Name")
-            @Html.DropDownListFor(temp => temp.NewVirtualTeamHeadID, Model.EmployeeList, (Model.FirstName + " " + Model.MiddleName + " " + Model.LastName + " (Current)"))
-
+            @Html.DropDownListFor(temp => temp.NewVirtualTeamHeadID, Model.ListOfAllEmployee, Model.ExistVirtualHeadName+" (Current)",new { @class="form-control"} )
             
 
             <br /><br />

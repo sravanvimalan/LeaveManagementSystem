@@ -108,7 +108,7 @@
                         AmOnly = c.Boolean(),
                         PmOnly = c.Boolean(),
                         VacationTypeID = c.Int(nullable: false),
-                        CreatedBy = c.Int(),
+                        CreatorID = c.Int(),
                         CreatedOn = c.DateTime(nullable: false),
                         Comments = c.String(maxLength: 150),
                         ApproverID = c.Int(nullable: false),
@@ -117,8 +117,12 @@
                         NoOfDays = c.Int(name: "No Of Days", nullable: false),
                     })
                 .PrimaryKey(t => t.RequestID)
+                .ForeignKey("dbo.Employee", t => t.ApproverID, cascadeDelete: true)
+                .ForeignKey("dbo.Employee", t => t.CreatorID)
                 .ForeignKey("dbo.VacationType", t => t.VacationTypeID, cascadeDelete: true)
-                .Index(t => t.VacationTypeID);
+                .Index(t => t.VacationTypeID)
+                .Index(t => t.CreatorID)
+                .Index(t => t.ApproverID);
             
             CreateTable(
                 "dbo.VacationType",
@@ -134,11 +138,15 @@
         public override void Down()
         {
             DropForeignKey("dbo.RequestVacation", "VacationTypeID", "dbo.VacationType");
+            DropForeignKey("dbo.RequestVacation", "CreatorID", "dbo.Employee");
+            DropForeignKey("dbo.RequestVacation", "ApproverID", "dbo.Employee");
             DropForeignKey("dbo.Employee", " QualificationID", "dbo.Qualification");
             DropForeignKey("dbo.Employee", " GenderID", "dbo.Gender");
             DropForeignKey("dbo.Employee", "ExperienceID", "dbo.Experience");
             DropForeignKey("dbo.Employee", "DesignationID", "dbo.Designation");
             DropForeignKey("dbo.Employee", "DepartmentID", "dbo.Department");
+            DropIndex("dbo.RequestVacation", new[] { "ApproverID" });
+            DropIndex("dbo.RequestVacation", new[] { "CreatorID" });
             DropIndex("dbo.RequestVacation", new[] { "VacationTypeID" });
             DropIndex("dbo.Employee", new[] { "DepartmentID" });
             DropIndex("dbo.Employee", new[] { "DesignationID" });

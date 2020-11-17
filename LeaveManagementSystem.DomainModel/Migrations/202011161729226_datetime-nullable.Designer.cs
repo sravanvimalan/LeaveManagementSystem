@@ -7,13 +7,13 @@ namespace LeaveManagementSystem.DomainModel.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class creatorID : IMigrationMetadata
+    public sealed partial class datetimenullable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(creatorID));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(datetimenullable));
         
         string IMigrationMetadata.Id
         {
-            get { return "202011131728157_creatorID"; }
+            get { return "202011161729226_datetime-nullable"; }
         }
         
         string IMigrationMetadata.Source

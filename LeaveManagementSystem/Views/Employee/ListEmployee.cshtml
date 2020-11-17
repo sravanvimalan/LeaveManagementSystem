@@ -1,4 +1,4 @@
-﻿@model List<LeaveManagementSystem.ViewModel.AdminProfileViewModel>
+﻿@model List<LeaveManagementSystem.ViewModel.EmployeeViewModel>
 @{
     ViewBag.Title = "Employee";
 }
@@ -18,8 +18,6 @@
                </div>
                <br /><br />
                <div class="container my-2">
-                   @*<div class="card">
-                       <div class="card-body">*@
                            <div class="container my-5">
                                <p class="my-5">
                                    <a href="/employee/addnewemployee" class="btn btn-primary">
@@ -27,14 +25,11 @@
                                    </a>
                                </p>
                                <div class="col-md-10">
-                                   @*<h2>No record found !!</h2>*@
                                    <div>
                                        <table class="table table-striped table-responsive-md">
                                            <thead>
                                                <tr>
-                                                   <th>First Name</th>
-                                                   <th>Middle Name</th>
-                                                   <th>Last Name</th>
+                                                   <th>Name</th>
                                                    <th>Email</th>
                                                    <th>Edit</th>
                                                    <th>Delete</th>
@@ -44,9 +39,7 @@
                                                @foreach (var item in Model)
                                                {
                                                    <tr>
-                                                       <td>@item.FirstName</td>
-                                                       <td>@item.MiddleName</td>
-                                                       <td>@item.LastName</td>
+                                                       <td>@item.FirstName @item.MiddleName @item.LastName </td>
                                                        <td>@item.EmailID</td>
                                                        <td>
                                                            <a href="~/employee/admineditemployee/@item.EmployeeID"
@@ -69,7 +62,5 @@
 
                                </div>
                            </div>
-                       @*</div>
-                   </div>*@
                </div>
            </div>

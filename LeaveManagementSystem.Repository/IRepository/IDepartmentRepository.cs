@@ -1,4 +1,5 @@
 ﻿using LeaveManagementSystem.DomainModel;
+using LeaveManagementSystem.DomainModel.DTOClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace LeaveManagementSystem.Repository
     {
         public List<Department> GetAllDepartments();
         public Department GetDepartmentByID(int DepartmentID);
+
+        public List<DepartmentWithVirtualHeadDTO> GetAllDepartmentWithVirtualHead();
 
         public void AddDepartment(Department obj);
         public void DeleteDepartmentByDepartmentID(int DepartmentID);

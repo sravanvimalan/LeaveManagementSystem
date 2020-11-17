@@ -11,8 +11,6 @@ namespace LeaveManagementSystem.ServiceLayer
 {
     public interface IQualificationService
     {
-        public List<Qualification> GetAllQualification();
-        public string GetQualificationById(int QualificationId);
-        public IEnumerable<SelectListItem> GetSelectListItemQualification(IEnumerable<Qualification> qualification);
+        public IEnumerable<SelectListItem> GetSelectListItemQualification();
     }
 }

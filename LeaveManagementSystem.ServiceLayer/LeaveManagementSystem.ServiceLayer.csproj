@@ -96,6 +96,7 @@
     <Compile Include="Utility\MapperExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\QualificationService.cs" />
+    <Compile Include="Utility\SendEmail.cs" />
     <Compile Include="Utility\SHA256HashGenerator.cs" />
   </ItemGroup>
   <ItemGroup>

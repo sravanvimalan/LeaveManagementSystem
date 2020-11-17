@@ -7,13 +7,13 @@ namespace LeaveManagementSystem.DomainModel.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class test : IMigrationMetadata
+    public sealed partial class removerequired : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(test));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(removerequired));
         
         string IMigrationMetadata.Id
         {
-            get { return "202011131720574_test"; }
+            get { return "202011151636137_removerequired"; }
         }
         
         string IMigrationMetadata.Source

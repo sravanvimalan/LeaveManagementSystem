@@ -9,6 +9,7 @@ using LeaveManagementSystem.ViewModel;
 using AutoMapper;
 using System.Net;
 using System.Web.Mvc;
+using LeaveManagementSystem.DomainModel.DTOClasses;
 
 namespace LeaveManagementSystem.ServiceLayer
 {
@@ -21,54 +22,7 @@ namespace LeaveManagementSystem.ServiceLayer
             this.departmentRepository = departmentRepository;
         }
 
-        public List<DepartmentViewModel> GetAllDepartment()
-        {
-            List<Department> department = departmentRepository.GetAllDepartments();
-            List<DepartmentViewModel> dvm = null;
-
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Department, DepartmentViewModel>();
-                cfg.IgnoreUnmapped();
-            });
-            IMapper mapper = config.CreateMapper();
-
-            dvm = mapper.Map<List<Department>, List<DepartmentViewModel>>(department);
-
-            return dvm;
-
-        }
-
-        public DepartmentViewModel GetDepartmentByID(int DepartmentID)
-        {
-            Department department = departmentRepository.GetDepartmentByID(DepartmentID);
-
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Department, DepartmentViewModel>();
-                cfg.IgnoreUnmapped();
-            });
-            IMapper mapper = config.CreateMapper();
-
-            DepartmentViewModel departmentViewModel = mapper.Map<Department, DepartmentViewModel>(department);
-
-            return departmentViewModel;
-
-        }
-
-        public int GetDepartmentIdByName(string DepartmentName)
-        {
-            //return departmentRepository.GetDepartmentIdByName(DepartmentName);
-            throw new NotImplementedException();
-        }
-
-       
-
-        public int GetLatestDepartmentID()
-        {
-            return departmentRepository.GetLatestDepartmentID();
-        }
-
+     
         public void AddDepartment(DepartmentViewModel obj)
         {
             Department departmentobj = new Department();
@@ -90,8 +44,9 @@ namespace LeaveManagementSystem.ServiceLayer
         {
             return departmentRepository.IsDepartmentExist(department);
         }
-        public IEnumerable<SelectListItem> GetSelectListItemsDepartment(IEnumerable<DepartmentViewModel> department)
+        public IEnumerable<SelectListItem> GetSelectListItemsDepartment()
         {
+            var department = departmentRepository.GetAllDepartments();
             var selectList = new List<SelectListItem>();
 
             foreach (var item in department)
@@ -103,6 +58,22 @@ namespace LeaveManagementSystem.ServiceLayer
                 });
             }
             return selectList;
+        }
+
+        public List<DepartmentWithVirtualHeadViewModel> GetAllDepartmentWithVirtualHead()
+        {
+            var list = departmentRepository.GetAllDepartmentWithVirtualHead();
+            List<DepartmentWithVirtualHeadViewModel> departmentWithVirtualHeadViewModels = null;
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<DepartmentWithVirtualHeadDTO, DepartmentWithVirtualHeadViewModel>();
+                cfg.IgnoreUnmapped();
+            });
+            IMapper mapper = config.CreateMapper();
+
+            departmentWithVirtualHeadViewModels = mapper.Map<List<DepartmentWithVirtualHeadDTO>, List<DepartmentWithVirtualHeadViewModel>>(list);
+
+            return departmentWithVirtualHeadViewModels;
         }
     }
 }

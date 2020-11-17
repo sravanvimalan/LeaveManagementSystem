@@ -15,8 +15,8 @@ namespace LeaveManagementSystem.ViewModel.ViewModel
        
         public string JobRole { get; set; }
        
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
        
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

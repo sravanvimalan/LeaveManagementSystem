@@ -8,6 +8,7 @@ using LeaveManagementSystem.ServiceLayer;
 using LeaveManagementSystem.ServiceLayer.Service.Session;
 using System.Web.Security;
 
+
 namespace LeaveManagementSystem.Controllers
 {
     public class AuthenticateController : Controller
@@ -27,6 +28,7 @@ namespace LeaveManagementSystem.Controllers
         public ActionResult SignIn()
         {
             SignInViewModel signInViewModel = new SignInViewModel();
+            
             return View(signInViewModel);
         }
         [HttpPost]

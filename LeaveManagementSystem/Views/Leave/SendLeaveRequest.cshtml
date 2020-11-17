@@ -5,9 +5,9 @@
 @{
     var emp = (LeaveManagementSystem.ServiceLayer.Service.Session.UserSessionModel)Session["EmployeeDetails"];
 }
-@{
+@*@{
     Html.RenderPartial("_EmployeePartialView");
-}
+}*@
 @if (ViewBag.Response != null)
 {
     <script>
@@ -45,14 +45,14 @@
 
 
         @Html.LabelFor(temp => temp.FromDate)
-        @Html.TextBoxFor(model => model.ToDate,
-               new { @type = "date", @Value = Model.ToDate.ToString("yyyy-MM-dd"), @class = "form-control", required = "required" })
-        <div> @Html.ValidationMessageFor(temp => temp.ToDate, "", new { @class = "text-danger" })</div>
+        @Html.TextBoxFor(model => model.FromDate,
+               new { @type = "date", @Value = Model.FromDate.ToString("yyyy-MM-dd"), @class = "form-control", required = "required" })
+        <div> @Html.ValidationMessageFor(temp => temp.FromDate, "", new { @class = "text-danger" })</div>
 
         @Html.LabelFor(temp => temp.ToDate)
-        @Html.TextBoxFor(model => model.FromDate,
-              new { @type = "date", @Value = Model.FromDate.ToString("yyyy-MM-dd"), @class = "form-control", required = "required" })
-        <div> @Html.ValidationMessageFor(temp => temp.FromDate, "", new { @class = "text-danger" })</div>
+        @Html.TextBoxFor(model => model.ToDate,
+              new { @type = "date", @Value = Model.ToDate.ToString("yyyy-MM-dd"), @class = "form-control", required = "required" })
+        <div> @Html.ValidationMessageFor(temp => temp.ToDate, "", new { @class = "text-danger" })</div>
 
         <br /><br />
         <div class="form-row">

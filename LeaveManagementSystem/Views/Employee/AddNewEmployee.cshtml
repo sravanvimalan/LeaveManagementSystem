@@ -1,5 +1,5 @@
 ﻿
-@model LeaveManagementSystem.ViewModel.AdminProfileViewModel
+@model LeaveManagementSystem.ViewModel.ViewModel.AddEmployeeViewModel
 
 
 
@@ -18,22 +18,23 @@
         <input type="file" name="Image" id="Image" />
         <br>
         <br> <br> <br> <br>
+        @Html.HiddenFor(temp=>temp.EmployeeID)
         <div class="form-row">
             <div class="form-group col-sm-3">
-                @Html.LabelFor(temp => temp.FirstName)
-                @Html.TextBoxFor(temp => temp.FirstName)
+                @Html.LabelFor(temp => temp.FirstName,"First Name")
+                @Html.TextBoxFor(temp => temp.FirstName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.FirstName, "", new { @class = "text-danger", required = "required" })
             </div>
             <div class="form-group col-sm-3">
-                @Html.LabelFor(temp => temp.MiddleName)
-                @Html.TextBoxFor(temp => temp.MiddleName)
+                @Html.LabelFor(temp => temp.MiddleName,"Middle Name")
+                @Html.TextBoxFor(temp => temp.MiddleName, new { @class = "form-control" })
 
             </div>
 
 
             <div class="form-group col-sm-3">
-                @Html.LabelFor(temp => temp.LastName)
-                @Html.TextBoxFor(temp => temp.LastName)
+                @Html.LabelFor(temp => temp.LastName,"Last Name")
+                @Html.TextBoxFor(temp => temp.LastName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.LastName, "", new { @class = "text-danger", required = "required" })
 
             </div>
@@ -41,7 +42,7 @@
         <div class="form-row">
             <div class="form-group col-sm-9">
                 @Html.LabelFor(temp => temp.EmailID, "Email ID")
-                @Html.TextBoxFor(temp => temp.EmailID)
+                @Html.TextBoxFor(temp => temp.EmailID, new { @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.EmailID, "", new { @class = "text-danger", required = "required" })
                 <div class="valid-feedback">looks good</div>
                 <div class="invalid-feedback">Invalid email</div>
@@ -51,131 +52,150 @@
         <div class="form-row">
             <div class="form-group col-sm-4">
                 @Html.LabelFor(temp => temp.Password)
-                @Html.PasswordFor(temp => temp.Password)
+                @Html.PasswordFor(temp => temp.Password, new { @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.Password, "", new { @class = "text-danger", required = "required" })
             </div>
             <div class="form-group col-sm-1">
 
             </div>
             <div class="form-group col-sm-4">
-                <label for="pass2"><b>Confirm Password</b></label>
-                <input type="password" placeholder="confirm Password" id="Password2" required>
-                <p id="validate-status"></p>
+                @Html.LabelFor(temp => temp.ConfirmPassword,"Confirm Password")
+                @Html.PasswordFor(temp => temp.ConfirmPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(temp => temp.ConfirmPassword, "", new { @class = "text-danger", required = "required" })
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-sm-9">
-                @Html.LabelFor(temp => temp.AddressLine1)
-                @Html.TextBoxFor(temp => temp.AddressLine1)
+                @Html.LabelFor(temp => temp.AddressLine1,"Address")
+                @Html.TextBoxFor(temp => temp.AddressLine1, new { @class = "form-control" })
+                @Html.ValidationMessageFor(temp => temp.AddressLine1, "", new { @class = "text-danger", required = "required" })
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-sm-9">
-                @Html.LabelFor(temp => temp.AddressLine1)
-                @Html.TextBoxFor(temp => temp.AddressLine1)
+                @Html.LabelFor(temp => temp.AddressLine2,"Address")
+                @Html.TextBoxFor(temp => temp.AddressLine2, new { @class = "form-control" })
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-sm-9">
-                @Html.LabelFor(temp => temp.AddressLine2)
-                @Html.TextBoxFor(temp => temp.AddressLine2)
+                @Html.LabelFor(temp => temp.AddressLine3,"Address")
+                @Html.TextBoxFor(temp => temp.AddressLine3, new { @class = "form-control" })
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-sm-4">
-                @Html.LabelFor(temp => temp.AddressLine3)
-                @Html.TextBoxFor(temp => temp.AddressLine3)
-            </div>
-            <div class="form-group col-sm-1">
-
-            </div>
-            <div class="form-group col-sm-4">
+            
+            <div class="form-group col-sm-9">
 
                 @Html.LabelFor(temp => temp.MobileNumber, "Mobile Number")
-                @Html.TextBoxFor(temp => temp.MobileNumber, new { pattern = "^[789]\\d{9}$", required = "required" })
+                @Html.TextBoxFor(temp => temp.MobileNumber, new { pattern = "^[789]\\d{9}$", required = "required", @class = "form-control" })
+                @Html.ValidationMessageFor(temp => temp.MobileNumber, "", new { @class = "text-danger", required = "required" })
                 <div class="valid-feedback">looks good</div>
                 <div class="invalid-feedback">Invalid mobile number</div>
                 <small class="mobile-exist text-danger"></small>
             </div>
         </div>
+        <div class="form-row">
+            <div class="form-group col-sm-4">
+                @Html.LabelFor(temp => temp.DateOfBirth,"Date Of Birth")
+                @Html.TextBoxFor(model => model.DateOfBirth,
+         new { @type = "date", @class = "form-control" })
+                @Html.ValidationMessageFor(temp => temp.DateOfBirth, "", new { @class = "text-danger", required = "required" })
 
-        <label for="DateOfBirth"><b>Date Of Birth</b></label>
-        <input type="date" name="DateOfBirth" id="DateOfBirth" required>
+            </div>
+            <div class="form-group col-sm-1">
 
-        @Html.LabelFor(temp => temp.GenderStringId, "Gender");
-        @Html.DropDownListFor(temp => temp.GenderStringId, Model.GenderList, "Select Gender")
-
+            </div>
+            <div class="form-group col-sm-4">
+                @Html.LabelFor(temp => temp.SelectedGenderId, "Gender")
+                @Html.DropDownListFor(temp => temp.SelectedGenderId, Model.GenderList, "Select Gender", new { @class = "form-control" })
+                @Html.ValidationMessageFor(temp => temp.SelectedGenderId, "", new { @class = "text-danger", required = "required" })
+                <br><br>
+            </div>
+        </div>
         <br /><br />
-        <fieldset>
-            <legend>Experience</legend>
+              <fieldset>
+                  <legend>Experience</legend>
+                  <div class="form-row">
+                      <div class="form-group col-sm-4">
+                          @Html.LabelFor(temp => temp.Experience.CompanyName, "Company Name")
+                          @Html.TextBoxFor(temp => temp.Experience.CompanyName, new { @class = "form-control" })
+                      </div>
+                      <div class="form-group col-sm-1">
 
-            <div class="form-row">
-                <div class="form-group col-sm-4">
-                    @Html.LabelFor(temp => temp.CompanyName)
-                    @Html.TextBoxFor(temp => temp.CompanyName)
-                </div>
-                <div class="form-group col-sm-1">
+                      </div>
+                      <div class="form-group col-sm-4">
+                          @Html.LabelFor(temp => temp.Experience.JobRole, "Job Role")
+                          @Html.TextBoxFor(temp => temp.Experience.JobRole, new { @class = "form-control" })
+                      </div>
+                  </div>
 
-                </div>
-                <div class="form-group col-sm-4">
-                    @Html.LabelFor(temp => temp.JobRole)
-                    @Html.TextBoxFor(temp => temp.JobRole)
-                </div>
-            </div>
+                  <div class="form-row">
+                      <div class="form-group col-sm-4">
+                          @Html.LabelFor(temp => temp.Experience.StartDate, "Start Date")
+                          @Html.TextBoxFor(model => model.Experience.StartDate,
+                   new { @type = "date", @class = "form-control" })
 
-            <div class="form-row">
-                <div class="form-group col-sm-4">
-                    @Html.LabelFor(temp => temp.StartDate)
-                    @Html.TextBoxFor(model => model.StartDate,
-             new { @type = "date", @Value = Model.StartDate.ToString("yyyy-MM-dd") })
+                      </div>
+                      <div class="form-group col-sm-1">
 
-                </div>
-                <div class="form-group col-sm-1">
-
-                </div>
-                <div class="form-group col-sm-4">
-                    @Html.LabelFor(temp => temp.EndDate)
-                    @Html.TextBoxFor(model => model.EndDate,
-             new { @type = "date", @Value = Model.EndDate.ToString("yyyy-MM-dd") })
-                    <br><br>
-                </div>
-            </div>
-        </fieldset>
+                      </div>
+                      <div class="form-group col-sm-4">
+                          @Html.LabelFor(temp => temp.Experience.EndDate, "End Date")
+                          @Html.TextBoxFor(model => model.Experience.EndDate,
+                   new { @type = "date", @class = "form-control" })
+                          <br><br>
+                      </div>
+                  </div>
+              </fieldset>
         <fieldset>
             <legend>Company</legend>
             <div class="form-row">
                 <div class="form-group col-sm-4">
-                    @Html.LabelFor(temp => temp.JoinDate)
+                    @Html.LabelFor(temp => temp.JoinDate,"Join Date")
                     @Html.TextBoxFor(model => model.JoinDate,
-             new { @type = "date", @Value = Model.JoinDate.ToString("yyyy-MM-dd") })
+             new { @type = "date", @class = "form-control" })
+                    @Html.ValidationMessageFor(temp => temp.JoinDate, "", new { @class = "text-danger", required = "required" })
                 </div>
                 <div class="form-group col-sm-1">
 
                 </div>
                 <div class="form-group col-sm-4">
-                    @Html.LabelFor(temp => temp.QualificationStringId, "Qualification")
-                    @Html.DropDownListFor(temp => temp.QualificationStringId, Model.QualificationList, "Select Qualification")
+                    @Html.LabelFor(temp => temp.SelectedQualificationId, "Qualification")
+                    @Html.DropDownListFor(temp => temp.SelectedQualificationId, Model.QualificationList, "Select Qualification", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(temp => temp.SelectedQualificationId, "", new { @class = "text-danger", required = "required" })
                 </div>
             </div>
-            <br /><br />
-            @Html.LabelFor(temp => temp.DepartmentStringId, "Department")
-            @Html.DropDownListFor(temp => temp.DepartmentStringId, Model.DepartmentList, "select Department")
-            <br />  <br />
-            @Html.LabelFor(temp => temp.DesignationStringId, "Designation")
-            @Html.DropDownListFor(temp => temp.DesignationStringId, Model.DesignationList, "select Designation")
+          
+            <div class="form-row">
+                <div class="form-group col-sm-4">
+                    @Html.LabelFor(temp => temp.SelectedDepartmentId, "Department")
+                    @Html.DropDownListFor(temp => temp.SelectedDepartmentId, Model.DepartmentList, "select Department", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(temp => temp.SelectedDepartmentId, "", new { @class = "text-danger", required = "required" })
+                </div>
+                <div class="form-group col-sm-1">
 
-            <br><br>
+                </div>
+                <div class="form-group col-sm-4">
+                    @Html.LabelFor(temp => temp.SelectedDesignationId, "Designation")
+                    @Html.DropDownListFor(temp => temp.SelectedDesignationId, Model.DesignationList, "select Designation", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(temp => temp.SelectedDesignationId, "", new { @class = "text-danger", required = "required" })
+                </div>
+            </div>
+            
+            @Html.LabelFor(temp => temp.IsSpecialPermission,"Special Permission")
+            @Html.CheckBoxFor(temp => temp.IsSpecialPermission, new { @class = "form-control" })
 
-            @Html.LabelFor(temp => temp.IsSpecialPermission)
-            @Html.CheckBoxFor(temp => temp.IsSpecialPermission)
+
+            @Html.LabelFor(temp => temp.IsVirtualTeamHead,"Virtual Head")
+            @Html.CheckBoxFor(temp => temp.IsVirtualTeamHead, new { @class = "form-control" })
 
 
-            @Html.LabelFor(temp => temp.IsVirtualTeamHead)
-            @Html.CheckBoxFor(temp => temp.IsVirtualTeamHead)
+            @Html.LabelFor(temp => temp.EmployeeStatus,"Employee Status")
+            @Html.CheckBoxFor(temp => temp.EmployeeStatus, new { @class = "form-control" })
 
 
-            @Html.LabelFor(temp => temp.CurrentStatus)
-            @Html.CheckBoxFor(temp => temp.CurrentStatus)
+
         </fieldset>
         <div class="form-row">
             <div class="form-group  col-sm-3">
@@ -191,35 +211,35 @@
 
 <script>
 
-    $(document).ready(function () {
-        $("#Password2").blur(validate);
-        function validate(event) {
-            var password1 = $("#Password").val();
-            var password2 = $("#Password2").val();
+    //$(document).ready(function () {
+    //    $("#Password2").blur(validate);
+    //    function validate(event) {
+    //        var password1 = $("#Password").val();
+    //        var password2 = $("#Password2").val();
 
-            if (password1 == password2) {
-                $("#validate-status").text("match").css("color","green");
-            }
-            else {
-                $("#validate-status").text("not match").css("color", "red");
-            }
+    //        if (password1 == password2) {
+    //            $("#validate-status").text("match").css("color","green");
+    //        }
+    //        else {
+    //            $("#validate-status").text("not match").css("color", "red");
+    //        }
 
-        }
-    });
+    //    }
+    //});
 
 
    
 
 
 
-    $(document).on("submit", ".form-validation", validation);
-    $(".form-validation,input").blur(validation);
-    function validation(event) {
-        if ($(".form-validation")[0].checkValidity() == false) {
-            event.preventDefault();
-        }
-        $(".form-validation")[0].classList.add("was-validated");
-    }
+    //$(document).on("submit", ".form-validation", validation);
+    //$(".form-validation,input").blur(validation);
+    //function validation(event) {
+    //    if ($(".form-validation")[0].checkValidity() == false) {
+    //        event.preventDefault();
+    //    }
+    //    $(".form-validation")[0].classList.add("was-validated");
+    //}
 
 
 
@@ -234,18 +254,20 @@
                 {
                     url: "/employee/getmobile?mobile=" + $("#MobileNumber").val(),
                     type: "GET",
-                    success: function (response) {
-                        if (response == "found") {
+                    success: function (msg) {
+                        if (msg == "found") {
                             $(".mobile-exist").text("Mobile number already exist");
                             $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
+                            alert(msg+"f");
                         }
                         else {
                             $(".mobile-exist").text(" ");
                             $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
+                            alert(msg+"n");
                         }
                     },
-                    error: function () {
-                        alert("Error occured")
+                    error: function (msg) {
+                        alert(msg);
                     }
                 }
 

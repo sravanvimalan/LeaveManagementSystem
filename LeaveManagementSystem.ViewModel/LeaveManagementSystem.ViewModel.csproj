@@ -72,12 +72,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ViewModel\AddEmployeeViewModel.cs" />
     <Compile Include="ViewModel\ExperienceViewModel.cs" />
     <Compile Include="ViewModel\GenderViewModel.cs" />
-    <Compile Include="ViewModel\ListAllDepartmentAndVirtualHeadViewModel.cs" />
-    <Compile Include="ViewModel\NewVHViewModel.cs" />
+    <Compile Include="ViewModel\DepartmentWithVirtualHeadViewModel.cs" />
+    <Compile Include="ViewModel\ChangeVHViewModel.cs" />
     <Compile Include="ViewModel\QualificationViewModel.cs" />
-    <Compile Include="ViewModel\UpdateEmpProfileByAdminViewModel.cs" />
     <Compile Include="ViewModel\VacationTypeViewModel.cs" />
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
     <Compile Include="ViewModel\AdminReplyViewModel.cs" />

@@ -10,7 +10,7 @@ using LeaveManagementSystem.ViewModel;
 
 namespace LeaveManagementSystem.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class DesignationController : Controller
     {
         IDesignationService designationService;
@@ -19,14 +19,14 @@ namespace LeaveManagementSystem.Controllers
         {
             this.designationService = designationService;
         }
-        [CustomAuthorizeAttribute("HR")]
+        //[CustomAuthorizeAttribute("HR")]
         public ActionResult AddDesignation()
         {
             DesignationViewModel designation = new DesignationViewModel();
 
             return View(designation);
         }
-        [CustomAuthorizeAttribute("HR")]
+        //[CustomAuthorizeAttribute("HR")]
         [HttpPost]
         public ActionResult AddDesignation(DesignationViewModel designation)
         {
@@ -42,6 +42,12 @@ namespace LeaveManagementSystem.Controllers
             }
            
 
+        }
+
+        public ActionResult ListDesignation()
+        {
+            var designations = designationService.GetAllDesignations();
+            return View(designations);
         }
         public string GetDesignation(string designation)
         {

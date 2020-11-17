@@ -11,17 +11,11 @@ namespace LeaveManagementSystem.ServiceLayer
 {
     public interface IDesignationService
     {
-        public List<Designation> GetAllDesignation();
-
-        public int GetDesignationIdByName(string DesignationName);
-
-        public DesignationViewModel GetDesignationByDesignationID(int DesignationID);
-
+       
         public bool IsDesignationExist(string designation);
 
-        //public int GetLatestDesignationId();
-
+        public List<DesignationViewModel> GetAllDesignations();
         public void AddDesignation(DesignationViewModel designationViewModel);
-        public IEnumerable<SelectListItem> GetSelectListItemDesignation(IEnumerable<Designation> designation);
+        public IEnumerable<SelectListItem> GetSelectListItemDesignation();
     }
 }

@@ -37,7 +37,7 @@ namespace LeaveManagementSystem.Repository
             Employee obj = Db.Employee.Where(temp => temp.EmployeeID == employeeID).FirstOrDefault();
             if (obj != null)
             {
-                Db.Employee.Remove(obj);
+                obj.EmployeeStatus = false;
                 Db.SaveChanges();
             }
         }
@@ -48,12 +48,7 @@ namespace LeaveManagementSystem.Repository
             return list;
         }
 
-        public List<Employee> GetAllVirtualHead()
-        {
-            List<Employee> list = Db.Employee.Where(temp => temp.IsVirtualTeamHead == true).ToList();
-            return list;
-        }
-
+      
         public List<Employee> GetEmployeeByDepartmentID(int departmentId)
         {
             List<Employee> employeeList = Db.Employee.Where(temp => temp.DepartmentID == departmentId).ToList();
@@ -68,37 +63,6 @@ namespace LeaveManagementSystem.Repository
             var employee = Db.Employee.FirstOrDefault(temp => temp.EmployeeID == employeeId);
 
             
-
-                //employeeDTO.FirstName = employee.FirstName;
-                //employeeDTO.MiddleName = employee.MiddleName;
-                //employeeDTO.LastName = employee.LastName;
-                //employeeDTO.JoinDate = employee.JoinDate;
-                //employeeDTO.DateOfBirth = employee.DateOfBirth;
-                //employeeDTO.EmployeeStatus = employee.EmployeeStatus;
-                //employeeDTO.AddressLine1 = employee.AddressLine1;
-                //employeeDTO.AddressLine2 = employee.AddressLine2;
-                //employeeDTO.AddressLine3 = employee.AddressLine3;
-                //employeeDTO.EmailID = employee.EmailID;
-                //employeeDTO.Nationality = employee.Nationality;
-                //employeeDTO.MobileNumber = employee.MobileNumber;
-                //employeeDTO.CreatedBy = employee.CreatedBy;
-                //employeeDTO.CreatedOn = employee.CreatedOn;
-                //employeeDTO.ModifiedBy = employee.ModifiedBy;
-                //employeeDTO.ModifiedOn = employee.ModifiedOn;
-                //employeeDTO.IsVirtualTeamHead = employee.IsVirtualTeamHead;
-                //employeeDTO.IsSpecialPermission = employee.IsSpecialPermission;
-                //employeeDTO.DepartmentName = employee.Department.DepartmentName;
-                //employeeDTO.DepartmentID = employee.DepartmentID;
-                //employeeDTO.QualificationName = employee.Qualification.QualificationName;
-                //employeeDTO.DesignationName = employee.Designation.DesignationName;
-                //employeeDTO.CompanyName = employee.Experience.CompanyName;
-                //employeeDTO.JobRole = employee.Experience.JobRole;
-                //employeeDTO.StartDate = employee.Experience.StartDate;
-                //employeeDTO.EndDate = employee.Experience.EndDate;
-                //employeeDTO.GenderID = employee.Gender.GenderID;
-                //employeeDTO.GenderName = employee.Gender.GenderName;
-                //employeeDTO.Image = employee.Image;
-           
             return employee;
         }
 
@@ -112,27 +76,9 @@ namespace LeaveManagementSystem.Repository
             throw new NotImplementedException();
         }
 
-        public bool IsMobileExist(string mobile)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void SetNewEmployee(Employee obj, Experience exp)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void UpdateIsVirtualHeadFlag(int EmployeeId, bool value)
-        {
-            throw new NotImplementedException();
-        }
 
-        
-
-        public void UpdateProfileByAdmin(Employee profile)
-        {
-            throw new NotImplementedException();
-        }
 
 
 
@@ -157,25 +103,28 @@ namespace LeaveManagementSystem.Repository
         //        return Db.Employee.Any(temp => temp.EmailID == email);
         //    }
 
-        //    public bool IsMobileExist(string mobile)
-        //    {
-        //        return Db.Employee.Any(temp => temp.MobileNumber == mobile);
-        //    }
+        public bool IsMobileExist(string mobile)
+        {
+            return Db.Employee.Any(temp => temp.MobileNumber == mobile);
+        }
 
-        //    public void SetNewEmployee(Employee obj,Experience exp)
-        //    {
-        //        Db.Experience.Add(exp);
-        //        Db.SaveChanges();
-        //        Db.Employee.Add(obj);
-        //        Db.SaveChanges();
-        //    }
+        public void AddEmployee(Employee employee)
+        {
+            Db.Experience.Add(employee.Experience);
+            Db.Employee.Add(employee);
+            Db.SaveChanges();
+        }
 
-        //    public void UpdateIsVirtualHeadFlag(int EmployeeId,bool value)
-        //    {
-        //        Employee employee = GetEmployeeByID(EmployeeId);
-        //        employee.IsVirtualTeamHead = value;
-        //        Db.SaveChanges();
-        //    }
+        public void UpdateIsVirtualHead(int EmployeeId, bool value)
+        {
+            if(EmployeeId != 0 )
+            {
+                Employee employee = GetEmployeeByID(EmployeeId);
+                employee.IsVirtualTeamHead = value;
+                Db.SaveChanges();
+            }
+           
+        }
 
         public void UpdatePassword(string password, int employeeID)
         {
@@ -184,26 +133,26 @@ namespace LeaveManagementSystem.Repository
             Db.SaveChanges();
         }
 
-        //    public void UpdateProfileByAdmin(Employee profile)
-        //    {
-        //        Employee existProfile = Db.Employee.Where(temp => temp.EmployeeID == profile.EmployeeID).FirstOrDefault();
+        public void UpdateProfileByAdmin(Employee profile)
+        {
+            Employee existProfile = Db.Employee.Where(temp => temp.EmployeeID == profile.EmployeeID).FirstOrDefault();
 
-        //        existProfile.Image = profile.Image;
-        //        existProfile.FirstName = profile.FirstName;
-        //        existProfile.MiddleName = profile.MiddleName;
-        //        existProfile.LastName = profile.LastName;
-        //        existProfile.EmployeeStatus = profile.EmployeeStatus;
-        //        existProfile.AddressLine1 = profile.AddressLine1;
-        //        existProfile.AddressLine2 = profile.AddressLine2;
-        //        existProfile.AddressLine3 = profile.AddressLine3;
-        //        existProfile.DepartmentID = profile.DepartmentID;
-        //        existProfile.DesignationID = profile.DesignationID;
-        //        existProfile.DateOfBirth = profile.DateOfBirth;
-        //        existProfile.IsSpecialPermission = profile.IsSpecialPermission;
-        //        //existProfile.CurrentStatus = profile.CurrentStatus;
-        //        Db.SaveChanges();
+            existProfile.Image = profile.Image;
+            existProfile.FirstName = profile.FirstName;
+            existProfile.MiddleName = profile.MiddleName;
+            existProfile.LastName = profile.LastName;
+            existProfile.EmployeeStatus = profile.EmployeeStatus;
+            existProfile.AddressLine1 = profile.AddressLine1;
+            existProfile.AddressLine2 = profile.AddressLine2;
+            existProfile.AddressLine3 = profile.AddressLine3;
+            existProfile.DepartmentID = profile.DepartmentID;
+            existProfile.DesignationID = profile.DesignationID;
+            existProfile.DateOfBirth = profile.DateOfBirth;
+            existProfile.IsSpecialPermission = profile.IsSpecialPermission;
+            //existProfile.CurrentStatus = profile.CurrentStatus;
+            Db.SaveChanges();
 
-        //    }
+        }
 
         public void UpdateProfileByEmployee(Employee employeeProfile)
         {
@@ -222,9 +171,6 @@ namespace LeaveManagementSystem.Repository
             existProfile.MobileNumber = employeeProfile.MobileNumber;
 
             Db.SaveChanges();
-
-
-
 
 
         }

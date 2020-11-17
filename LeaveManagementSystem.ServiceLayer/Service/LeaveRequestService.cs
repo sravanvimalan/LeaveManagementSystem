@@ -44,8 +44,13 @@ namespace LeaveManagementSystem.ServiceLayer.Service
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<RequestVacation, RequestVacationViewModel>();
-                cfg.CreateMap<VacationType, VacationTypeViewModel>();
                 cfg.CreateMap<Employee, EmployeeViewModel>();
+                cfg.CreateMap<Department, DepartmentViewModel>();
+                cfg.CreateMap<Designation, DesignationViewModel>();
+                cfg.CreateMap<Gender, GenderViewModel>();
+                cfg.CreateMap<Qualification, QualificationViewModel>();
+                cfg.CreateMap<Experience, ExperienceViewModel>();
+                cfg.CreateMap<VacationType, VacationTypeViewModel>();
                 cfg.IgnoreUnmapped();
             });
             IMapper mapper = config.CreateMapper();
@@ -98,6 +103,13 @@ namespace LeaveManagementSystem.ServiceLayer.Service
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<RequestVacation, RequestVacationViewModel>();
+                cfg.CreateMap<Employee, EmployeeViewModel>();
+                cfg.CreateMap<Department, DepartmentViewModel>();
+                cfg.CreateMap<Designation, DesignationViewModel>();
+                cfg.CreateMap<Gender, GenderViewModel>();
+                cfg.CreateMap<Qualification, QualificationViewModel>();
+                cfg.CreateMap<Experience, ExperienceViewModel>();
+                cfg.CreateMap<VacationType, VacationTypeViewModel>();
                 cfg.IgnoreUnmapped();
             });
             IMapper mapper = config.CreateMapper();
@@ -137,6 +149,8 @@ namespace LeaveManagementSystem.ServiceLayer.Service
             if (designation == "Project Manager")
             {
                var leaveRequests =  MapRequestDV(RequestVacationRepository.GetAllLeaveRequestForProjectManager(employeeId));
+
+                return leaveRequests;
                
             }
             return MapRequestDV(RequestVacationRepository.GetAllLeaveRequestForVirtualHead(departmentId));

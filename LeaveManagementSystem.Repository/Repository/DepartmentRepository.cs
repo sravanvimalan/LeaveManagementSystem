@@ -1,4 +1,5 @@
 ﻿using LeaveManagementSystem.DomainModel;
+using LeaveManagementSystem.DomainModel.DTOClasses;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -67,6 +68,43 @@ namespace LeaveManagementSystem.Repository
         public bool IsDepartmentExist(string department)
         {
             return Db.Department.Any(temp => temp.DepartmentName == department);
+        }
+
+        public List<DepartmentWithVirtualHeadDTO> GetAllDepartmentWithVirtualHead()
+        {
+            var departmentWithVirtualHeadDTO = new List<DepartmentWithVirtualHeadDTO>();
+            var departmentWithVT = from dep in Db.Department.ToList()
+                              join emp in Db.Employee.ToList()
+                              on dep.DepartmentID equals emp.DepartmentID
+                              into depWithVT
+                              from dv in depWithVT.DefaultIfEmpty()
+                              select new { dep, dv };
+
+            foreach (var item in departmentWithVT)
+            {
+                if(item.dv != null && item.dv.IsVirtualTeamHead == true)
+                {
+                    departmentWithVirtualHeadDTO.Add(new DepartmentWithVirtualHeadDTO
+                    {
+                        DepartmentID = item.dep.DepartmentID,
+                        DepartmentName = item.dep.DepartmentName,
+                        EmployeeID = item.dv.EmployeeID,
+                        EmployeeName = item.dv.FirstName + item.dv.MiddleName + item.dv.LastName
+                    });
+                }
+                else
+                {
+                    departmentWithVirtualHeadDTO.Add(new DepartmentWithVirtualHeadDTO
+                    {
+                        DepartmentID = item.dep.DepartmentID,
+                        DepartmentName = item.dep.DepartmentName,
+                        EmployeeID = 0,
+                        EmployeeName = "Not Yet Assigned "
+                    });
+                }
+               
+            }
+            return departmentWithVirtualHeadDTO;
         }
     }
 }

@@ -74,10 +74,10 @@ namespace LeaveManagementSystem.Repository
 
         public List<RequestVacation> GetAllLeaveRequestForVirtualHead(int departmentId)
         {
-            //List<RequestVacation> requestVacations = Db.RequestVacation.Where(temp => temp.Employee.DepartmentID == departmentId).ToList();
+            List<RequestVacation> requestVacations = Db.RequestVacation.Where(temp => temp.Creater.DepartmentID == departmentId).ToList();
 
-            //return requestVacations;
-            return null;
+            return requestVacations;
+           
         }
         public List<RequestVacation> GetAllLeaveRequestForProjectManager(int employeeId)
         {

@@ -12,10 +12,7 @@ namespace LeaveManagementSystem.ServiceLayer
 {
     public interface IGenderService
     {
-        public List<Gender> GetAllGender();
+       
         public IEnumerable<SelectListItem> GenderList();
-
-        public string GetGenderById(int GenderId);
-        public IEnumerable<SelectListItem> GetSelectListItemsGender(IEnumerable<Gender> genders);
     }
 }

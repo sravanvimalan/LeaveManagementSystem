@@ -11,18 +11,16 @@ namespace LeaveManagementSystem.ServiceLayer
 {
     public interface IDepartmentService
     {
-        public List<DepartmentViewModel> GetAllDepartment();
-        public int GetLatestDepartmentID();
-
+      
+       
         public void AddDepartment(DepartmentViewModel obj);
-        public int GetDepartmentIdByName(string DepartmentName);
-        public DepartmentViewModel GetDepartmentByID(int DepartmentID);
-
+      
+       
         public bool IsDepartmentExist(string department);
 
-        public IEnumerable<SelectListItem> GetSelectListItemsDepartment(IEnumerable<DepartmentViewModel> department);
+        public IEnumerable<SelectListItem> GetSelectListItemsDepartment();
 
-
+        public List<DepartmentWithVirtualHeadViewModel> GetAllDepartmentWithVirtualHead();
 
 
 

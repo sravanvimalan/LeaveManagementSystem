@@ -22,8 +22,8 @@ namespace LeaveManagementSystem.DomainModel
         [MaxLength(150)]
         public string JobRole { get; set; }
         [Column("StartDate", Order = 3, TypeName = "datetime")]
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
         [Column("EndDate", Order = 4, TypeName = "datetime")]
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

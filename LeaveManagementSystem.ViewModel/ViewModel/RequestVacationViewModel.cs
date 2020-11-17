@@ -38,9 +38,13 @@ namespace LeaveManagementSystem.ViewModel
 
         public string Response { get; set; }
 
+       
         public virtual VacationTypeViewModel VacationType { get; set; }
+      
         public virtual EmployeeViewModel Approver { get; set; }
-        public virtual EmployeeViewModel Creator { get; set; }
+
+     
+        public virtual EmployeeViewModel Creater { get; set; }
 
         public IEnumerable<SelectListItem> VacationTypeList { get; set; }
         public IEnumerable<SelectListItem> ApproverList { get; set; }
