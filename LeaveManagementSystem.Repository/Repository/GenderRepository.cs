@@ -15,12 +15,7 @@ namespace LeaveManagementSystem.Repository
             Db = new LeaveManagementSystemDbcontext();
         }
 
-        public string GetGenderByID(int GenderID)
-        {
-            Gender obj = Db.Gender.Where(temp => temp.GenderID == GenderID).FirstOrDefault();
-            return obj.GenderName;
-        }
-
+      
         public List<Gender> GetGenders()
         {
             List<Gender> list = Db.Gender.ToList();

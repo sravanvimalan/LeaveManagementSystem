@@ -32,32 +32,19 @@ namespace LeaveManagementSystem.Repository
             return list;
         }
 
-        public Designation GetDesignationByDesignationID(int DesignationID)
-        {
-            Designation obj = Db.Designation.Where(temp => temp.DesignationID == DesignationID).FirstOrDefault();
-            return obj;
-        }
+      
 
         public void AddDesignation(Designation obj)
         {
             Db.Designation.Add(obj);
             Db.SaveChanges();
         }
-        public int GetDesignationIdByName(string DesignationName)
-        {
-            Designation designation = Db.Designation.Where(temp => temp.DesignationName == DesignationName).FirstOrDefault();
-            return designation.DesignationID;
-        }
-
+      
         public bool IsDesignationExist(string designation)
         {
             return Db.Designation.Any(temp => temp.DesignationName == designation);
         }
 
-        //public int GetLatestDesignationId()
-        //{
-        //    Designation designation = Db.Designation.OrderByDescending(temp => temp.DesignationID).FirstOrDefault();
-        //    return designation.DesignationID;
-        //}
+       
     }
 }

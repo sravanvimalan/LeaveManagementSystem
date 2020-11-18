@@ -11,8 +11,7 @@ namespace LeaveManagementSystem.Repository
     public interface IDepartmentRepository
     {
         public List<Department> GetAllDepartments();
-        //public Department GetDepartmentByID(int DepartmentID);
-
+       
         public List<DepartmentWithVirtualHeadDTO> GetAllDepartmentWithVirtualHead();
 
         public void AddDepartment(Department obj);

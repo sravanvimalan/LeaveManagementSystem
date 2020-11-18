@@ -17,46 +17,14 @@ namespace LeaveManagementSystem.Repository
             Db = new LeaveManagementSystemDbcontext();
         }
 
-        public void DeleteDepartmentByDepartmentID(int DepartmentID)
-        {
-            Department obj = Db.Department.Where(temp => temp.DepartmentID == DepartmentID).FirstOrDefault();
-            if(obj != null)
-            {
-                Db.Department.Remove(obj);
-                Db.SaveChanges();
-            }
-        }
-
+      
         public List<Department> GetAllDepartments()
         {
             List<Department> list = Db.Department.ToList();
             return list;
         }
 
-        public Department GetDepartmentByID(int DepartmentID)
-        {
-            Department obj = Db.Department.Where(temp => temp.DepartmentID == DepartmentID).FirstOrDefault();
-
-            return obj;
-        }
-
        
-
-        public int GetLatestDepartmentID()
-        {
-            Department obj = new Department();
-            try
-            {
-                obj = Db.Department.OrderByDescending(temp => temp.DepartmentID).First();
-            }
-            catch
-            {
-
-            }
-            if (obj != null)
-                return obj.DepartmentID;
-            return 0;
-        }
 
         public void AddDepartment(Department obj)
         {
@@ -107,16 +75,7 @@ namespace LeaveManagementSystem.Repository
                 }
 
             }
-            //int prevDepId = 0;
-            //foreach (var item in departmentWithVirtualHeadDTO)
-            //{
-            //    if (prevDepId == item.DepartmentID)
-            //        departmentWithVirtualHeadDTO.Remove(item);
-            //    prevDepId = item.DepartmentID;
-            //}
-            //departmentWithVirtualHeadDTO.SelectMany((departmentWithVirtualHeadDTO) => departmentWithVirtualHeadDTO.DepartmentName).Distinct();
-
-
+           
 
             return departmentWithVirtualHeadDTO;
         }

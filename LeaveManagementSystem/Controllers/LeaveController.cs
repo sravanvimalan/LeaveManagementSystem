@@ -40,7 +40,7 @@ namespace LeaveManagementSystem.Controllers
             ViewBag.Response = TempData["Response"];
             RequestVacationViewModel requestVacationViewModel = new RequestVacationViewModel();
 
-            requestVacationViewModel.VacationTypeList = vacationTypeService.GetAllVacationTypeList(vacationTypeService.GetAllVacationType());
+            requestVacationViewModel.VacationTypeList = vacationTypeService.GetAllVacationTypeList();
 
             requestVacationViewModel.ApproverList = employeeService.GetAllProjectManagers();
 

@@ -66,42 +66,13 @@ namespace LeaveManagementSystem.Repository
             return employee;
         }
 
-        public List<Employee> GetEmployeesByDesignationId(int DesignationId)
-        {
-            throw new NotImplementedException();
-        }
-
+     
         public bool IsEmailExist(string email)
         {
             throw new NotImplementedException();
         }
 
 
-
-
-
-
-
-
-
-
-        //public Employee GetEmployeeByID(int EmployeeID)
-        //{
-        //    Employee obj = Db.Employee.Where(temp => temp.EmployeeID == EmployeeID).FirstOrDefault();
-        //    return obj;
-        //}
-
-        //    public List<Employee> GetEmployeesByDesignationId(int DesignationId)
-        //    {
-        //        List<Employee> list = Db.Employee.Where(temp => temp.DesignationID == DesignationId).ToList();
-
-        //        return list;
-        //    }
-
-        //    public bool IsEmailExist(string email)
-        //    {
-        //        return Db.Employee.Any(temp => temp.EmailID == email);
-        //    }
 
         public bool IsMobileExist(string mobile)
         {

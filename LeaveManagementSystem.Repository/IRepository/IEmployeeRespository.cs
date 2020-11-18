@@ -19,7 +19,6 @@ namespace LeaveManagementSystem.Repository
         public void AddEmployee(Employee employee);
         public void DeleteEmployeeByEmployeeID(int EmployeeID);
 
-        public List<Employee> GetEmployeesByDesignationId(int DesignationId);
 
         public List<Employee> GetEmployeeByDepartmentID(int DepartmentId);
 

@@ -21,11 +21,6 @@ namespace LeaveManagementSystem.Repository
             return list;
         }
 
-        public string GetQualificationById(int QualificationId)
-        {
-            Qualification qualification = Db.Qualification.Where(temp => temp.QualificationID == QualificationId).FirstOrDefault();
-
-            return qualification.QualificationName;
-        }
+      
     }
 }

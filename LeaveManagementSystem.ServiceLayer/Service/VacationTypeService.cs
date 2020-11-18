@@ -29,8 +29,10 @@ namespace LeaveManagementSystem.ServiceLayer.Service
         }
 
        
-        public IEnumerable<SelectListItem> GetAllVacationTypeList(IEnumerable<VacationType> vacationType)
+        public IEnumerable<SelectListItem> GetAllVacationTypeList()
         {
+            var vacationType = vacationTypeRepository.GetAllVacationTypes();
+
             var selectList = new List<SelectListItem>();
             foreach (var item in vacationType)
             {

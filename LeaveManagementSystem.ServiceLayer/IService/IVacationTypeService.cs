@@ -11,9 +11,8 @@ namespace LeaveManagementSystem.ServiceLayer.IService
 {
     public interface IVacationTypeService
     {
-        public List<VacationType> GetAllVacationType();
       
-
-        public IEnumerable<SelectListItem> GetAllVacationTypeList(IEnumerable<VacationType> vacationType);
+      
+        public IEnumerable<SelectListItem> GetAllVacationTypeList();
     }
 }

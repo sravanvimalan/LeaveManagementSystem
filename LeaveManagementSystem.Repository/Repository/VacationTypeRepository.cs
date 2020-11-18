@@ -21,11 +21,6 @@ namespace LeaveManagementSystem.Repository
             return list;
         }
 
-        public VacationType GetVacationTypeByVacationId(int vacationId)
-        {
-            VacationType vacationType = Db.VacationType.Where(temp => temp.VacationTypeID == vacationId).FirstOrDefault();
-
-            return vacationType;
-        }
+       
     }
 }
