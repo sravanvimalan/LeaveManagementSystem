@@ -18,7 +18,17 @@
         <input type="file" name="Image" id="Image" />
         <br>
         <br> <br> <br> <br>
-        @Html.HiddenFor(temp=>temp.EmployeeID)
+        @Html.HiddenFor(temp => temp.EmployeeID)
+        @Html.HiddenFor(temp => temp.DesignationName)
+        @Html.HiddenFor(temp => temp.DepartmentName)
+        @Html.HiddenFor(temp => temp.GenderName)
+        @Html.HiddenFor(temp => temp.QualificationName)
+        @Html.HiddenFor(temp => temp.SelectedGenderID)
+        @Html.HiddenFor(temp => temp.SelectedQualificationID)
+        @Html.HiddenFor(temp => temp.SelectedDepartmentID)
+        @Html.HiddenFor(temp => temp.SelectedDesignationID)
+        @Html.HiddenFor(temp=>temp.StartDate)
+
         <div class="form-row">
             <div class="form-group col-sm-3">
                 @Html.LabelFor(temp => temp.FirstName, "First Name")
@@ -49,23 +59,23 @@
                 <small class="email-exist text-danger"></small>
             </div>
         </div>
-       
+
         <div class="form-row">
             <div class="form-group col-sm-9">
-                @Html.LabelFor(temp => temp.AddressLine1, "Address")
+                @Html.LabelFor(temp => temp.AddressLine1, "Address Line 1")
                 @Html.TextBoxFor(temp => temp.AddressLine1, new { @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.AddressLine1, "", new { @class = "text-danger", required = "required" })
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-sm-9">
-                @Html.LabelFor(temp => temp.AddressLine2, "Address")
+                @Html.LabelFor(temp => temp.AddressLine2, "Address Line 2")
                 @Html.TextBoxFor(temp => temp.AddressLine2, new { @class = "form-control" })
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-sm-9">
-                @Html.LabelFor(temp => temp.AddressLine3, "Address")
+                @Html.LabelFor(temp => temp.AddressLine3, "Address Line 3")
                 @Html.TextBoxFor(temp => temp.AddressLine3, new { @class = "form-control" })
             </div>
         </div>
@@ -80,12 +90,19 @@
                 <div class="invalid-feedback">Invalid mobile number</div>
                 <small class="mobile-exist text-danger"></small>
             </div>
+            <div class="form-group col-sm-9">
+
+                @Html.LabelFor(temp => temp.Nationality, "Nationality")
+                @Html.TextBoxFor(temp => temp.Nationality, new { required = "required", @class = "form-control" })
+                @Html.ValidationMessageFor(temp => temp.Nationality, "", new { @class = "text-danger",@value=Model.Nationality,required = "required" })
+
+            </div>
         </div>
         <div class="form-row">
             <div class="form-group col-sm-4">
                 @Html.LabelFor(temp => temp.DateOfBirth, "Date Of Birth")
-                @Html.TextBoxFor(model => model.DateOfBirth,
-         new { @type = "date", @class = "form-control" })
+                 @Html.TextBoxFor(model => model.DateOfBirth,
+               new { @type = "date", @Value = Model.DateOfBirth.ToString("yyyy-MM-dd"), @class = "form-control", required = "required" })
                 @Html.ValidationMessageFor(temp => temp.DateOfBirth, "", new { @class = "text-danger", required = "required" })
 
             </div>
@@ -93,9 +110,9 @@
 
             </div>
             <div class="form-group col-sm-4">
-                @Html.HiddenFor(temp=>temp.Gender)
+                @Html.HiddenFor(temp => temp.Gender)
                 @Html.LabelFor(temp => temp.SelectedGenderID, "Gender")
-                @Html.DropDownListFor(temp => temp.SelectedGenderID, Model.GenderList,Model.Gender.GenderName, new { @class = "form-control" })
+                @Html.DropDownListFor(temp => temp.SelectedGenderID, Model.GenderList, Model.GenderName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.SelectedGenderID, "", new { @class = "text-danger", required = "required" })
                 <br><br>
             </div>
@@ -107,22 +124,33 @@
             <div class="form-row">
                 <div class="form-group col-sm-4">
                     @Html.LabelFor(temp => temp.Experience.CompanyName, "Company Name")
-                    @Html.TextBoxFor(temp => temp.Experience.CompanyName, new { @class = "form-control"})
+                    @Html.TextBoxFor(temp => temp.Experience.CompanyName, new { @class = "form-control" })
                 </div>
                 <div class="form-group col-sm-1">
 
                 </div>
                 <div class="form-group col-sm-4">
                     @Html.LabelFor(temp => temp.Experience.JobRole, "Job Role")
-                    @Html.TextBoxFor(temp => temp.Experience.JobRole, new { @class = "form-control"})
+                    @Html.TextBoxFor(temp => temp.Experience.JobRole, new { @class = "form-control" })
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group col-sm-4">
                     @Html.LabelFor(temp => temp.Experience.StartDate, "Start Date")
+                    @if (Model.Experience != null)
+                    {
+                        @Html.TextBoxFor(model => model.Experience.StartDate,
+                     new { @type = "date", @Value = Model.Experience.StartDate.ToString("yyyy-MM-dd"), @class = "form-control", required = "required" })
+                    
+                    }
+
+                    else
+                    {
                     @Html.TextBoxFor(model => model.Experience.StartDate,
-             new { @type = "date", @class = "form-control" })
+                                                  new { @type = "date", @class = "form-control" })
+                    }
+
 
                 </div>
                 <div class="form-group col-sm-1">
@@ -130,8 +158,17 @@
                 </div>
                 <div class="form-group col-sm-4">
                     @Html.LabelFor(temp => temp.Experience.EndDate, "End Date")
-                    @Html.TextBoxFor(model => model.Experience.EndDate,
-             new { @type = "date", @class = "form-control" })
+                    @if (Model.Experience != null)
+                    {
+                        @Html.TextBoxFor(model => model.Experience.EndDate,
+             new { @type = "date", @Value = Model.Experience.EndDate.ToString("yyyy-MM-dd"), @class = "form-control", required = "required" })
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(model => model.Experience.EndDate,
+                     new { @type = "date", @class = "form-control" })
+                    }
+
                     <br><br>
                 </div>
             </div>
@@ -142,15 +179,14 @@
                 <div class="form-group col-sm-4">
                     @Html.LabelFor(temp => temp.JoinDate, "Join Date")
                     @Html.TextBoxFor(model => model.JoinDate,
-             new { @type = "date", @class = "form-control" })
-                    @Html.ValidationMessageFor(temp => temp.JoinDate, "", new { @class = "text-danger", required = "required",@value=Model.JoinDate })
+              new { @type = "date", @Value = Model.JoinDate.ToString("yyyy-MM-dd"), @class = "form-control", required = "required" })
                 </div>
                 <div class="form-group col-sm-1">
 
                 </div>
                 <div class="form-group col-sm-4">
                     @Html.LabelFor(temp => temp.SelectedQualificationID, "Qualification")
-                    @Html.DropDownListFor(temp => temp.SelectedQualificationID, Model.QualificationList, Model.Qualification.QualificationName, new { @class = "form-control" })
+                    @Html.DropDownListFor(temp => temp.SelectedQualificationID, Model.QualificationList, Model.QualificationName, new { @class = "form-control" })
                     @Html.ValidationMessageFor(temp => temp.SelectedQualificationID, "", new { @class = "text-danger", required = "required" })
                 </div>
             </div>
@@ -158,7 +194,7 @@
             <div class="form-row">
                 <div class="form-group col-sm-4">
                     @Html.LabelFor(temp => temp.SelectedDepartmentID, "Department")
-                    @Html.DropDownListFor(temp => temp.SelectedDepartmentID, Model.DepartmentList, Model.Department.DepartmentName, new { @class = "form-control" })
+                    @Html.DropDownListFor(temp => temp.SelectedDepartmentID, Model.DepartmentList, Model.DepartmentName, new { @class = "form-control" })
                     @Html.ValidationMessageFor(temp => temp.SelectedDepartmentID, "", new { @class = "text-danger", required = "required" })
                 </div>
                 <div class="form-group col-sm-1">
@@ -166,29 +202,27 @@
                 </div>
                 <div class="form-group col-sm-4">
                     @Html.LabelFor(temp => temp.SelectedDesignationID, "Designation")
-                    @Html.DropDownListFor(temp => temp.SelectedDesignationID, Model.DesignationList,Model.Designation.DesignationName, new { @class = "form-control" })
+                    @Html.DropDownListFor(temp => temp.SelectedDesignationID, Model.DesignationList, Model.DesignationName, new { @class = "form-control" })
                     @Html.ValidationMessageFor(temp => temp.SelectedDesignationID, "", new { @class = "text-danger", required = "required" })
                 </div>
             </div>
-
-            @Html.LabelFor(temp => temp.IsSpecialPermission, "Special Permission")
-            @Html.CheckBoxFor(temp => temp.IsSpecialPermission, new { @class = "form-control" })
-
-
-            @Html.LabelFor(temp => temp.IsVirtualTeamHead, "Virtual Head")
-            @Html.CheckBoxFor(temp => temp.IsVirtualTeamHead, new { @class = "form-control" })
-
+            @if (Model.DepartmentName == "HR")
+            {
+                @Html.LabelFor(temp => temp.IsSpecialPermission, "Special Permission")
+                @Html.CheckBoxFor(temp => temp.IsSpecialPermission, new { @class = "form-control" })
+            }
+            <br />
 
             @Html.LabelFor(temp => temp.EmployeeStatus, "Employee Status")
             @Html.CheckBoxFor(temp => temp.EmployeeStatus, new { @class = "form-control" })
 
 
-
+            <br /> <br />
         </fieldset>
         <div class="form-row">
             <div class="form-group  col-sm-3">
 
-                <button type="submit" class="btn btn-info">Register new employee</button>
+                <button type="submit" class="btn btn-info">Save And Update</button>
             </div>
 
         </div>

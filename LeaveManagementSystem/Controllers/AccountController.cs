@@ -20,10 +20,7 @@ namespace LeaveManagementSystem.Controllers
             this.designationService = designationService;
             this.employeeService = employeeService;
         }
-
-       
-       
-       [Authorize]
+         
         public ActionResult UpdatePassword()
         {
             ViewBag.Response = TempData["Response"];
@@ -33,7 +30,7 @@ namespace LeaveManagementSystem.Controllers
             return View(updatePasswordViewModel);
         }
         [HttpPost]
-        [Authorize]
+       
         public ActionResult UpdatePassword(UpdatePasswordViewModel updatePasswordViewModel)
         {
             if(ModelState.IsValid)
@@ -51,7 +48,7 @@ namespace LeaveManagementSystem.Controllers
             }
          
         }
-        [Authorize]
+        
         public ActionResult UpdateProfile()
         {
             ViewBag.Response = TempData["Response"];
@@ -76,7 +73,7 @@ namespace LeaveManagementSystem.Controllers
             return View(updateProfileByEmployeeViewModel);
         }
         [HttpPost]
-        [Authorize]
+      
         public ActionResult UpdateProfile(UpdateProfileByEmployeeViewModel updateProfileByEmployeeViewModel)
         {
             if(ModelState.IsValid)
@@ -104,7 +101,7 @@ namespace LeaveManagementSystem.Controllers
         }
        
       
-        [Authorize]
+      
         public ActionResult Home(EmployeeViewModel employeeViewModel)
         {
             employeeViewModel = employeeService.GetEmployeeByID(Convert.ToInt32(Session["EmployeeID"]));
@@ -114,7 +111,7 @@ namespace LeaveManagementSystem.Controllers
         {
             return View();
         }
-        [Authorize]
+       
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();

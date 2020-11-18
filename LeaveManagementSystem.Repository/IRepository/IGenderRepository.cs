@@ -9,7 +9,6 @@ namespace LeaveManagementSystem.Repository
 {
     public interface IGenderRepository
     {
-        public string GetGenderByID(int GenderID);
         public List<Gender> GetGenders();
     }
 }

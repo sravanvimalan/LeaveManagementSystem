@@ -54,6 +54,7 @@ namespace LeaveManagementSystem.ViewModel.ViewModel
         public string AddressLine3 { get; set; }
        
         [MaxLength(150)]
+        [DataType(DataType.EmailAddress)]
         [Required(ErrorMessage ="Email ID field is Required")]
         public string EmailID { get; set; }
 
@@ -68,6 +69,7 @@ namespace LeaveManagementSystem.ViewModel.ViewModel
         public string Nationality { get; set; }
        
         [MaxLength(150)]
+        [DataType(DataType.PhoneNumber)]
         [Required(ErrorMessage ="Mobile number is required")]
         public string MobileNumber { get; set; }
        
@@ -99,13 +101,8 @@ namespace LeaveManagementSystem.ViewModel.ViewModel
         [System.ComponentModel.DataAnnotations.Compare("Password")]
         public string ConfirmPassword { get; set; }
 
-
-    
-        
         public bool IsVirtualTeamHead { get; set; }
 
-        
-       
         public bool IsSpecialPermission { get; set; }
 
 

@@ -9,7 +9,7 @@
 
 
 
-<form action="/employee/addnewemployee" class="form-validation" method="post" novalidate="novalidate" enctype="multipart/form-data">
+<form action="/employee/addemployee" class="form-validation" method="post" novalidate="novalidate" enctype="multipart/form-data">
     <div class="container ">
         <h3>Register</h3>
         <p>Enter employee details.</p>
@@ -84,7 +84,7 @@
             </div>
         </div>
         <div class="form-row">
-            
+
             <div class="form-group col-sm-9">
 
                 @Html.LabelFor(temp => temp.MobileNumber, "Mobile Number")
@@ -93,6 +93,13 @@
                 <div class="valid-feedback">looks good</div>
                 <div class="invalid-feedback">Invalid mobile number</div>
                 <small class="mobile-exist text-danger"></small>
+            </div>
+            <div class="form-group col-sm-9">
+
+                @Html.LabelFor(temp => temp.Nationality, "Nationality")
+                @Html.TextBoxFor(temp => temp.Nationality, new {  required = "required", @class = "form-control" })
+                @Html.ValidationMessageFor(temp => temp.Nationality, "", new { @class = "text-danger", required = "required" })
+                
             </div>
         </div>
         <div class="form-row">
@@ -183,24 +190,19 @@
                 </div>
             </div>
             
-            @Html.LabelFor(temp => temp.IsSpecialPermission,"Special Permission")
-            @Html.CheckBoxFor(temp => temp.IsSpecialPermission, new { @class = "form-control" })
-
-
-            @Html.LabelFor(temp => temp.IsVirtualTeamHead,"Virtual Head")
-            @Html.CheckBoxFor(temp => temp.IsVirtualTeamHead, new { @class = "form-control" })
-
-
-            @Html.LabelFor(temp => temp.EmployeeStatus,"Employee Status")
-            @Html.CheckBoxFor(temp => temp.EmployeeStatus, new { @class = "form-control" })
+         
+            @Html.HiddenFor(temp=>temp.EmployeeStatus)
+            
 
 
 
         </fieldset>
+        <br />
+        <br />
         <div class="form-row">
             <div class="form-group  col-sm-3">
 
-                <button type="submit" class="btn btn-info">Register new employee</button>
+                <button type="submit" class="btn btn-info">Save</button>
             </div>
 
         </div>
@@ -210,6 +212,34 @@
 </form>
 
 <script>
+
+    $("#MobileNumber").dblclick(
+        function () {
+            $.ajax(
+                {
+                    url: "/employee/getmobile?mobile=" + $("#MobileNumber").val(),
+                    type: "GET",
+                    success: function (msg) {
+                        if (msg == "found") {
+                            $(".mobile-exist").text("Mobile number already exist");
+                            $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
+                            alert(msg + "f");
+                        }
+                        else {
+                            $(".mobile-exist").text(" ");
+                            $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
+                            alert(msg + "n");
+                        }
+                    },
+                    error: function () {
+                        alert("error occured");
+                    }
+                }
+
+            )
+        });
+
+  
 
     //$(document).ready(function () {
     //    $("#Password2").blur(validate);
@@ -248,31 +278,7 @@
 
 
 
-    $("#MobileNumber").blur(
-        function () {
-            $.ajax(
-                {
-                    url: "/employee/getmobile?mobile=" + $("#MobileNumber").val(),
-                    type: "GET",
-                    success: function (msg) {
-                        if (msg == "found") {
-                            $(".mobile-exist").text("Mobile number already exist");
-                            $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
-                            alert(msg+"f");
-                        }
-                        else {
-                            $(".mobile-exist").text(" ");
-                            $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
-                            alert(msg+"n");
-                        }
-                    },
-                    error: function (msg) {
-                        alert(msg);
-                    }
-                }
-
-            )
-        });
+   
 
 
     $("#EmailID").blur(

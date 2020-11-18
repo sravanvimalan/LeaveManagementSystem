@@ -16,16 +16,16 @@ namespace LeaveManagementSystem.Controllers
     {
         IEmployeeService employeeService;
         IGenderService genderService;
-        IExperienceService experienceService;
+       
         IQualificationService qualificationService;
         IDesignationService designationService;
         IDepartmentService departmentService;
 
-        public EmployeeController(IEmployeeService employeeService, IGenderService genderService, IExperienceService experienceService, IQualificationService qualificationService, IDesignationService designationService, IDepartmentService departmentService)
+        public EmployeeController(IEmployeeService employeeService, IGenderService genderService,  IQualificationService qualificationService, IDesignationService designationService, IDepartmentService departmentService)
         {
             this.employeeService = employeeService;
             this.genderService = genderService;
-            this.experienceService = experienceService;
+           
             this.qualificationService = qualificationService;
             this.designationService = designationService;
             this.departmentService = departmentService;
@@ -40,11 +40,11 @@ namespace LeaveManagementSystem.Controllers
         }
 
         //[CustomAuthorizeAttribute("HR")]
-        public ActionResult AddNewEmployee()
+        public ActionResult AddEmployee()
         {
             AddEmployeeViewModel addEmployeeViewModel = new AddEmployeeViewModel();
 
-           
+            addEmployeeViewModel.EmployeeStatus = true;
             addEmployeeViewModel.GenderList =genderService.GenderList();
             addEmployeeViewModel.QualificationList =qualificationService. GetSelectListItemQualification();
             addEmployeeViewModel.DesignationList =designationService.GetSelectListItemDesignation();
@@ -55,7 +55,7 @@ namespace LeaveManagementSystem.Controllers
         }
         [HttpPost]
         //[CustomAuthorizeAttribute("HR")]
-        public ActionResult AddNewEmployee(AddEmployeeViewModel addEmployeeViewModel)
+        public ActionResult AddEmployee(AddEmployeeViewModel addEmployeeViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace LeaveManagementSystem.Controllers
         public ActionResult DeleteEmployee(int id)
         {
             employeeService.DeleteEmployeeByEmployeeID(id);
-            return RedirectToAction("employee");
+            return RedirectToAction("ListEmployee");
         }
         //[CustomAuthorizeAttribute("HR")]
         //[Authorize]
@@ -99,6 +99,17 @@ namespace LeaveManagementSystem.Controllers
             EmployeeViewModel.QualificationList = qualificationService.GetSelectListItemQualification();
             EmployeeViewModel.DesignationList = designationService.GetSelectListItemDesignation();
             EmployeeViewModel.DepartmentList = departmentService.GetSelectListItemsDepartment();
+            EmployeeViewModel.GenderName = EmployeeViewModel.Gender.GenderName;
+            EmployeeViewModel.QualificationName = EmployeeViewModel.Qualification.QualificationName;
+            EmployeeViewModel.DepartmentName = EmployeeViewModel.Department.DepartmentName;
+            EmployeeViewModel.DesignationName = EmployeeViewModel.Designation.DesignationName;
+            EmployeeViewModel.SelectedGenderID = Convert.ToString(EmployeeViewModel.Gender.GenderID);
+            EmployeeViewModel.SelectedDesignationID = Convert.ToString(EmployeeViewModel.Designation.DesignationID);
+            EmployeeViewModel.SelectedDepartmentID = Convert.ToString(EmployeeViewModel.Department.DepartmentID);
+            EmployeeViewModel.SelectedQualificationID = Convert.ToString(EmployeeViewModel.Qualification.QualificationID);
+           
+           
+
             return View(EmployeeViewModel);
         }
         [HttpPost]
@@ -122,6 +133,7 @@ namespace LeaveManagementSystem.Controllers
             }
             else
             {
+               
                 ModelState.AddModelError("newemployee", "Invalid employee details, please check and try again");
                 //employeeViewModel = employeeService.GetEmployeeByID(employeeViewModel.EmployeeID);
                 employeeViewModel.GenderList = genderService.GenderList();

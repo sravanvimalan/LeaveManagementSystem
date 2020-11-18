@@ -25,15 +25,12 @@ namespace LeaveManagementSystem.Controllers
 
 
         //[CustomAuthorizeAttribute("HR")]
-        public ActionResult Index()
+        public ActionResult DepartmentList()
         {
-
-          
 
             List<DepartmentWithVirtualHeadViewModel> virtualHeadList = departmentService.GetAllDepartmentWithVirtualHead();
 
             return View(virtualHeadList);
-
         }
       
 
@@ -62,7 +59,7 @@ namespace LeaveManagementSystem.Controllers
             }
            
 
-            return RedirectToAction("index");
+            return RedirectToAction("DepartmentList");
 
        
 

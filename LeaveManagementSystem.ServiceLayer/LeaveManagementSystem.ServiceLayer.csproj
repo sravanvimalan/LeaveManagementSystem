@@ -77,13 +77,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IService\IExperienceService.cs" />
     <Compile Include="IService\ILeaveRequestService.cs" />
     <Compile Include="IService\IVacationTypeService.cs" />
     <Compile Include="Service\DepartmentService.cs" />
     <Compile Include="Service\DesignationService.cs" />
     <Compile Include="Service\EmployeeService.cs" />
-    <Compile Include="Service\ExperienceService.cs" />
     <Compile Include="Service\GenderService.cs" />
     <Compile Include="IService\IDepartmentService.cs" />
     <Compile Include="IService\IDesignationService.cs" />

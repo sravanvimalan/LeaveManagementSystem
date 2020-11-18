@@ -77,12 +77,10 @@
     <Compile Include="Repository\DepartmentRepository.cs" />
     <Compile Include="Repository\DesignationRepository.cs" />
     <Compile Include="Repository\EmployeeRepository.cs" />
-    <Compile Include="Repository\ExperienceRepository.cs" />
     <Compile Include="Repository\GenderRepository.cs" />
     <Compile Include="IRepository\IDepartmentRepository.cs" />
     <Compile Include="IRepository\IDesignationRepository.cs" />
     <Compile Include="IRepository\IEmployeeRespository.cs" />
-    <Compile Include="IRepository\IExperienceRepository.cs" />
     <Compile Include="IRepository\IGenderRepository.cs" />
     <Compile Include="IRepository\IQualificationRepository.cs" />
     <Compile Include="IRepository\IRequestVacationRepository.cs" />

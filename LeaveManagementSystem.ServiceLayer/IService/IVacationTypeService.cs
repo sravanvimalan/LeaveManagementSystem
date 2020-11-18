@@ -12,7 +12,7 @@ namespace LeaveManagementSystem.ServiceLayer.IService
     public interface IVacationTypeService
     {
         public List<VacationType> GetAllVacationType();
-        public VacationTypeViewModel GetVacationTypeByVacationId(int vacationId);
+      
 
         public IEnumerable<SelectListItem> GetAllVacationTypeList(IEnumerable<VacationType> vacationType);
     }

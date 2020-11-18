@@ -121,20 +121,6 @@ namespace LeaveManagementSystem.ServiceLayer.Service
 
 
 
-        public void UpdateLeaveRequest(RequestVacationViewModel requestVacationViewModel)
-        {
-            RequestVacation requestVacation = null;
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<RequestVacationViewModel, RequestVacation>();
-                cfg.IgnoreUnmapped();
-            });
-            IMapper mapper = config.CreateMapper();
-            requestVacation = mapper.Map<RequestVacationViewModel, RequestVacation>(requestVacationViewModel);
-
-            RequestVacationRepository.UpdateLeaveRequest(requestVacation);
-        }
-
         public void UpdateStatusAndResponse(string Status, string Response, int RequestId, int VerifierId)
         {
             RequestVacationRepository.UpdateStatusAndResponse(Status, Response, RequestId, VerifierId);

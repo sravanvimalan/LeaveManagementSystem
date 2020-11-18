@@ -73,8 +73,11 @@ namespace LeaveManagementSystem.Repository
         public List<DepartmentWithVirtualHeadDTO> GetAllDepartmentWithVirtualHead()
         {
             var departmentWithVirtualHeadDTO = new List<DepartmentWithVirtualHeadDTO>();
+
+            var vhList = Db.Employee.Where(temp => temp.IsVirtualTeamHead == true).ToList();
+
             var departmentWithVT = from dep in Db.Department.ToList()
-                              join emp in Db.Employee.ToList()
+                              join emp in vhList
                               on dep.DepartmentID equals emp.DepartmentID
                               into depWithVT
                               from dv in depWithVT.DefaultIfEmpty()
@@ -82,7 +85,7 @@ namespace LeaveManagementSystem.Repository
 
             foreach (var item in departmentWithVT)
             {
-                if(item.dv != null && item.dv.IsVirtualTeamHead == true)
+                if (item.dv != null && item.dv.IsVirtualTeamHead == true)
                 {
                     departmentWithVirtualHeadDTO.Add(new DepartmentWithVirtualHeadDTO
                     {
@@ -102,8 +105,19 @@ namespace LeaveManagementSystem.Repository
                         EmployeeName = "Not Yet Assigned "
                     });
                 }
-               
+
             }
+            //int prevDepId = 0;
+            //foreach (var item in departmentWithVirtualHeadDTO)
+            //{
+            //    if (prevDepId == item.DepartmentID)
+            //        departmentWithVirtualHeadDTO.Remove(item);
+            //    prevDepId = item.DepartmentID;
+            //}
+            //departmentWithVirtualHeadDTO.SelectMany((departmentWithVirtualHeadDTO) => departmentWithVirtualHeadDTO.DepartmentName).Distinct();
+
+
+
             return departmentWithVirtualHeadDTO;
         }
     }

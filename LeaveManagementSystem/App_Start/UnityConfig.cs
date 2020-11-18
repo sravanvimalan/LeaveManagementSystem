@@ -30,8 +30,7 @@ namespace LeaveManagementSystem
             container.RegisterType<IDepartmentService, DepartmentService>();
             container.RegisterType<IDesignationRepository, DesignationRepository>();
             container.RegisterType<IDesignationService, DesignationService>();
-            container.RegisterType<IExperienceRepository, ExperienceRepository>();
-            container.RegisterType<IExperienceService, ExperienceService>();
+            
             container.RegisterType<ILeaveRequestService, LeaveRequestService>();
             container.RegisterType<IRequestVacationRepository, RequestVacationRepository>();
             container.RegisterType<IVacationTypeRepository, VacationTypeRepository>();

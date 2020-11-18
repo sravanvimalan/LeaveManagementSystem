@@ -28,21 +28,7 @@ namespace LeaveManagementSystem.ServiceLayer.Service
             return list;
         }
 
-        public VacationTypeViewModel GetVacationTypeByVacationId(int vacationId)
-        {
-            VacationType vacation = vacationTypeRepository.GetVacationTypeByVacationId(vacationId);
-
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<VacationType, VacationTypeViewModel>();
-                cfg.IgnoreUnmapped();
-            });
-            IMapper mapper = config.CreateMapper();
-
-            VacationTypeViewModel vacationTypeViewModel = mapper.Map<VacationType, VacationTypeViewModel>(vacation);
-
-            return vacationTypeViewModel;
-        }
+       
         public IEnumerable<SelectListItem> GetAllVacationTypeList(IEnumerable<VacationType> vacationType)
         {
             var selectList = new List<SelectListItem>();

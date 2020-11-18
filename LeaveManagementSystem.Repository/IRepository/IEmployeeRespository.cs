@@ -13,29 +13,13 @@ namespace LeaveManagementSystem.Repository
     {
         public Employee GetEmployeeByID(int EmployeeID);
         public int AuthenticateUser(string Email, string Password);
-
         public List<ProjectManagerDTO> GetAllProjectManagers();
-
-
-
-
-
-
-
-
-        /// <summary>
-        /// consider above functions 
-        /// </summary>
-        /// <returns></returns>
-
         public List<Employee> GetAllEmployees();
 
         public void AddEmployee(Employee employee);
         public void DeleteEmployeeByEmployeeID(int EmployeeID);
 
         public List<Employee> GetEmployeesByDesignationId(int DesignationId);
-
-       
 
         public List<Employee> GetEmployeeByDepartmentID(int DepartmentId);
 

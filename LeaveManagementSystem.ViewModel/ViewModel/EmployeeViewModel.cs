@@ -14,18 +14,28 @@ namespace LeaveManagementSystem.ViewModel
     {
         public int EmployeeID { get; set; }
         public string Image { get; set; }
+        [Required(ErrorMessage = "first name field is required")]
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
+        [Required(ErrorMessage ="last name field is required")]
         public string LastName { get; set; }
+        [Required]
         public DateTime DateOfBirth { get; set; }
+        [Required]
         public DateTime JoinDate { get; set; }
         public bool EmployeeStatus { get; set; }
+        [Required]
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string AddressLine3 { get; set; }
+        [Required(ErrorMessage ="Email address field is required")]
+        [DataType(DataType.EmailAddress)]
         public string EmailID { get; set; }
+        [Required(ErrorMessage ="Nationality field is required")]
 
         public string Nationality { get; set; }
+        [Required(ErrorMessage ="Phone number field is required")]
+        [DataType(DataType.PhoneNumber)]
         public string MobileNumber { get; set; }
 
         public int CreatedBy { get; set; }
@@ -42,13 +52,17 @@ namespace LeaveManagementSystem.ViewModel
         public DateTime EndDate { get; set; }
         public string GenderName { get; set; }
         public int GenderID { get; set; }
+        [Required(ErrorMessage ="please select a gender")]
         public string SelectedGenderID { get; set; }
         public string QualificationName { get; set; }
+        [Required (ErrorMessage ="Please select a qualification")]
         public string SelectedQualificationID { get; set; }
         public int DepartmentID { get; set; }
         public string DepartmentName { get; set; }
+        [Required(ErrorMessage ="please select a department")]
         public string SelectedDepartmentID { get; set; }
         public int DesignationID { get; set; }
+        [Required(ErrorMessage ="please select a designation")]
         public string SelectedDesignationID { get; set; }
         public string DesignationName { get; set; }
         public bool CurrentStatus { get; set; }

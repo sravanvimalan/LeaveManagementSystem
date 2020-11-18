@@ -3,9 +3,6 @@
     ViewBag.Title = "UpdateProfile";
 }
 
-@*@{
-    Html.RenderPartial("_EmployeePartialView");
-}*@
 @if (ViewBag.Response != null)
 {
 <div class="alert alert-success">
@@ -80,23 +77,14 @@
         <div>
             @Html.ValidationMessageFor(temp => temp.GenderID, "", new { @class = "text-danger" })
         </div>
-
-
-        <br /><br />
-
-
-
-
-
+        <br/>
+        <br/>
         @Html.LabelFor(temp => temp.Nationality, "Nationality")
         @Html.TextBoxFor(temp => temp.Nationality, new { @class = "form-control" })
         <div>
             @Html.ValidationMessageFor(temp => temp.Nationality, "", new { @class = "text-danger form - control", required = "required" })
-        </div>
-
-
-
-        <button type="submit" class="btn btn-success">Save</button>
+        
+            </div><button type="submit" class="btn btn-success">Save</button>
     </div>
 }
 
@@ -107,6 +95,7 @@
         color: white !important;
     }
 </style>
+
 <script>
 
     $("a[href='/Account/updateprofile']").attr("id", "active");

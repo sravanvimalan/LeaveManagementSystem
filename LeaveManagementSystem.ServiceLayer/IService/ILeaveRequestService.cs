@@ -15,7 +15,7 @@ namespace LeaveManagementSystem.ServiceLayer.IService
 
         public List<RequestVacationViewModel> GetLeaveRequestByApproveId(int EmployeeId);
 
-        public void UpdateLeaveRequest(RequestVacationViewModel requestVacationViewModel);
+        
 
         public RequestVacationViewModel GetLeaveRequestByID(int RequestID);
 

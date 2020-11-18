@@ -24,7 +24,7 @@ namespace LeaveManagementSystem.Repository
         public int AuthenticateUser(string email, string password)
         {
             Employee employee = Db.Employee.Where(temp => temp.EmailID == email && temp.Password == password).FirstOrDefault();
-            if (employee != null)
+            if (employee != null && employee.EmployeeStatus == true)
             {
                 return employee.EmployeeID;
             }
@@ -44,7 +44,7 @@ namespace LeaveManagementSystem.Repository
 
         public List<Employee> GetAllEmployees()
         {
-            List<Employee> list = Db.Employee.ToList();
+            List<Employee> list = Db.Employee.Where(temp=>temp.EmployeeStatus == true).ToList();
             return list;
         }
 

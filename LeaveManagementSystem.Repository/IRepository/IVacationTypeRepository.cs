@@ -10,6 +10,5 @@ namespace LeaveManagementSystem.Repository
     public interface IVacationTypeRepository
     {
         public List<VacationType> GetAllVacationTypes();
-        public VacationType GetVacationTypeByVacationId(int vacationId);
     }
 }

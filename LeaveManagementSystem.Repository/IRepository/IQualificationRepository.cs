@@ -10,6 +10,5 @@ namespace LeaveManagementSystem.Repository
     public interface IQualificationRepository
     {
         public List<Qualification> GetAllQualification();
-        public string GetQualificationById(int QualificationId);
     }
 }

@@ -30,7 +30,7 @@ namespace LeaveManagementSystem.Repository
 
         public List<RequestVacation> GetLeaveRequestByApproveId(int EmployeeId)
         {
-            List<RequestVacation> requestVacation = Db.RequestVacation.Where(temp => temp.ApproverID == EmployeeId & temp.LeaveStatus == "Pending").ToList();
+            List<RequestVacation> requestVacation = Db.RequestVacation.Where(temp => temp.ApproverID == EmployeeId & temp.LeaveStatus == "Pending").OrderByDescending(temp => temp.CreatedOn).ToList();
 
             return requestVacation;
         }

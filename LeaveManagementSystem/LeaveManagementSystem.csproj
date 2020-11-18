@@ -273,13 +273,13 @@
     <Content Include="Views\Account\UpdateProfile.cshtml" />
     <Content Include="Views\Leave\SendLeaveRequest.cshtml" />
     <Content Include="Views\Authenticate\SignIn.cshtml" />
-    <Content Include="Views\Employee\AddNewEmployee.cshtml" />
+    <Content Include="Views\Employee\AddEmployee.cshtml" />
     <Content Include="Views\Employee\ListEmployee.cshtml" />
     <Content Include="Views\Employee\AdminEditEmployee.cshtml" />
     <Content Include="Views\Account\Home.cshtml" />
     <Content Include="Views\Leave\VerifyLeave.cshtml" />
     <Content Include="Views\Leave\LeaveDetail.cshtml" />
-    <Content Include="Views\Department\Index.cshtml" />
+    <Content Include="Views\Department\DepartmentList.cshtml" />
     <Content Include="Views\Department\ChangeVirtualHead.cshtml" />
     <Content Include="Views\Designation\AddDesignation.cshtml" />
     <Content Include="Views\Department\AddDepartment.cshtml" />

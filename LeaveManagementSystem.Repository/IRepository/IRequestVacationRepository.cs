@@ -9,14 +9,14 @@ namespace LeaveManagementSystem.Repository
 {
     public interface IRequestVacationRepository
     {
-        public RequestVacation GetRequestVacationByID(int RequestVacationID);
+        //public RequestVacation GetRequestVacationByID(int RequestVacationID);
         public List<RequestVacation> GetAllRequestVacation();
 
         public void AddRequestVacation(RequestVacation requestVacation);
 
         public List<RequestVacation> GetLeaveRequestByApproveId(int EmployeeId);
 
-        public void UpdateLeaveRequest(RequestVacation requestVacation);
+        //public void UpdateLeaveRequest(RequestVacation requestVacation);
 
         public RequestVacation GetLeaveRequestByRequestID(int RequestID);
 
@@ -25,7 +25,7 @@ namespace LeaveManagementSystem.Repository
         public List<RequestVacation> GetAllRequestByEmployeeId(int id);
 
         public List<RequestVacation> GetAllLeaveRequestForVirtualHead(int departmentId);
-        List<RequestVacation> GetAllLeaveRequestForProjectManager(int employeeId);
-        List<RequestVacation> GetAllLeaveRequestForHR();
+        public List<RequestVacation> GetAllLeaveRequestForProjectManager(int employeeId);
+        public List<RequestVacation> GetAllLeaveRequestForHR();
     }
 }
