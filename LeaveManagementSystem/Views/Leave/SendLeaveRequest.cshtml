@@ -6,13 +6,13 @@
     var emp = (LeaveManagementSystem.ServiceLayer.Service.Session.UserSessionModel)Session["EmployeeDetails"];
 }
 @*@{
-    Html.RenderPartial("_EmployeePartialView");
-}*@
+        Html.RenderPartial("_EmployeePartialView");
+    }*@
 @if (ViewBag.Response != null)
 {
-    <script>
-        alert("@ViewBag.Response");
-    </script>
+    <div class="alert alert-success">
+        <strong>Updated Successfully!</strong>
+    </div>
 
 }
 <link rel="stylesheet" href="~/Content/CustomStyleSheet.css">

@@ -17,6 +17,7 @@ using LeaveManagementSystem.ServiceLayer.Service.Session;
 namespace LeaveManagementSystem.Controllers
 {
     [Authorize]
+    [CustomAuthorizeAttribute("CanApproveLeaveRequest")]
     public class LeaveController : Controller
     {
         ILeaveRequestService leaveRequestService;
@@ -34,7 +35,7 @@ namespace LeaveManagementSystem.Controllers
             this.vacationTypeService = vacationTypeService;
         }
 
-        [Authorize]
+        [OverrideAuthorization]
         public ActionResult SendLeaveRequest()
         {
             ViewBag.Response = TempData["Response"];
@@ -51,7 +52,7 @@ namespace LeaveManagementSystem.Controllers
             return View(requestVacationViewModel);
         }
         [HttpPost]
-        [Authorize]
+        [OverrideAuthorization]
         public ActionResult SendLeaveRequest(RequestVacationViewModel vacationRequestViewModel)
         {
             if (ModelState.IsValid)
@@ -74,8 +75,7 @@ namespace LeaveManagementSystem.Controllers
 
         }
 
-        // GET: Leave
-        //[CustomAuthorizeAttribute("Project Manager", "VirtualHead","HR")]
+        [CustomAuthorizeAttribute("CanApproveLeaveRequest")]
         public ActionResult VerifyLeave()
         {
             var employee = (UserSessionModel)(Session["EmployeeDetails"]);
@@ -83,7 +83,7 @@ namespace LeaveManagementSystem.Controllers
 
             return View(requestVacations);
         }
-       
+        [OverrideAuthorization]
         public ActionResult LeaveStatus()
         {
              var requestVacation = leaveRequestService.GetAllRequestByEmployeeId(Convert.ToInt32(Session["EmployeeID"]));
@@ -106,14 +106,14 @@ namespace LeaveManagementSystem.Controllers
                 return View(requestVacation);
             
         }
-        //[CustomAuthorizeAttribute("Project Manager", "VirtualHead","HR")]
+        [CustomAuthorizeAttribute("CanApproveLeaveRequest")]
         public ActionResult LeaveDetail(int Id)    
         {
             RequestVacationViewModel requestVacation = leaveRequestService.GetLeaveRequestByID(Id);
             return View(requestVacation);
         }
         [HttpPost]
-        //[CustomAuthorizeAttribute("Project Manager", "VirtualHead", "HR")]
+        [CustomAuthorizeAttribute("CanApproveLeaveRequest")]
         public ActionResult LeaveDetail( AdminReplyViewModel adminReply)     
         {
             leaveRequestService.UpdateStatusAndResponse(adminReply.LeaveStatus, adminReply.Response, adminReply.RequestID,Convert.ToInt32(Session["EmployeeID"]));

@@ -20,7 +20,7 @@ namespace LeaveManagementSystem.ServiceLayer
         public void AddEmployee(AddEmployeeViewModel obj);
         public void DeleteEmployeeByEmployeeID(int EmployeeID);
 
-        public List<EmployeeViewModel> GetEmployeesByDesignationId(int DesignationId);
+       
 
         public List<EmployeeViewModel> GetAllVirtualHead();
 

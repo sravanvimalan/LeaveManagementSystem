@@ -3,13 +3,14 @@
     ViewBag.Title = "Department";
 }
 <style>
-    .container 
-    {
-        width:900px;
+    .container {
+        width: 900px;
     }
 </style>
 <h2>Department</h2>
-<a href="~/department/adddepartment" class="btn btn-primary" style="float:right;">Add Department</a><br /><br />
+<a href="~/department/adddepartment" class="btn btn-primary" style="float:right;">Add Department</a>
+<br />
+<br />
 <div class="container my-2">
     <div class="card">
         <div class="card-body">
@@ -18,7 +19,7 @@
 
                 </p>
                 <div class="col-md-11">
-                    
+
                     <div th:case="*">
                         <table class="table table-striped table-responsive-md">
                             <thead>
@@ -27,26 +28,26 @@
                                     <th>Virtual Team Head</th>
 
                                     <th>Edit</th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
-                                 @foreach (var item in Model)
-                                 {
-                                <tr>
-                                    <td>@item.DepartmentName</td>
-                                    <td>@item.EmployeeName</td>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.DepartmentName</td>
+                                        <td>@item.EmployeeName</td>
 
-                                    <td>
-                                        <a href="~/department/ChangeVirtualHead?deptId=@item.DepartmentID&empId=@item.EmployeeID&deptName=@item.DepartmentName&existVTName=@item.EmployeeName"
-                                           class="btn btn-success">
-                                            <i class="fas fa-user-edit ml-2"></i>
-                                        </a>
-                                    </td>
-                                    
-                                </tr>
-                                 }
-                                
+                                        <td>
+                                            <a href="~/department/ChangeVirtualHead?deptId=@item.DepartmentID&empId=@item.EmployeeID&deptName=@item.DepartmentName&existVTName=@item.EmployeeName"
+                                               class="btn btn-success">
+                                                <i class="fas fa-user-edit ml-2"></i>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                }
+
                             </tbody>
                         </table>
                     </div>
@@ -56,3 +57,14 @@
         </div>
     </div>
 </div>
+<style>
+    #active {
+        background-color: grey !important;
+        color: white !important;
+    }
+</style>
+<script>
+
+    $("a[href='/department/departmentlist']").attr("id", "active");
+
+</script>

@@ -1,6 +1,12 @@
 ﻿
 @model LeaveManagementSystem.ViewModel.ViewModel.AddEmployeeViewModel
+@if (ViewBag.Response != null)
+{
+    <div class="alert alert-success">
+        <strong>Updated Successfully!</strong>
+    </div>
 
+}
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,22 +24,22 @@
         <input type="file" name="Image" id="Image" />
         <br>
         <br> <br> <br> <br>
-        @Html.HiddenFor(temp=>temp.EmployeeID)
+        @Html.HiddenFor(temp => temp.EmployeeID)
         <div class="form-row">
             <div class="form-group col-sm-3">
-                @Html.LabelFor(temp => temp.FirstName,"First Name")
+                @Html.LabelFor(temp => temp.FirstName, "First Name")
                 @Html.TextBoxFor(temp => temp.FirstName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.FirstName, "", new { @class = "text-danger", required = "required" })
             </div>
             <div class="form-group col-sm-3">
-                @Html.LabelFor(temp => temp.MiddleName,"Middle Name")
+                @Html.LabelFor(temp => temp.MiddleName, "Middle Name")
                 @Html.TextBoxFor(temp => temp.MiddleName, new { @class = "form-control" })
 
             </div>
 
 
             <div class="form-group col-sm-3">
-                @Html.LabelFor(temp => temp.LastName,"Last Name")
+                @Html.LabelFor(temp => temp.LastName, "Last Name")
                 @Html.TextBoxFor(temp => temp.LastName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.LastName, "", new { @class = "text-danger", required = "required" })
 
@@ -44,8 +50,7 @@
                 @Html.LabelFor(temp => temp.EmailID, "Email ID")
                 @Html.TextBoxFor(temp => temp.EmailID, new { @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.EmailID, "", new { @class = "text-danger", required = "required" })
-                <div class="valid-feedback">looks good</div>
-                <div class="invalid-feedback">Invalid email</div>
+               
                 <small class="email-exist text-danger"></small>
             </div>
         </div>
@@ -59,27 +64,27 @@
 
             </div>
             <div class="form-group col-sm-4">
-                @Html.LabelFor(temp => temp.ConfirmPassword,"Confirm Password")
+                @Html.LabelFor(temp => temp.ConfirmPassword, "Confirm Password")
                 @Html.PasswordFor(temp => temp.ConfirmPassword, new { @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.ConfirmPassword, "", new { @class = "text-danger", required = "required" })
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-sm-9">
-                @Html.LabelFor(temp => temp.AddressLine1,"Address")
+                @Html.LabelFor(temp => temp.AddressLine1, "Address")
                 @Html.TextBoxFor(temp => temp.AddressLine1, new { @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.AddressLine1, "", new { @class = "text-danger", required = "required" })
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-sm-9">
-                @Html.LabelFor(temp => temp.AddressLine2,"Address")
+                @Html.LabelFor(temp => temp.AddressLine2, "Address")
                 @Html.TextBoxFor(temp => temp.AddressLine2, new { @class = "form-control" })
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-sm-9">
-                @Html.LabelFor(temp => temp.AddressLine3,"Address")
+                @Html.LabelFor(temp => temp.AddressLine3, "Address")
                 @Html.TextBoxFor(temp => temp.AddressLine3, new { @class = "form-control" })
             </div>
         </div>
@@ -90,21 +95,20 @@
                 @Html.LabelFor(temp => temp.MobileNumber, "Mobile Number")
                 @Html.TextBoxFor(temp => temp.MobileNumber, new { pattern = "^[789]\\d{9}$", required = "required", @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.MobileNumber, "", new { @class = "text-danger", required = "required" })
-                <div class="valid-feedback">looks good</div>
-                <div class="invalid-feedback">Invalid mobile number</div>
+              
                 <small class="mobile-exist text-danger"></small>
             </div>
             <div class="form-group col-sm-9">
 
                 @Html.LabelFor(temp => temp.Nationality, "Nationality")
-                @Html.TextBoxFor(temp => temp.Nationality, new {  required = "required", @class = "form-control" })
+                @Html.TextBoxFor(temp => temp.Nationality, new { required = "required", @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.Nationality, "", new { @class = "text-danger", required = "required" })
-                
+
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-sm-4">
-                @Html.LabelFor(temp => temp.DateOfBirth,"Date Of Birth")
+                @Html.LabelFor(temp => temp.DateOfBirth, "Date Of Birth")
                 @Html.TextBoxFor(model => model.DateOfBirth,
          new { @type = "date", @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.DateOfBirth, "", new { @class = "text-danger", required = "required" })
@@ -121,45 +125,45 @@
             </div>
         </div>
         <br /><br />
-              <fieldset>
-                  <legend>Experience</legend>
-                  <div class="form-row">
-                      <div class="form-group col-sm-4">
-                          @Html.LabelFor(temp => temp.Experience.CompanyName, "Company Name")
-                          @Html.TextBoxFor(temp => temp.Experience.CompanyName, new { @class = "form-control" })
-                      </div>
-                      <div class="form-group col-sm-1">
+        <fieldset>
+            <legend>Experience</legend>
+            <div class="form-row">
+                <div class="form-group col-sm-4">
+                    @Html.LabelFor(temp => temp.Experience.CompanyName, "Company Name")
+                    @Html.TextBoxFor(temp => temp.Experience.CompanyName, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-sm-1">
 
-                      </div>
-                      <div class="form-group col-sm-4">
-                          @Html.LabelFor(temp => temp.Experience.JobRole, "Job Role")
-                          @Html.TextBoxFor(temp => temp.Experience.JobRole, new { @class = "form-control" })
-                      </div>
-                  </div>
+                </div>
+                <div class="form-group col-sm-4">
+                    @Html.LabelFor(temp => temp.Experience.JobRole, "Job Role")
+                    @Html.TextBoxFor(temp => temp.Experience.JobRole, new { @class = "form-control" })
+                </div>
+            </div>
 
-                  <div class="form-row">
-                      <div class="form-group col-sm-4">
-                          @Html.LabelFor(temp => temp.Experience.StartDate, "Start Date")
-                          @Html.TextBoxFor(model => model.Experience.StartDate,
-                   new { @type = "date", @class = "form-control" })
+            <div class="form-row">
+                <div class="form-group col-sm-4">
+                    @Html.LabelFor(temp => temp.Experience.StartDate, "Start Date")
+                    @Html.TextBoxFor(model => model.Experience.StartDate,
+             new { @type = "date", @class = "form-control" })
 
-                      </div>
-                      <div class="form-group col-sm-1">
+                </div>
+                <div class="form-group col-sm-1">
 
-                      </div>
-                      <div class="form-group col-sm-4">
-                          @Html.LabelFor(temp => temp.Experience.EndDate, "End Date")
-                          @Html.TextBoxFor(model => model.Experience.EndDate,
-                   new { @type = "date", @class = "form-control" })
-                          <br><br>
-                      </div>
-                  </div>
-              </fieldset>
+                </div>
+                <div class="form-group col-sm-4">
+                    @Html.LabelFor(temp => temp.Experience.EndDate, "End Date")
+                    @Html.TextBoxFor(model => model.Experience.EndDate,
+             new { @type = "date", @class = "form-control" })
+                    <br><br>
+                </div>
+            </div>
+        </fieldset>
         <fieldset>
             <legend>Company</legend>
             <div class="form-row">
                 <div class="form-group col-sm-4">
-                    @Html.LabelFor(temp => temp.JoinDate,"Join Date")
+                    @Html.LabelFor(temp => temp.JoinDate, "Join Date")
                     @Html.TextBoxFor(model => model.JoinDate,
              new { @type = "date", @class = "form-control" })
                     @Html.ValidationMessageFor(temp => temp.JoinDate, "", new { @class = "text-danger", required = "required" })
@@ -173,7 +177,7 @@
                     @Html.ValidationMessageFor(temp => temp.SelectedQualificationId, "", new { @class = "text-danger", required = "required" })
                 </div>
             </div>
-          
+
             <div class="form-row">
                 <div class="form-group col-sm-4">
                     @Html.LabelFor(temp => temp.SelectedDepartmentId, "Department")
@@ -189,10 +193,10 @@
                     @Html.ValidationMessageFor(temp => temp.SelectedDesignationId, "", new { @class = "text-danger", required = "required" })
                 </div>
             </div>
-            
-         
-            @Html.HiddenFor(temp=>temp.EmployeeStatus)
-            
+
+
+            @Html.HiddenFor(temp => temp.EmployeeStatus)
+
 
 
 
@@ -207,39 +211,104 @@
 
         </div>
     </div>
-    
+
 
 </form>
 
-<script>
+<script type="text/javascript">
 
-    $("#MobileNumber").dblclick(
-        function () {
-            $.ajax(
-                {
-                    url: "/employee/getmobile?mobile=" + $("#MobileNumber").val(),
-                    type: "GET",
-                    success: function (msg) {
-                        if (msg == "found") {
-                            $(".mobile-exist").text("Mobile number already exist");
-                            $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
-                            alert(msg + "f");
-                        }
-                        else {
-                            $(".mobile-exist").text(" ");
-                            $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
-                            alert(msg + "n");
-                        }
-                    },
-                    error: function () {
-                        alert("error occured");
+
+
+    $(document).ready(function () {
+        $("#MobileNumber").blur(function () {
+            var number = $("#MobileNumber").val();
+
+            $.ajax({
+                url: '/RemoteValidation/getmobile?number=' + number,
+                method: 'get',
+                data: { number: number },
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.msg == "found") {
+                        $(".mobile-exist").text("Mobile number already exist");
+                        
                     }
+                    else {
+                        $(".mobile-exist").text(" ");
+                       
+                    }
+                },
+                error: function (response) {
+                    alert("error");
                 }
 
-            )
+
+            });
+
+
         });
 
-  
+    });
+
+
+    $(document).ready(function () {
+        $("#EmailID").blur(function () {
+            var email = $("#EmailID").val();
+
+            $.ajax({
+                url: '/RemoteValidation/getemail?email=' + email,
+                method: 'get',
+                data: { email: email },
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.msg == "found") {
+                        $(".email-exist").text("Email already exist");
+                    }
+                    else {
+                        $(".email-exist").text(" ");
+                    }
+                },
+                error: function (response) {
+                    alert("error");
+                }
+
+
+            });
+
+
+        });
+
+    });
+
+
+
+    //$("#MobileNumber").dblclick(
+    //    function () {
+    //        $.ajax(
+    //            {
+    //                url: "/employee/getmobile?mobile=" + $("#MobileNumber").val(),
+    //                type: "GET",
+    //                success: function (msg) {
+    //                    if (msg == "found") {
+    //                        $(".mobile-exist").text("Mobile number already exist");
+    //                        $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
+    //                        alert(msg + "f");
+    //                    }
+    //                    else {
+    //                        $(".mobile-exist").text(" ");
+    //                        $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
+    //                        alert(msg + "n");
+    //                    }
+    //                },
+    //                error: function () {
+    //                    alert("error occured");
+    //                }
+    //            }
+
+    //        )
+    //    });
+
+
 
     //$(document).ready(function () {
     //    $("#Password2").blur(validate);
@@ -258,18 +327,11 @@
     //});
 
 
-   
 
 
 
-    //$(document).on("submit", ".form-validation", validation);
-    //$(".form-validation,input").blur(validation);
-    //function validation(event) {
-    //    if ($(".form-validation")[0].checkValidity() == false) {
-    //        event.preventDefault();
-    //    }
-    //    $(".form-validation")[0].classList.add("was-validated");
-    //}
+
+ 
 
 
 
@@ -278,31 +340,30 @@
 
 
 
-   
 
 
-    $("#EmailID").blur(
-        function () {
-            $.ajax(
-                {
-                    url: "/employee/getemail?email=" + $("#EmailID").val(),
-                    type: "GET",
-                    success: function (response) {
-                        if (response == "found") {
-                            $(".email-exist").text("Email already exist");
-                            $(".email-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
-                        }
-                        else {
-                            $(".email-exist").text("");
-                            $(".email-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
-                        }
-                    },
-                    error: function () {
-                        alert("Error occured")
-                    }
-                }
+    //$("#EmailID").blur(
+    //    function () {
+    //        $.ajax(
+    //            {
+    //                url: "/employee/getemail?email=" + $("#EmailID").val(),
+    //                type: "GET",
+    //                success: function (response) {
+    //                    if (response == "found") {
+    //                        $(".email-exist").text("Email already exist");
+    //                        $(".email-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
+    //                    }
+    //                    else {
+    //                        $(".email-exist").text("");
+    //                        $(".email-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
+    //                    }
+    //                },
+    //                error: function () {
+    //                    alert("Error occured")
+    //                }
+    //            }
 
-            )
-        });
+    //        )
+    //    });
 </script>
 

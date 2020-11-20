@@ -12,31 +12,20 @@ namespace LeaveManagementSystem.CustomAuthorizationFilter
 {
     public class CustomAuthorizeAttribute : AuthorizeAttribute
     {
-        private readonly string[] allowedroles;
+        private readonly string _permission;
     
-        public CustomAuthorizeAttribute(params string[] roles)
+        public CustomAuthorizeAttribute( string role)
         {
-            this.allowedroles = roles;
+            this._permission = role;
         }
        
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             bool authorize = false;
-            var designationName = Convert.ToString(httpContext.Session["DesignationName"]);
 
-            var VirtualHead = Convert.ToString(httpContext.Session["VirtualHead"]);
+            var permission = (bool)httpContext.Session[_permission];
 
-            var HR = Convert.ToString(httpContext.Session["HR"]);
-            foreach (var item in allowedroles)
-            {
-                if(item == designationName || item == VirtualHead || item == HR )
-                {
-                    authorize = true;
-                }
-                
-            }
-
-
+            if(permission) { authorize = true; }
 
             return authorize;
         }
@@ -46,7 +35,7 @@ namespace LeaveManagementSystem.CustomAuthorizationFilter
             filterContext.Result = new RedirectToRouteResult(
                new RouteValueDictionary
                {
-                    { "controller", "Account" },
+                    { "controller", "UnAuthorized" },
                     { "action", "Unauthorized" }
                });
         }

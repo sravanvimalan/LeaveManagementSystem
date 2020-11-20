@@ -48,8 +48,7 @@ namespace LeaveManagementSystem.ViewModel
         public bool IsVirtualTeamHead { get; set; }
         public string CompanyName { get; set; }
         public string JobRole { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+       
         public string GenderName { get; set; }
         public int GenderID { get; set; }
         [Required(ErrorMessage ="please select a gender")]
@@ -57,6 +56,8 @@ namespace LeaveManagementSystem.ViewModel
         public string QualificationName { get; set; }
         [Required (ErrorMessage ="Please select a qualification")]
         public string SelectedQualificationID { get; set; }
+
+        public int QualificationID { get; set; }
         public int DepartmentID { get; set; }
         public string DepartmentName { get; set; }
         [Required(ErrorMessage ="please select a department")]

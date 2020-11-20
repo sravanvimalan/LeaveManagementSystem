@@ -1,5 +1,5 @@
 ﻿
-@{ 
+@{
     var employee = (LeaveManagementSystem.ServiceLayer.Service.Session.UserSessionModel)Session["EmployeeDetails"];
 }
 
@@ -29,4 +29,10 @@ else
 <h5>
     <span class="label label-success">Active</span>
 </h5>
-<p>
+@if (Session["Response"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Updated Successfully!</strong>
+    </div>
+
+}

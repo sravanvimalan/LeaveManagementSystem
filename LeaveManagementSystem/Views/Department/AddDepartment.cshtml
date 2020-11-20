@@ -2,7 +2,13 @@
 @{
     ViewBag.Title = "AddDepartment";
 }
+@if (ViewBag.Response != null)
+{
+    <div class="alert alert-success">
+        <strong>Updated Successfully!</strong>
+    </div>
 
+}
 
 <link rel="stylesheet" href="~/Content/CustomStyleSheet.css">
 
@@ -17,6 +23,7 @@
         @Html.ValidationMessageFor(temp => temp.DepartmentName, "", new { @class = "text-danger", required = "required" })
 
         <small class="department-exist text-danger"></small>
+        <br /> <br /> 
         <button type="submit" style="float:right;" class="btn btn-primary">Add</button>
         <a href="/department/departmentlist" style="float:left" class="btn btn-primary">back</a>
 
@@ -24,29 +31,36 @@
 </div>
 
 <script>
-    $("#DepartmentName").blur(
-        function () {
-            $.ajax(
-                {
-                    url: "/department/getdepartment?department=" + $("#DepartmentName").val(),
-                    type: "GET",
-                    success: function (response) {
-                        if (response == "found") {
-                            $(".department-exist").text("Designation already exist");
-                            $(".Isdesignation-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
-                        }
-                        else {
-                            $(".department-exist").text("");
-                            $(".Isdesignation-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
-                        }
-                    },
-                    error: function () {
-                        alert("Error occured")
+    $(document).ready(function () {
+        $("#DepartmentName").blur(function () {
+            var department = $("#DepartmentName").val();
+
+            $.ajax({
+                url: '/RemoteValidation/getdepartment?department=' + department,
+                method: 'get',
+                data: { department: department },
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.msg == "found") {
+                        $(".department-exist").text("Department already exist");
+
                     }
+                    else {
+                        $(".department-exist").text(" ");
+
+                    }
+                },
+                error: function (response) {
+                    alert("Something went wrong ! Try again");
                 }
 
-            )
+
+            });
+
+
         });
+
+    });
 </script>
 
 

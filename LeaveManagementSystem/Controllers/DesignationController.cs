@@ -10,7 +10,8 @@ using LeaveManagementSystem.ViewModel;
 
 namespace LeaveManagementSystem.Controllers
 {
-    //[Authorize]
+    [Authorize]
+    [CustomAuthorizeAttribute("HasAdminPermission")]
     public class DesignationController : Controller
     {
         IDesignationService designationService;
@@ -19,14 +20,14 @@ namespace LeaveManagementSystem.Controllers
         {
             this.designationService = designationService;
         }
-        //[CustomAuthorizeAttribute("HR")]
+       
         public ActionResult AddDesignation()
         {
             DesignationViewModel designation = new DesignationViewModel();
 
             return View(designation);
         }
-        //[CustomAuthorizeAttribute("HR")]
+        
         [HttpPost]
         public ActionResult AddDesignation(DesignationViewModel designation)
         {
@@ -49,17 +50,7 @@ namespace LeaveManagementSystem.Controllers
             var designations = designationService.GetAllDesignations();
             return View(designations);
         }
-        public string GetDesignation(string designation)
-        {
-            if (designationService.IsDesignationExist(designation))
-            {
-                return "found";
-            }
-            else
-            {
-                return "not found";
-            }
-        }
+       
 
 
 
@@ -68,3 +59,4 @@ namespace LeaveManagementSystem.Controllers
 
     }
 }
+

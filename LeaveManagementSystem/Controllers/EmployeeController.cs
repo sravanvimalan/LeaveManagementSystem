@@ -6,12 +6,15 @@ using System.Web.Mvc;
 using LeaveManagementSystem.CustomAuthorizationFilter;
 using LeaveManagementSystem.ServiceLayer;
 using LeaveManagementSystem.ServiceLayer.IService;
+using LeaveManagementSystem.ServiceLayer.Service.Session;
 using LeaveManagementSystem.ViewModel;
 using LeaveManagementSystem.ViewModel.ViewModel;
 
 namespace LeaveManagementSystem.Controllers
 {
     [Authorize]
+    [CustomAuthorizeAttribute("HasAdminPermission")]
+
     public class EmployeeController : Controller
     {
         IEmployeeService employeeService;
@@ -31,7 +34,7 @@ namespace LeaveManagementSystem.Controllers
             this.departmentService = departmentService;
         }
 
-        //[CustomAuthorizeAttribute("HR")]
+       
         public ActionResult ListEmployee(string Search = "")
         {
             List<EmployeeViewModel> list = employeeService.GetAllEmployees();
@@ -39,7 +42,7 @@ namespace LeaveManagementSystem.Controllers
             return View(list);
         }
 
-        //[CustomAuthorizeAttribute("HR")]
+        
         public ActionResult AddEmployee()
         {
             AddEmployeeViewModel addEmployeeViewModel = new AddEmployeeViewModel();
@@ -54,7 +57,7 @@ namespace LeaveManagementSystem.Controllers
 
         }
         [HttpPost]
-        //[CustomAuthorizeAttribute("HR")]
+    
         public ActionResult AddEmployee(AddEmployeeViewModel addEmployeeViewModel)
         {
             if (ModelState.IsValid)
@@ -83,15 +86,14 @@ namespace LeaveManagementSystem.Controllers
 
         }
 
-        //[CustomAuthorizeAttribute("HR")]
+       
         [Authorize]
         public ActionResult DeleteEmployee(int id)
         {
             employeeService.DeleteEmployeeByEmployeeID(id);
             return RedirectToAction("ListEmployee");
         }
-        //[CustomAuthorizeAttribute("HR")]
-        //[Authorize]
+        
         public ActionResult AdminEditEmployee(int id)
         {
             EmployeeViewModel EmployeeViewModel = employeeService.GetEmployeeByID(id);
@@ -113,7 +115,7 @@ namespace LeaveManagementSystem.Controllers
             return View(EmployeeViewModel);
         }
         [HttpPost]
-        //[Authorize]
+        
         public ActionResult AdminEditEmployee(EmployeeViewModel employeeViewModel)
         {
 
@@ -127,8 +129,14 @@ namespace LeaveManagementSystem.Controllers
                     var Base64String = Convert.ToBase64String(ImgByte, 0, ImgByte.Length);
                     employeeViewModel.Image = Base64String;
                 }
-
+                employeeViewModel.GenderID = Convert.ToInt32(employeeViewModel.SelectedGenderID);
+                employeeViewModel.DepartmentID = Convert.ToInt32(employeeViewModel.SelectedDepartmentID);
+                employeeViewModel.DesignationID = Convert.ToInt32(employeeViewModel.SelectedDesignationID);
+                employeeViewModel.QualificationID = Convert.ToInt32(employeeViewModel.SelectedQualificationID);
+                employeeViewModel.ModifiedBy = Convert.ToInt32(Session["EmployeeID"]);
+                employeeViewModel.ModifiedOn = DateTime.Now;
                 employeeService.UpdateProfileByAdmin(employeeViewModel);
+                
                 return RedirectToAction("ListEmployee");
             }
             else
@@ -145,35 +153,7 @@ namespace LeaveManagementSystem.Controllers
 
         }
        
-        [HttpGet]
-        public JsonResult GetMobile(string mobile)
-        {
-
-            bool value =  employeeService.IsMobileExist(mobile);
-
-            if(value)
-            {
-                return Json(new { msg = " found" }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(new { msg = " not found" }, JsonRequestBehavior.AllowGet);
-            }
-
-        }
-        [HttpGet]
-        public string GetEmail(string email)
-        {
-            bool value = employeeService.IsEmailExist(email);
-
-            if (value)
-            {
-                return "found";
-            }
-            else
-            {
-                return "not found";
-            }
-        }
+       
+        
     }
 }

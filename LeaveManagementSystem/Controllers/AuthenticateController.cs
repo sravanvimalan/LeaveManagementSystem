@@ -11,6 +11,7 @@ using System.Web.Security;
 
 namespace LeaveManagementSystem.Controllers
 {
+   
     public class AuthenticateController : Controller
     {
         IEmployeeService employeeService;
@@ -58,12 +59,12 @@ namespace LeaveManagementSystem.Controllers
                     userSessionModel.LastName = employeeViewModel.LastName;
                     userSessionModel.Image = employeeViewModel.Image;
 
-                    if (employeeViewModel.IsVirtualTeamHead == true || employeeViewModel.DesignationName == "ProjectManager")
+                    if (employeeViewModel.IsVirtualTeamHead == true || employeeViewModel.Designation.DesignationName == "ProjectManager")
                     {
                        userSessionModel.CanApproveLeaveRequest = true;
                     }
 
-                    if (employeeViewModel.DepartmentName == "HR")
+                    if (employeeViewModel.Department.DepartmentName == "HR")
                     {
                         userSessionModel.HasAdminPermission = true;
 
@@ -71,12 +72,15 @@ namespace LeaveManagementSystem.Controllers
                         {
                             userSessionModel.CanApproveLeaveRequest = true;
                         }
-                    } 
-
+                    }
+                   
                     Session["EmployeeDetails"] = userSessionModel;
                     Session["EmployeeImage"] = userSessionModel.Image;
 
-                    FormsAuthentication.SetAuthCookie(employeeViewModel.EmailID, false);
+                    Session["HasAdminPermission"] = userSessionModel.HasAdminPermission;
+                    Session["CanApproveLeaveRequest"] = userSessionModel.CanApproveLeaveRequest;
+
+                    FormsAuthentication.SetAuthCookie(employeeViewModel.EmailID,false) ;
                     return RedirectToAction("home", "account");
                 }
                 else

@@ -2,33 +2,39 @@
 @{
     ViewBag.Title = "ChangeVirtualHead";
 }
+@if (ViewBag.Response != null)
+{
+    <div class="alert alert-success">
+        <strong>Updated Successfully!</strong>
+    </div>
+
+}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="~/Content/CustomStyleSheet.css">
 
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="~/Content/CustomStyleSheet.css">
-   
+
+<form action="/department/changevirtualhead" method="post">
+    <div class="container">
+        <h1>Change Virtual Head</h1>
+
+        <hr>
+
+        @Html.LabelFor(Model => Model.DepartmentName, "Department Name")
+        @Html.TextBoxFor(Model => Model.DepartmentName, new { @value = Model.DepartmentName, @readonly = true })
+        <br /> <br />
+        @Html.HiddenFor(temp => temp.ExistVirtualHeadID)
+
+        @Html.LabelFor(temp => temp.NewVirtualTeamHeadID, "Vitual Head Name")
+        @Html.DropDownListFor(temp => temp.NewVirtualTeamHeadID, Model.ListOfAllEmployee, Model.ExistVirtualHeadName + " (Current)", new { @class = "form-control" })
 
 
-    <form action="/department/changevirtualhead" method="post">
-        <div class="container">
-            <h1>Change Virtual Head</h1>
-
-            <hr>
-
-            @Html.LabelFor(Model => Model.DepartmentName, "Department Name")
-            @Html.TextBoxFor(Model => Model.DepartmentName, new { @value = Model.DepartmentName, @readonly = true })
-            <br /> <br />
-            @Html.HiddenFor(temp=>temp.ExistVirtualHeadID)
-
-            @Html.LabelFor(temp => temp.NewVirtualTeamHeadID, "Vitual Head Name")
-            @Html.DropDownListFor(temp => temp.NewVirtualTeamHeadID, Model.ListOfAllEmployee, Model.ExistVirtualHeadName+" (Current)",new { @class="form-control"} )
-            
-
-            <br /><br />
-                  <button type="submit" class="btn btn-success"> Save</button>
-            <a href="/department/index" class="btn btn-primary" style="float:right">Back</a>
-        </div>
+        <br /><br />
+        <button type="submit" class="btn btn-success"> Save</button>
+        <a href="/department/index" class="btn btn-primary" style="float:right">Back</a>
+    </div>
 
 
-    </form>
+</form>
 

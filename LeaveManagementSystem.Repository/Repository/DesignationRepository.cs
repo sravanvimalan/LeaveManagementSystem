@@ -16,15 +16,7 @@ namespace LeaveManagementSystem.Repository
             Db = new LeaveManagementSystemDbcontext();
         }
 
-        public void DeleteDesignationByDesignationID(int DesignationID)
-        {
-            Designation obj = Db.Designation.Where(temp => temp.DesignationID == DesignationID).FirstOrDefault();
-             if(obj != null)
-            {
-                Db.Designation.Remove(obj);
-                Db.SaveChanges();
-            }
-        }
+      
 
         public List<Designation> GetAllDesignations()
         {

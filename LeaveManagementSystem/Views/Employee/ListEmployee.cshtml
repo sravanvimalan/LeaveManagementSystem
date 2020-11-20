@@ -3,64 +3,78 @@
     ViewBag.Title = "Employee";
 }
 
-     <br /><br />
-           <div style="width:100px;">
-               <div class="input-group" style="width:300px;">
-                   <form action="/employee/Listemployee">
-                       <input type="text" class="form-control" placeholder="Search Employee" name="Search">
-                       <span class="input-group-btn">
-                           <button class="btn btn-default" type="submit">
-                             
-                               <span class="glyphicon glyphicon-search"></span>
-                           </button>
-                       </span>
-                   </form>
-               </div>
-               <br /><br />
-               <div class="container my-2">
-                           <div class="container my-5">
-                               <p class="my-5">
-                                   <a href="/employee/addemployee" class="btn btn-primary">
-                                       <i class="fas fa-user-plus ml-2"> Add Employee </i>
-                                   </a>
-                               </p>
-                               <div class="col-md-10">
-                                   <div>
-                                       <table class="table table-striped table-responsive-md">
-                                           <thead>
-                                               <tr>
-                                                   <th>Name</th>
-                                                   <th>Email</th>
-                                                   <th>Edit</th>
-                                                   <th>Delete</th>
-                                               </tr>
-                                           </thead>
-                                           <tbody>
-                                               @foreach (var item in Model)
-                                               {
-                                                   <tr>
-                                                       <td>@item.FirstName @item.MiddleName @item.LastName </td>
-                                                       <td>@item.EmailID</td>
-                                                       <td>
-                                                           <a href="~/employee/admineditemployee/@item.EmployeeID"
-                                                              class="btn btn-primary">
-                                                               <i class="fas fa-user-edit ml-2"></i>
-                                                           </a>
-                                                       </td>
-                                                       <td>
-                                                           <a href="~/employee/deleteemployee/@item.EmployeeID"
-                                                              class="btn btn-primary">
-                                                               <i class="fas fa-user-times ml-2"></i>
-                                                           </a>
-                                                       </td>
-                                                   </tr>
-                                               }
 
-                                           </tbody>
-                                       </table>
-                                   </div>
+<br />
+<br />
+<div style="width:100px;">
+    <div class="input-group" style="width:300px;">
+        <form action="/employee/Listemployee">
+            <input type="text" class="form-control" placeholder="Search Employee" name="Search">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">
 
-                               </div>
-                           </div>
-               </div>
-           </div>
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </form>
+    </div>
+    <br /><br />
+    <div class="container my-2">
+        <div class="container my-5">
+            <p class="my-5">
+                <a href="/employee/addemployee" class="btn btn-primary">
+                    <i class="fas fa-user-plus ml-2"> Add Employee </i>
+                </a>
+            </p>
+            <div class="col-md-10">
+                <div>
+                    <table class="table table-striped table-responsive-md">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.FirstName @item.MiddleName @item.LastName </td>
+                                    <td>@item.EmailID</td>
+                                    <td>
+                                        <a href="~/employee/admineditemployee/@item.EmployeeID"
+                                           class="btn btn-primary">
+                                            <i class="fas fa-user-edit ml-2"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="~/employee/deleteemployee/@item.EmployeeID"
+                                           class="btn btn-primary">
+                                            <i class="fas fa-user-times ml-2"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    #active {
+        background-color: grey !important;
+        color: white !important;
+    }
+</style>
+
+<script>
+
+    $("a[href='/employee/listEmployee']").attr("id", "active");
+
+</script>

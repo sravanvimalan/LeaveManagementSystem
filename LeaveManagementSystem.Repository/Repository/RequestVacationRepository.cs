@@ -18,7 +18,7 @@ namespace LeaveManagementSystem.Repository
 
         public List<RequestVacation> GetAllRequestByEmployeeId(int id)
         {
-            List<RequestVacation> requestVacations = Db.RequestVacation.Where(temp => temp.CreatorID == id).ToList();
+            List<RequestVacation> requestVacations = Db.RequestVacation.Where(temp => temp.CreatorID == id).OrderByDescending(temp=>temp.CreatedOn).ToList();
             return requestVacations;
         }
 

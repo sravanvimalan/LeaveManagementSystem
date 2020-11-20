@@ -12,6 +12,7 @@ using LeaveManagementSystem.CustomAuthorizationFilter;
 namespace LeaveManagementSystem.Controllers
 {
     [Authorize]
+    [CustomAuthorizeAttribute("HasAdminPermission")]
     public class DepartmentController : Controller
     {
         IDepartmentService departmentService;
@@ -24,7 +25,7 @@ namespace LeaveManagementSystem.Controllers
         }
 
 
-        //[CustomAuthorizeAttribute("HR")]
+     
         public ActionResult DepartmentList()
         {
 
@@ -35,7 +36,7 @@ namespace LeaveManagementSystem.Controllers
       
 
 
-    //[CustomAuthorizeAttribute("HR")]
+   
     public ActionResult ChangeVirtualHead(int deptId,int empId,string deptName,string existVTName)
     {
            IEnumerable<SelectListItem> employeeList = employeeService.GetAllEmployeeByDepartmentID(deptId);
@@ -49,7 +50,7 @@ namespace LeaveManagementSystem.Controllers
 
     }
     [HttpPost]
-    //[CustomAuthorizeAttribute("HR")]
+  
     public ActionResult ChangeVirtualHead(ChangeVHViewModel VirtualHead)
     {
             if(VirtualHead.NewVirtualTeamHeadID != null)
@@ -64,14 +65,14 @@ namespace LeaveManagementSystem.Controllers
        
 
     }
-    //[CustomAuthorizeAttribute("HR")]
+   
     public ActionResult AddDepartment()
     {
         DepartmentViewModel department = new DepartmentViewModel();
         return View(department);
     }
     [HttpPost]
-    //[CustomAuthorizeAttribute("HR")]
+   
     public ActionResult AddDepartment(DepartmentViewModel department)
     {
         if (ModelState.IsValid)
@@ -91,17 +92,7 @@ namespace LeaveManagementSystem.Controllers
 
 
     }
-    public string GetDepartment(string department)
-    {
-        if (departmentService.IsDepartmentExist(department))
-        {
-            return "found";
-        }
-        else
-        {
-            return "not found";
-        }
-    }
+   
 
 
 }

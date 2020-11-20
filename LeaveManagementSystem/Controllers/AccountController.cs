@@ -8,6 +8,7 @@ using LeaveManagementSystem.ServiceLayer.Service.Session;
 
 namespace LeaveManagementSystem.Controllers
 { 
+   [Authorize]
     public class AccountController : Controller
     {
         IGenderService genderService;
@@ -88,6 +89,21 @@ namespace LeaveManagementSystem.Controllers
                 }
                 Session["EmployeeImage"] = updateProfileByEmployeeViewModel.Image;
                 employeeService.UpdateProfileByEmployee(updateProfileByEmployeeViewModel);
+               
+                var userSessionModel = new UserSessionModel();
+
+                EmployeeViewModel employeeViewModel = employeeService.GetEmployeeByID(Convert.ToInt32(Session["EmployeeID"]));
+                userSessionModel.EmployeeID = employeeViewModel.EmployeeID;
+                userSessionModel.DepartmentID = employeeViewModel.DepartmentID;
+                userSessionModel.DesignationName = employeeViewModel.Designation.DesignationName;
+                userSessionModel.DepartmentName = employeeViewModel.Department.DepartmentName;
+                userSessionModel.JoinDate = employeeViewModel.JoinDate;
+                userSessionModel.FirstName = employeeViewModel.FirstName;
+                userSessionModel.MiddleName = employeeViewModel.MiddleName;
+                userSessionModel.LastName = employeeViewModel.LastName;
+                userSessionModel.Image = employeeViewModel.Image;
+                Session["EmployeeDetails"] = userSessionModel;
+                Session["EmployeeImage"] = userSessionModel.Image;
                 TempData["Response"] = "Updated Successfuly";
                 return RedirectToAction("updateprofile");
             }
@@ -107,10 +123,7 @@ namespace LeaveManagementSystem.Controllers
             employeeViewModel = employeeService.GetEmployeeByID(Convert.ToInt32(Session["EmployeeID"]));
             return View(employeeViewModel);
         }
-        public ActionResult Unauthorized()
-        {
-            return View();
-        }
+       
        
         public ActionResult Logout()
         {

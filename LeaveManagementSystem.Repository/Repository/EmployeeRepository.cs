@@ -24,7 +24,7 @@ namespace LeaveManagementSystem.Repository
         public int AuthenticateUser(string email, string password)
         {
             Employee employee = Db.Employee.Where(temp => temp.EmailID == email && temp.Password == password).FirstOrDefault();
-            if (employee != null && employee.EmployeeStatus == true)
+            if (employee != null /*&& employee.EmployeeStatus == true*/)
             {
                 return employee.EmployeeID;
             }
@@ -69,7 +69,7 @@ namespace LeaveManagementSystem.Repository
      
         public bool IsEmailExist(string email)
         {
-            throw new NotImplementedException();
+            return Db.Employee.Any(temp => temp.EmailID == email);
         }
 
 
@@ -77,6 +77,7 @@ namespace LeaveManagementSystem.Repository
         public bool IsMobileExist(string mobile)
         {
             return Db.Employee.Any(temp => temp.MobileNumber == mobile);
+            
         }
 
         public void AddEmployee(Employee employee)
@@ -112,15 +113,29 @@ namespace LeaveManagementSystem.Repository
             existProfile.FirstName = profile.FirstName;
             existProfile.MiddleName = profile.MiddleName;
             existProfile.LastName = profile.LastName;
+            existProfile.EmailID = profile.EmailID;
+            existProfile.ModifiedBy = profile.ModifiedBy;
+            existProfile.ModifiedOn = profile.ModifiedOn;
             existProfile.EmployeeStatus = profile.EmployeeStatus;
             existProfile.AddressLine1 = profile.AddressLine1;
             existProfile.AddressLine2 = profile.AddressLine2;
             existProfile.AddressLine3 = profile.AddressLine3;
             existProfile.DepartmentID = profile.DepartmentID;
             existProfile.DesignationID = profile.DesignationID;
+            existProfile.GenderID = profile.GenderID;
+            existProfile.QualificationID = profile.QualificationID;
+            existProfile.Nationality = profile.Nationality;
             existProfile.DateOfBirth = profile.DateOfBirth;
+            existProfile.JoinDate = profile.JoinDate;
             existProfile.IsSpecialPermission = profile.IsSpecialPermission;
-            //existProfile.CurrentStatus = profile.CurrentStatus;
+            existProfile.IsVirtualTeamHead = profile.IsVirtualTeamHead;
+            existProfile.MobileNumber = profile.MobileNumber;
+            if (existProfile.Experience != null)
+            {
+                existProfile.Experience.CompanyName = profile.Experience.CompanyName;
+                existProfile.Experience.StartDate = profile.Experience.StartDate;
+                existProfile.Experience.EndDate = profile.Experience.EndDate;
+            }
             Db.SaveChanges();
 
         }

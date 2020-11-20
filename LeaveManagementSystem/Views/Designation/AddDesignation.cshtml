@@ -2,48 +2,60 @@
 @{
     ViewBag.Title = "AddDesignation";
 }
-
-    <link rel="stylesheet" href="~/Content/CustomStyleSheet.css" >
-
-    <div class="container">
-        <hr>
-        @using (Html.BeginForm("adddesignation", "designation", FormMethod.Post))
-        {
-            @Html.LabelFor(temp => temp.DesignationName, "Designation Name")
-            @Html.TextBoxFor(temp => temp.DesignationName)
-            @Html.ValidationMessageFor(temp => temp.DesignationName, "", new { @class = "text-danger", required = "required" })
-            <div class="valid-feedback">Looks good</div>
-            <div class="invalid-feedback">Not good</div>
-            <small class="designation-exist text-danger"></small>
-            <button type="submit" style="float:right;" class="btn btn-primary">Add</button>
-            <a href="~/designation/listdesignation" style="float:left;" class="btn btn-primary">Back</a>
-        }
+@if (ViewBag.Response != null)
+{
+    <div class="alert alert-success">
+        <strong>Updated Successfully!</strong>
     </div>
 
+}
+<link rel="stylesheet" href="~/Content/CustomStyleSheet.css">
+
+<div class="container">
+    <hr>
+    @using (Html.BeginForm("adddesignation", "designation", FormMethod.Post))
+    {
+        @Html.LabelFor(temp => temp.DesignationName, "Designation Name")
+        @Html.TextBoxFor(temp => temp.DesignationName)
+        @Html.ValidationMessageFor(temp => temp.DesignationName, "", new { @class = "text-danger", required = "required" })
+        <small class="designation-exist text-danger"></small>
+        <br /> <br />
+        <button type="submit" style="float:right;" class="btn btn-primary">Add</button>
+        <a href="~/designation/listdesignation" style="float:left;" class="btn btn-primary">Back</a>
+    }
+</div>
+
 <script>
-    $("#DesignationName").blur(
-        function () {
-            $.ajax(
-                {
-                    url: "/designation/getdesignation?designation=" + $("#DesignationName").val(),
-                    type: "GET",
-                    success: function (response) {
-                        if (response == "found") {
-                            $(".designation-exist").text("Designation already exist");
-                            $(".Isdesignation-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
-                        }
-                        else {
-                            $(".designation-exist").text("");
-                            $(".Isdesignation-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
-                        }
-                    },
-                    error: function () {
-                        alert("Error occured")
+    $(document).ready(function () {
+        $("#DesignationName").blur(function () {
+            var designation = $("#DesignationName").val();
+
+            $.ajax({
+                url: '/RemoteValidation/getdesignation?designation=' + designation,
+                method: 'get',
+                data: { designation: designation },
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.msg == "found") {
+                        $(".designation-exist").text("Designation already exist");
+
                     }
+                    else {
+                        $(".designation-exist").text(" ");
+
+                    }
+                },
+                error: function (response) {
+                    alert("Something went wrong ! Try again");
                 }
 
-            )
+
+            });
+
+
         });
+
+    });
 </script>
 
 

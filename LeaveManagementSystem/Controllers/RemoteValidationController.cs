@@ -12,33 +12,73 @@ namespace LeaveManagementSystem.Controllers
     public class RemoteValidationController : Controller
     {
         IEmployeeService employeeService;
+        IDesignationService designationService;
+        IDepartmentService departmentService;
 
-        public RemoteValidationController(IEmployeeService employeeService)
+        public RemoteValidationController(IEmployeeService employeeService, IDesignationService designationService, IDepartmentService departmentService)
         {
             this.employeeService = employeeService;
+            this.designationService = designationService;
+            this.departmentService = departmentService;
         }
 
-        //[HttpGet]
-        //public JsonResult IsMailExist(string password, string email)
-        //{
+        [HttpGet]
 
-        //    bool isExist = false;
-        //    EmployeeViewModel employee = employeeService.AuthenticateUser(email, password);
-        //    if(employee != null)
-        //    {
-        //        isExist = true;
-        //    }
-        //    return Json(isExist, JsonRequestBehavior.AllowGet);
-        //}
-        //To check only EmpName   
-        //[HttpGet]
-        //public JsonResult IsEmpNameExist(string Empname)
-        //{
+        public JsonResult GetMobile(string number)
+        {
 
-        //    bool isExist = EmployeeStaticData.UserList.Where(u => u.EmpName.ToLowerInvariant().Equals(Empname.ToLower())) != null;
-        //    return Json(!isExist, JsonRequestBehavior.AllowGet);
-        //}
-        
-        
+            bool value = employeeService.IsMobileExist(number);
+
+            if (value)
+            {
+
+                return Json(new { msg = "found" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { msg = "not found" }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+        [HttpGet]
+        public JsonResult GetEmail(string email)
+        {
+            bool value = employeeService.IsEmailExist(email);
+
+            if (value)
+            {
+                return Json(new { msg = "found" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { msg = "not found" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpGet]
+        public JsonResult GetDesignation(string designation)
+        {
+            if (designationService.IsDesignationExist(designation))
+            {
+                return Json(new { msg = "found" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { msg = "not found" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpGet]
+        public JsonResult GetDepartment(string department)
+        {
+            if (departmentService.IsDepartmentExist(department))
+            {
+                return Json(new { msg = "found" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { msg = "not found" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
     }
 }

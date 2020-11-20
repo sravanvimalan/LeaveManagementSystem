@@ -127,27 +127,7 @@ namespace LeaveManagementSystem.ServiceLayer
             return employeeViewModel;
         }
 
-        public List<EmployeeViewModel> GetEmployeesByDesignationId(int DesignationId)
-        {
-            List<Employee> list = employeeRespository.GetEmployeesByDesignationId(DesignationId);
-
-            List<EmployeeViewModel> employeeProfileViewModel = null;
-
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Employee, EmployeeViewModel>();
-                cfg.CreateMap<Department, DepartmentViewModel>();
-                cfg.CreateMap<Designation, DesignationViewModel>();
-                cfg.IgnoreUnmapped();
-            });
-
-            IMapper mapper = config.CreateMapper();
-
-            employeeProfileViewModel = mapper.Map<List<Employee>, List<EmployeeViewModel>>(list);
-
-            return employeeProfileViewModel;
-            
-        }
+      
 
         public bool IsEmailExist(string email)
         {
