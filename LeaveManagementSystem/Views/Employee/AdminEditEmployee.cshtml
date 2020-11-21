@@ -34,7 +34,7 @@
         @Html.HiddenFor(temp => temp.SelectedQualificationID)
         @Html.HiddenFor(temp => temp.SelectedDepartmentID)
         @Html.HiddenFor(temp => temp.SelectedDesignationID)
-        
+
 
         <div class="form-row">
             <div class="form-group col-sm-3">
@@ -61,8 +61,6 @@
                 @Html.LabelFor(temp => temp.EmailID, "Email ID")
                 @Html.TextBoxFor(temp => temp.EmailID, new { @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.EmailID, "", new { @class = "text-danger", required = "required" })
-                <div class="valid-feedback">looks good</div>
-                <div class="invalid-feedback">Invalid email</div>
                 <small class="email-exist text-danger"></small>
             </div>
         </div>
@@ -93,8 +91,7 @@
                 @Html.LabelFor(temp => temp.MobileNumber, "Mobile Number")
                 @Html.TextBoxFor(temp => temp.MobileNumber, new { pattern = "^[789]\\d{9}$", required = "required", @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.MobileNumber, "", new { @class = "text-danger", required = "required" })
-                <div class="valid-feedback">looks good</div>
-                <div class="invalid-feedback">Invalid mobile number</div>
+
                 <small class="mobile-exist text-danger"></small>
             </div>
             <div class="form-group col-sm-9">
@@ -226,9 +223,9 @@
             <br /> <br />
         </fieldset>
         <div class="form-row">
-            <div class="form-group  col-sm-3">
+            <div class="form-group  col-sm-10">
 
-                <button type="submit" class="btn btn-info">Save And Update</button>
+                <button type="submit" class="btn btn-info" style="float:right;">Save And Update</button>
             </div>
 
         </div>
@@ -237,92 +234,92 @@
 
 </form>
 
-@*<script>
+<script type="text/javascript">
 
-        $(document).ready(function () {
-            $("#Password2").blur(validate);
-            function validate(event) {
-                var password1 = $("#Password").val();
-                var password2 = $("#Password2").val();
 
-                if (password1 == password2) {
-                    $("#validate-status").text("match").css("color","green");
+
+    $(document).ready(function () {
+        $("#MobileNumber").blur(function () {
+            var number = $("#MobileNumber").val();
+
+            $.ajax({
+                url: '/RemoteValidation/getmobile?number=' + number,
+                method: 'get',
+                data: { number: number },
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.msg == "found") {
+
+                        $(".mobile-exist").text("Mobile number already exist");
+
+                    }
+                    else {
+                        $(".mobile-exist").text(" ");
+
+                    }
+                },
+                error: function (response) {
+                    alert("error");
                 }
-                else {
-                    $("#validate-status").text("not match").css("color", "red");
-                }
 
-            }
+
+            });
+
+
         });
 
+    });
 
 
+    $(document).ready(function () {
+        $("#EmailID").blur(function () {
+            var email = $("#EmailID").val();
 
-
-
-        $(document).on("submit", ".form-validation", validation);
-        $(".form-validation,input").blur(validation);
-        function validation(event) {
-            if ($(".form-validation")[0].checkValidity() == false) {
-                event.preventDefault();
-            }
-            $(".form-validation")[0].classList.add("was-validated");
-        }
-
-
-
-
-
-
-
-
-        $("#MobileNumber").blur(
-            function () {
-                $.ajax(
-                    {
-                        url: "/employee/getmobile?mobile=" + $("#MobileNumber").val(),
-                        type: "GET",
-                        success: function (response) {
-                            if (response == "found") {
-                                $(".mobile-exist").text("Mobile number already exist");
-                                $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
-                            }
-                            else {
-                                $(".mobile-exist").text(" ");
-                                $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
-                            }
-                        },
-                        error: function () {
-                            alert("Error occured")
-                        }
+            $.ajax({
+                url: '/RemoteValidation/getemail?email=' + email,
+                method: 'get',
+                data: { email: email },
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.msg == "found") {
+                        $(".email-exist").text("Email already exist");
                     }
+                    else {
+                        $(".email-exist").text(" ");
+                    }
+                },
+                error: function (response) {
+                    alert("error");
+                }
 
-                )
+
             });
 
 
-        $("#EmailID").blur(
-            function () {
-                $.ajax(
-                    {
-                        url: "/employee/getemail?email=" + $("#EmailID").val(),
-                        type: "GET",
-                        success: function (response) {
-                            if (response == "found") {
-                                $(".email-exist").text("Email already exist");
-                                $(".email-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
-                            }
-                            else {
-                                $(".email-exist").text("");
-                                $(".email-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
-                            }
-                        },
-                        error: function () {
-                            alert("Error occured")
-                        }
-                    }
+        });
 
-                )
-            });
-    </script>*@
+    });
+</script>
+
+<style>
+    #active {
+        background-color: grey !important;
+        color: white !important;
+    }
+</style>
+
+<script>
+
+    $("a[href='/employee/listEmployee']").attr("id", "active");
+
+</script>
+
+
+
+
+
+
+
+
+
 

@@ -5,6 +5,7 @@ using LeaveManagementSystem.ServiceLayer;
 using LeaveManagementSystem.ViewModel.ViewModel;
 using System.Web.Security;
 using LeaveManagementSystem.ServiceLayer.Service.Session;
+using LeaveManagementSystem.Utility;
 
 namespace LeaveManagementSystem.Controllers
 { 

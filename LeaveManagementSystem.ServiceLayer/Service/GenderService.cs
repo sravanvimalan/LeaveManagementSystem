@@ -8,6 +8,7 @@ using LeaveManagementSystem.Repository;
 using AutoMapper;
 using LeaveManagementSystem.DomainModel;
 using System.Web.Mvc;
+using LeaveManagementSystem.Utility;
 
 namespace LeaveManagementSystem.ServiceLayer
 {

@@ -10,6 +10,7 @@ using AutoMapper;
 using System.Net;
 using System.Web.Mvc;
 using LeaveManagementSystem.DomainModel.DTOClasses;
+using LeaveManagementSystem.Utility;
 
 namespace LeaveManagementSystem.ServiceLayer
 {

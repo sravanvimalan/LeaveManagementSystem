@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="~/Content/CustomStyleSheet.css">
 
 <div class="container">
-    <h3>Register new department</h3>
+
 
     <hr>
     @using (Html.BeginForm("adddepartment", "department", FormMethod.Post))
@@ -23,9 +23,9 @@
         @Html.ValidationMessageFor(temp => temp.DepartmentName, "", new { @class = "text-danger", required = "required" })
 
         <small class="department-exist text-danger"></small>
-        <br /> <br /> 
+        <br /> <br />
         <button type="submit" style="float:right;" class="btn btn-primary">Add</button>
-        <a href="/department/departmentlist" style="float:left" class="btn btn-primary">back</a>
+        <a href="/department/Departmentlist" style="float: left;" class="btn btn-primary">back</a>
 
     }
 </div>
@@ -62,6 +62,16 @@
 
     });
 </script>
+<style>
+    #active {
+        background-color: grey !important;
+        color: white !important;
+    }
+</style>
+<script>
 
+    $("a[href='/department/departmentlist']").attr("id", "active");
+
+</script>
 
 

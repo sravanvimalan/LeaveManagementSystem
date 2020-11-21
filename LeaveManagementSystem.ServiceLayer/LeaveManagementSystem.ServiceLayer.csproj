@@ -91,11 +91,8 @@
     <Compile Include="Service\LeaveRequestService.cs" />
     <Compile Include="Service\Session\UserSessionModel.cs" />
     <Compile Include="Service\VacationTypeService.cs" />
-    <Compile Include="Utility\MapperExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\QualificationService.cs" />
-    <Compile Include="Utility\SendEmail.cs" />
-    <Compile Include="Utility\SHA256HashGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -109,6 +106,10 @@
     <ProjectReference Include="..\LeaveManagementSystem.Repository\LeaveManagementSystem.Repository.csproj">
       <Project>{8dde9fe2-d056-44da-855e-320ee4484b5b}</Project>
       <Name>LeaveManagementSystem.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LeaveManagementSystem.Utility\LeaveManagementSystem.Utility.csproj">
+      <Project>{fe6664ce-4d9c-49f8-8ae9-0b1e8103d620}</Project>
+      <Name>LeaveManagementSystem.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\LeaveManagementSystem.ViewModel\LeaveManagementSystem.ViewModel.csproj">
       <Project>{00669953-7c44-46b0-814a-29f71ffb1641}</Project>

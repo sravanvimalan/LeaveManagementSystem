@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using LeaveManagementSystem.DomainModel;
 using AutoMapper;
 using System.Web.Mvc;
+using LeaveManagementSystem.Utility;
 
 namespace LeaveManagementSystem.ServiceLayer
 {

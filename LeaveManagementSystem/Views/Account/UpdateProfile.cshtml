@@ -5,9 +5,9 @@
 
 @if (ViewBag.Response != null)
 {
-<div class="alert alert-success">
-    <strong>Updated Successfully!</strong> 
-</div>
+    <div class="alert alert-success">
+        <strong>Updated Successfully!</strong>
+    </div>
 
 }
 
@@ -18,74 +18,75 @@
 
 @using (Html.BeginForm("updateprofile", "account", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div class="container">
-        <h3><b>Update Profile</b></h3>
-        <p>Your current details.</p>
-        <label for="Image">Add Image</label>
-        <input type="file" name="Image" id="Image" />
+<div class="container">
+    <h3><b>Update Profile</b></h3>
+    <p>Your current details.</p>
+    <label for="Image">Upload Image</label>
+    <input type="file" name="Image" id="Image" />
 
-        <br>
-        <br> <br> <br> <br>
-        @Html.HiddenFor(temp => temp.EmployeeID)
-
-
-        @Html.LabelFor(temp => temp.FirstName, "First Name")
-        @Html.TextBoxFor(temp => temp.FirstName, new { @class = "form-control", required = "required" })
-
-        <div> @Html.ValidationMessageFor(temp => temp.FirstName, "", new { @class = "text-danger" }) </div>
+    <br>
+    <br> <br> <br> <br>
+    @Html.HiddenFor(temp => temp.EmployeeID)
 
 
-        @Html.LabelFor(temp => temp.MiddleName, "Middle Name")
-        @Html.TextBoxFor(temp => temp.MiddleName, new { @class = "form-control" })
+    @Html.LabelFor(temp => temp.FirstName, "First Name")
+    @Html.TextBoxFor(temp => temp.FirstName, new { @class = "form-control", required = "required" })
+
+    <div> @Html.ValidationMessageFor(temp => temp.FirstName, "", new { @class = "text-danger" }) </div>
 
 
-        @Html.LabelFor(temp => temp.LastName, "Last Name")
-        @Html.TextBoxFor(temp => temp.LastName, new { @class = "form-control", required = "required" })
-        <div>@Html.ValidationMessageFor(temp => temp.LastName, "", new { @class = "text-danger" })</div>
-
-        @Html.LabelFor(temp => temp.DateOfBirth, "Date Of Birth")
+    @Html.LabelFor(temp => temp.MiddleName, "Middle Name")
+    @Html.TextBoxFor(temp => temp.MiddleName, new { @class = "form-control" })
 
 
+    @Html.LabelFor(temp => temp.LastName, "Last Name")
+    @Html.TextBoxFor(temp => temp.LastName, new { @class = "form-control", required = "required" })
+    <div>@Html.ValidationMessageFor(temp => temp.LastName, "", new { @class = "text-danger" })</div>
 
-
-        @Html.TextBoxFor(model => model.DateOfBirth,
-               new { @type = "date", @Value = Model.DateOfBirth.ToString("yyyy-MM-dd"), @class = "form-control", required = "required" })
-        <div> @Html.ValidationMessageFor(temp => temp.DateOfBirth, "", new { @class = "text-danger" })</div>
-        <br /><br />
-
-        @Html.LabelFor(temp => temp.MobileNumber, "Mobile Number")
-        @Html.TextBoxFor(temp => temp.MobileNumber, new { @class = " form-control", required = "required" })
-        <div>@Html.ValidationMessageFor(temp => temp.MobileNumber, "", new { @class = "text-danger " })</div>
+    @Html.LabelFor(temp => temp.DateOfBirth, "Date Of Birth")
 
 
 
-        @Html.LabelFor(temp => temp.AddressLine1, "Address Line 1")
-        @Html.TextBoxFor(temp => temp.AddressLine1, new { @class = " form-control", required = "required" })
-        <div>@Html.ValidationMessageFor(temp => temp.AddressLine1, "", new { @class = "text-danger" })</div>
 
-        @Html.LabelFor(temp => temp.AddressLine2, "Address Line 2")
-        @Html.TextBoxFor(temp => temp.AddressLine2, new { @class = "form-control" })
+    @Html.TextBoxFor(model => model.DateOfBirth,
+           new { @type = "date", @Value = Model.DateOfBirth.ToString("yyyy-MM-dd"), @class = "form-control", required = "required" })
+    <div> @Html.ValidationMessageFor(temp => temp.DateOfBirth, "", new { @class = "text-danger" })</div>
+    <br /><br />
+
+    @Html.LabelFor(temp => temp.MobileNumber, "Mobile Number")
+    @Html.TextBoxFor(temp => temp.MobileNumber, new { @class = " form-control", required = "required" })
+    <div>@Html.ValidationMessageFor(temp => temp.MobileNumber, "", new { @class = "text-danger " })</div>
+    <small class="mobile-exist text-danger"></small>
+    <br />
 
 
-        @Html.LabelFor(temp => temp.AddressLine3, "Address Line 3")
-        @Html.TextBoxFor(temp => temp.AddressLine3, new { @class = "form-control" })
+    @Html.LabelFor(temp => temp.AddressLine1, "Address Line 1")
+    @Html.TextBoxFor(temp => temp.AddressLine1, new { @class = " form-control", required = "required" })
+    <div>@Html.ValidationMessageFor(temp => temp.AddressLine1, "", new { @class = "text-danger" })</div>
+
+    @Html.LabelFor(temp => temp.AddressLine2, "Address Line 2")
+    @Html.TextBoxFor(temp => temp.AddressLine2, new { @class = "form-control" })
+
+
+    @Html.LabelFor(temp => temp.AddressLine3, "Address Line 3")
+    @Html.TextBoxFor(temp => temp.AddressLine3, new { @class = "form-control" })
 
 
 
-        @Html.LabelFor(temp => temp.GenderID, "Gender")
-        @Html.DropDownListFor(temp => temp.GenderID, Model.GenderList, Model.GenderName, new { @class = "form-control" })
-        <div>
-            @Html.ValidationMessageFor(temp => temp.GenderID, "", new { @class = "text-danger" })
-        </div>
-        <br/>
-        <br/>
-        @Html.LabelFor(temp => temp.Nationality, "Nationality")
-        @Html.TextBoxFor(temp => temp.Nationality, new { @class = "form-control" })
-        <div>
-            @Html.ValidationMessageFor(temp => temp.Nationality, "", new { @class = "text-danger form - control", required = "required" })
-        
-            </div><button type="submit" class="btn btn-success">Save</button>
+    @Html.LabelFor(temp => temp.GenderID, "Gender")
+    @Html.DropDownListFor(temp => temp.GenderID, Model.GenderList, Model.GenderName, new { @class = "form-control" })
+    <div>
+        @Html.ValidationMessageFor(temp => temp.GenderID, "", new { @class = "text-danger" })
     </div>
+    <br />
+    <br />
+    @Html.LabelFor(temp => temp.Nationality, "Nationality")
+    @Html.TextBoxFor(temp => temp.Nationality, new { @class = "form-control" })
+    <div>
+        @Html.ValidationMessageFor(temp => temp.Nationality, "", new { @class = "text-danger form - control", required = "required" })
+        <br /><br />
+    </div><button type="submit" class="btn btn-primary" style="float:right;">Save</button>
+</div>
 }
 
 
@@ -103,6 +104,39 @@
 </script>
 
 
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#MobileNumber").blur(function () {
+            var number = $("#MobileNumber").val();
+
+            $.ajax({
+                url: '/RemoteValidation/getmobile?number=' + number,
+                method: 'get',
+                data: { number: number },
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.msg == "found") {
+                        $(".mobile-exist").text("Mobile number already exist");
+
+                    }
+                    else {
+                        $(".mobile-exist").text(" ");
+
+                    }
+                },
+                error: function (response) {
+                    alert("error");
+                }
+
+
+            });
+
+
+        });
+
+    });
+</script>
 
 
 

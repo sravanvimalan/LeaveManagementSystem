@@ -7,11 +7,11 @@
 
 @if (employee.Image == "AAAAAAAAAAAAAA==" || employee.Image == null)
 {
-    <img src="~/Image/person.jpg" alt="Image" width="80px" />
+<img src="~/Image/person.jpg" alt="Image" style="width: 80px" />
 }
 else
 {
-    <img src="data:image/png;base64,@Session["EmployeeImage"]" alt="Image" width="80px" />
+    <img src="data:image/png;base64,@Session["EmployeeImage"]" alt="Image" style="width: 80px" />
 }
 
 
@@ -20,15 +20,20 @@ else
 <h5><span><i class='far fa-calendar'></i></span>@employee.JoinDate.ToShortDateString()</h5>
 <h5>@employee.DesignationName</h5>
 <h5>@employee.DepartmentName</h5>
-@if (employee.HasAdminPermission)
-{
+<div class="form-row">
+    <div class="col-sm-4">
+        @if (employee.HasAdminPermission)
+        {
 
-    <h5> <span class="label label-danger"> Admin</span></h5>
+            <h5> <span class="label label-danger col-sm-2"  style="margin-right:10px"> Admin</span></h5>
 
-}
-<h5>
-    <span class="label label-success">Active</span>
-</h5>
+        }
+        <span class="label label-success col-sm-2">Active</span>
+    </div>
+    
+</div>
+
+
 @if (Session["Response"] != null)
 {
     <div class="alert alert-success">

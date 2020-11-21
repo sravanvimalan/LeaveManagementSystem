@@ -39,12 +39,12 @@
 
 
 
-        @Html.LabelFor(temp => temp.FromDate)
+        @Html.LabelFor(temp => temp.FromDate,"From Date")
         @Html.TextBoxFor(model => model.FromDate,
                new { @type = "date", @Value = Model.FromDate.ToString("yyyy-MM-dd"), @class = "form-control", required = "required" })
         <div> @Html.ValidationMessageFor(temp => temp.FromDate, "", new { @class = "text-danger" })</div>
-
-        @Html.LabelFor(temp => temp.ToDate)
+        <br />
+        @Html.LabelFor(temp => temp.ToDate,"To Date")
         @Html.TextBoxFor(model => model.ToDate,
               new { @type = "date", @Value = Model.ToDate.ToString("yyyy-MM-dd"), @class = "form-control", required = "required" })
         <div> @Html.ValidationMessageFor(temp => temp.ToDate, "", new { @class = "text-danger" })</div>
@@ -77,7 +77,7 @@
 
 
 
-        @Html.LabelFor(temp => temp.VacationStringID, "VacationID")
+        @Html.LabelFor(temp => temp.VacationStringID, "Vacation Type")
         @Html.DropDownListFor(temp => temp.VacationStringID, Model.VacationTypeList, "Select Vacation", new { @class = "form-control", required = "required" })
         <div> @Html.ValidationMessageFor(temp => temp.VacationStringID, "", new { @class = "text-danger" })</div>
 
@@ -93,7 +93,7 @@
         <br><br>
 
 
-        @Html.LabelFor(temp => temp.Comments)
+        @Html.LabelFor(temp => temp.Comments,"Comment")
         @Html.TextAreaFor(temp => temp.Comments, new { @class = "form-control", required = "required" })
         <div> @Html.ValidationMessageFor(temp => temp.Comments, "", new { @class = "text-danger" })</div>
 

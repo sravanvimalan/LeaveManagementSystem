@@ -323,6 +323,10 @@
       <Project>{7b5b4db7-1240-4ac1-a12e-759d4aa20645}</Project>
       <Name>LeaveManagementSystem.ServiceLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LeaveManagementSystem.Utility\LeaveManagementSystem.Utility.csproj">
+      <Project>{fe6664ce-4d9c-49f8-8ae9-0b1e8103d620}</Project>
+      <Name>LeaveManagementSystem.Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LeaveManagementSystem.ViewModel\LeaveManagementSystem.ViewModel.csproj">
       <Project>{00669953-7c44-46b0-814a-29f71ffb1641}</Project>
       <Name>LeaveManagementSystem.ViewModel</Name>

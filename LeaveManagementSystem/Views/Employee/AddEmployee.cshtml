@@ -20,7 +20,7 @@
         <h3>Register</h3>
         <p>Enter employee details.</p>
         <br> <br>
-        <label for="Image">Add Image</label>
+        <label for="Image">Upload Image</label>
         <input type="file" name="Image" id="Image" />
         <br>
         <br> <br> <br> <br>
@@ -50,7 +50,7 @@
                 @Html.LabelFor(temp => temp.EmailID, "Email ID")
                 @Html.TextBoxFor(temp => temp.EmailID, new { @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.EmailID, "", new { @class = "text-danger", required = "required" })
-               
+
                 <small class="email-exist text-danger"></small>
             </div>
         </div>
@@ -95,7 +95,7 @@
                 @Html.LabelFor(temp => temp.MobileNumber, "Mobile Number")
                 @Html.TextBoxFor(temp => temp.MobileNumber, new { pattern = "^[789]\\d{9}$", required = "required", @class = "form-control" })
                 @Html.ValidationMessageFor(temp => temp.MobileNumber, "", new { @class = "text-danger", required = "required" })
-              
+
                 <small class="mobile-exist text-danger"></small>
             </div>
             <div class="form-group col-sm-9">
@@ -203,14 +203,13 @@
         </fieldset>
         <br />
         <br />
-        <div class="form-row">
-            <div class="form-group  col-sm-3">
 
-                <button type="submit" class="btn btn-info">Save</button>
-            </div>
-
-        </div>
     </div>
+
+
+    <button type="submit" class="btn btn-primary" style="float:right;margin-right:120px;">Save</button>
+    <a href="/employee/listemployee" class="btn btn-primary">Back</a>
+
 
 
 </form>
@@ -231,11 +230,11 @@
                 success: function (msg) {
                     if (msg.msg == "found") {
                         $(".mobile-exist").text("Mobile number already exist");
-                        
+
                     }
                     else {
                         $(".mobile-exist").text(" ");
-                       
+
                     }
                 },
                 error: function (response) {
@@ -282,88 +281,17 @@
 
 
 
-    //$("#MobileNumber").dblclick(
-    //    function () {
-    //        $.ajax(
-    //            {
-    //                url: "/employee/getmobile?mobile=" + $("#MobileNumber").val(),
-    //                type: "GET",
-    //                success: function (msg) {
-    //                    if (msg == "found") {
-    //                        $(".mobile-exist").text("Mobile number already exist");
-    //                        $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
-    //                        alert(msg + "f");
-    //                    }
-    //                    else {
-    //                        $(".mobile-exist").text(" ");
-    //                        $(".mobile-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
-    //                        alert(msg + "n");
-    //                    }
-    //                },
-    //                error: function () {
-    //                    alert("error occured");
-    //                }
-    //            }
-
-    //        )
-    //    });
-
-
-
-    //$(document).ready(function () {
-    //    $("#Password2").blur(validate);
-    //    function validate(event) {
-    //        var password1 = $("#Password").val();
-    //        var password2 = $("#Password2").val();
-
-    //        if (password1 == password2) {
-    //            $("#validate-status").text("match").css("color","green");
-    //        }
-    //        else {
-    //            $("#validate-status").text("not match").css("color", "red");
-    //        }
-
-    //    }
-    //});
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-    //$("#EmailID").blur(
-    //    function () {
-    //        $.ajax(
-    //            {
-    //                url: "/employee/getemail?email=" + $("#EmailID").val(),
-    //                type: "GET",
-    //                success: function (response) {
-    //                    if (response == "found") {
-    //                        $(".email-exist").text("Email already exist");
-    //                        $(".email-exist").parent(".form-group").find(".valid-feedback").css("color", "white");
-    //                    }
-    //                    else {
-    //                        $(".email-exist").text("");
-    //                        $(".email-exist").parent(".form-group").find(".valid-feedback").css("color", "green");
-    //                    }
-    //                },
-    //                error: function () {
-    //                    alert("Error occured")
-    //                }
-    //            }
-
-    //        )
-    //    });
 </script>
 
+<style>
+    #active {
+        background-color: grey !important;
+        color: white !important;
+    }
+</style>
+
+<script>
+
+    $("a[href='/employee/listEmployee']").attr("id", "active");
+
+</script>
