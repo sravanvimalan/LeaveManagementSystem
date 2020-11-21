@@ -13,6 +13,8 @@ using LeaveManagementSystem.ViewModel.ViewModel;
 using System.Net;
 using System.Net.Mail;
 using LeaveManagementSystem.ServiceLayer.Service.Session;
+using LeaveManagementSystem.Helper;
+
 
 namespace LeaveManagementSystem.Controllers
 {
@@ -114,10 +116,14 @@ namespace LeaveManagementSystem.Controllers
         }
         [HttpPost]
         [CustomAuthorizeAttribute("CanApproveLeaveRequest")]
-        public ActionResult LeaveDetail( AdminReplyViewModel adminReply)     
+        public ActionResult LeaveDetail(RequestVacationViewModel requestVacation)     
         {
-            leaveRequestService.UpdateStatusAndResponse(adminReply.LeaveStatus, adminReply.Response, adminReply.RequestID,Convert.ToInt32(Session["EmployeeID"]));
-      
+
+            SmtpHelper.SendLeaveRequestEmailAlert(requestVacation.LeaveStatus, requestVacation.Creater.EmailID, requestVacation.RequesterName);
+
+            leaveRequestService.UpdateStatusAndResponse(requestVacation.LeaveStatus, requestVacation.Response, requestVacation.RequestID, Convert.ToInt32(Session["EmployeeID"]));
+
+
             return RedirectToAction("Verifyleave");
         }
 

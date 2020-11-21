@@ -28,23 +28,23 @@ namespace LeaveManagementSystem.Repository
             return list;
         }
 
-        public List<RequestVacation> GetLeaveRequestByApproveId(int EmployeeId)
+        public List<RequestVacation> GetLeaveRequestByApproveId(int employeeId)
         {
-            List<RequestVacation> requestVacation = Db.RequestVacation.Where(temp => temp.ApproverID == EmployeeId & temp.LeaveStatus == "Pending").OrderByDescending(temp => temp.CreatedOn).ToList();
+            List<RequestVacation> requestVacation = Db.RequestVacation.Where(temp => temp.ApproverID == employeeId & temp.LeaveStatus == "Pending").OrderByDescending(temp => temp.CreatedOn).ToList();
 
             return requestVacation;
         }
 
-        public RequestVacation GetLeaveRequestByRequestID(int RequestID)
+        public RequestVacation GetLeaveRequestByRequestID(int requestID)
         {
-            RequestVacation requestVacation = Db.RequestVacation.Where(temp => temp.RequestID == RequestID).FirstOrDefault();
+            RequestVacation requestVacation = Db.RequestVacation.Where(temp => temp.RequestID == requestID).FirstOrDefault();
 
             return requestVacation;
         }
 
-        public RequestVacation GetRequestVacationByID(int RequestID)
+        public RequestVacation GetRequestVacationByID(int requestID)
         {
-            RequestVacation obj = Db.RequestVacation.Where(temp => temp.RequestID == RequestID).FirstOrDefault();
+            RequestVacation obj = Db.RequestVacation.Where(temp => temp.RequestID == requestID).FirstOrDefault();
             return obj;
         }
 
@@ -62,13 +62,13 @@ namespace LeaveManagementSystem.Repository
             Db.SaveChanges();
         }
 
-        public void UpdateStatusAndResponse(string Status, string Response, int RequestId,int VerifierId)
+        public void UpdateStatusAndResponse(string status, string response, int requestId,int verifierId)
         {
-            RequestVacation requestVacation = Db.RequestVacation.Where(temp => temp.RequestID == RequestId).FirstOrDefault();
+            RequestVacation requestVacation = Db.RequestVacation.Where(temp => temp.RequestID == requestId).FirstOrDefault();
 
-            requestVacation.LeaveStatus = Status;
-            requestVacation.Response = Response;
-            requestVacation.ApproverID = VerifierId;
+            requestVacation.LeaveStatus = status;
+            requestVacation.Response = response;
+            requestVacation.ApproverID = verifierId;
             Db.SaveChanges();
         }
 

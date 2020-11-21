@@ -62,6 +62,10 @@
 
         @Html.HiddenFor(temp => temp.RequestID)
         @Html.HiddenFor(temp => temp.CreatorID)
+        @Html.HiddenFor(temp => temp.Creater.EmailID)
+        @Html.HiddenFor(temp => temp.Creater.FirstName)
+        @Html.HiddenFor(temp => temp.Creater.MiddleName)
+        @Html.HiddenFor(temp => temp.Creater.LastName)
     </div>
 
     <button type="submit" class="btn btn-success" name="LeaveStatus" value="Accept">Accept</button>

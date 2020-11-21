@@ -87,11 +87,11 @@ namespace LeaveManagementSystem.Repository
             Db.SaveChanges();
         }
 
-        public void UpdateIsVirtualHead(int EmployeeId, bool value)
+        public void UpdateIsVirtualHead(int employeeId, bool value)
         {
-            if(EmployeeId != 0 )
+            if(employeeId != 0 )
             {
-                Employee employee = GetEmployeeByID(EmployeeId);
+                Employee employee = GetEmployeeByID(employeeId);
                 employee.IsVirtualTeamHead = value;
                 Db.SaveChanges();
             }
@@ -183,6 +183,13 @@ namespace LeaveManagementSystem.Repository
 
             return projectManagerDTO;
            
+        }
+
+        public List<Employee> ListEmployee(string name)
+        {
+            List<Employee> employees = Db.Employee.Where(temp => (temp.FirstName+temp.MiddleName+temp.LastName).ToLower().Contains(name.ToLower())).ToList();
+
+            return employees;
         }
     }
 }

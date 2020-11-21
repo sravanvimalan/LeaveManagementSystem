@@ -78,9 +78,9 @@ namespace LeaveManagementSystem.ServiceLayer.Service
 
         }
 
-        public List<RequestVacationViewModel> GetLeaveRequestByApproveId(int EmployeeId)
+        public List<RequestVacationViewModel> GetLeaveRequestByApproveId(int employeeId)
         {
-            List<RequestVacation> List = RequestVacationRepository.GetLeaveRequestByApproveId(EmployeeId);
+            List<RequestVacation> List = RequestVacationRepository.GetLeaveRequestByApproveId(employeeId);
 
             var config = new MapperConfiguration(cfg =>
             {
@@ -96,9 +96,9 @@ namespace LeaveManagementSystem.ServiceLayer.Service
 
         }
 
-        public RequestVacationViewModel GetLeaveRequestByID(int RequestID)
+        public RequestVacationViewModel GetLeaveRequestByID(int requestID)
         {
-            RequestVacation requestVacation = RequestVacationRepository.GetLeaveRequestByRequestID(RequestID);
+            RequestVacation requestVacation = RequestVacationRepository.GetLeaveRequestByRequestID(requestID);
 
             var config = new MapperConfiguration(cfg =>
             {
@@ -121,11 +121,11 @@ namespace LeaveManagementSystem.ServiceLayer.Service
 
 
 
-        public void UpdateStatusAndResponse(string Status, string Response, int RequestId, int VerifierId)
+        public void UpdateStatusAndResponse(string status, string response, int requestId, int verifierId)
         {
-            RequestVacationRepository.UpdateStatusAndResponse(Status, Response, RequestId, VerifierId);
+            RequestVacationRepository.UpdateStatusAndResponse(status, response, requestId, verifierId);
         }
-        //------------------------------------------------------------
+       
         public List<RequestVacationViewModel> GetAllLeaveRequest(string designation, string department, int departmentId, int employeeId)
         {
             if (department == "HR")

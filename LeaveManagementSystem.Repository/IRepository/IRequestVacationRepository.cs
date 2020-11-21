@@ -14,13 +14,13 @@ namespace LeaveManagementSystem.Repository
 
         public void AddRequestVacation(RequestVacation requestVacation);
 
-        public List<RequestVacation> GetLeaveRequestByApproveId(int EmployeeId);
+        public List<RequestVacation> GetLeaveRequestByApproveId(int employeeId);
 
      
 
-        public RequestVacation GetLeaveRequestByRequestID(int RequestID);
+        public RequestVacation GetLeaveRequestByRequestID(int requestID);
 
-        public void UpdateStatusAndResponse(string Status, string Response, int RequestId,int VerifierId);
+        public void UpdateStatusAndResponse(string status, string response, int requestId,int verifierId);
 
         public List<RequestVacation> GetAllRequestByEmployeeId(int id);
 

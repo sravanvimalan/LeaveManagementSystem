@@ -5,9 +5,7 @@
 @{
     var emp = (LeaveManagementSystem.ServiceLayer.Service.Session.UserSessionModel)Session["EmployeeDetails"];
 }
-@*@{
-        Html.RenderPartial("_EmployeePartialView");
-    }*@
+
 @if (ViewBag.Response != null)
 {
     <div class="alert alert-success">
@@ -19,20 +17,17 @@
 
 
 
-@if (emp.CanApproveLeaveRequest || emp.DesignationName == "Project Manager" || emp.HasAdminPermission == true)
+@if (emp.CanApproveLeaveRequest)
 {
     <style>
         .hide-element {
             visibility: visible !important;
         }
-
-        .hide-leavestatus {
-            visibility: hidden;
-        }
     </style>
 }
-<a href="~/Leave/verifyleave" class="btn btn-primary @*hide-element*@">Verify Request</a>
-<a href="~/Leave/Leavestatus" class="btn btn-primary @*hide-leavestatus*@" style="float:right;">Leave Status</a>
+<br />
+<a href="~/Leave/verifyleave" class=" hide-element">Verify Request</a>
+<a href="~/Leave/Leavestatus" class="btn btn-primary " style="float:right;">Leave Status</a>
 <form action="~/leave/sendleaverequest" method="post">
     <div class="container">
         <h3>Leave Request</h3>

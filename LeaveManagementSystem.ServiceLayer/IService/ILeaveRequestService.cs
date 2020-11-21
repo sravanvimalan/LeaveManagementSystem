@@ -13,13 +13,13 @@ namespace LeaveManagementSystem.ServiceLayer.IService
     {
         public void AddLeaveRequest(RequestVacationViewModel requestVacationViewModel);
 
-        public List<RequestVacationViewModel> GetLeaveRequestByApproveId(int EmployeeId);
+        public List<RequestVacationViewModel> GetLeaveRequestByApproveId(int employeeId);
 
         
 
-        public RequestVacationViewModel GetLeaveRequestByID(int RequestID);
+        public RequestVacationViewModel GetLeaveRequestByID(int requestID);
 
-        public void UpdateStatusAndResponse(string Status, string Response, int RequestId,int VerifierId);
+        public void UpdateStatusAndResponse(string status, string response, int requestId,int verifierId);
 
         public List<RequestVacationViewModel> GetAllRequestVacation();
 

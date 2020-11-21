@@ -13,22 +13,22 @@ namespace LeaveManagementSystem.ServiceLayer
     public interface IEmployeeService
     {
         public IEnumerable<SelectListItem> GetAllProjectManagers();
-        public EmployeeViewModel GetEmployeeByID(int EmployeeID);
-        public int AuthenticateUser(string Email, string Password);
+        public EmployeeViewModel GetEmployeeByID(int employeeID);
+        public int AuthenticateUser(string email, string password);
         public List<EmployeeViewModel> GetAllEmployees();
 
         public void AddEmployee(AddEmployeeViewModel obj);
-        public void DeleteEmployeeByEmployeeID(int EmployeeID);
+        public void DeleteEmployeeByEmployeeID(int employeeID);
 
        
 
         public List<EmployeeViewModel> GetAllVirtualHead();
 
-        public IEnumerable<SelectListItem> GetAllEmployeeByDepartmentID(int DepartmentId);
+        public IEnumerable<SelectListItem> GetAllEmployeeByDepartmentID(int departmentId);
 
-        public void UpdateIsVirtualHead(int EmployeeId, bool value);
+        public void UpdateIsVirtualHead(int employeeId, bool value);
 
-        public void UpdatePassword(string Password, int EmployeeID);
+        public void UpdatePassword(string password, int employeeID);
         public void UpdateProfileByEmployee(UpdateProfileByEmployeeViewModel updateProfile);
 
         public bool IsMobileExist(string mobile);
@@ -37,5 +37,7 @@ namespace LeaveManagementSystem.ServiceLayer
         public void UpdateProfileByAdmin(EmployeeViewModel profile);
         public IEnumerable<SelectListItem> ApproverList(List<EmployeeViewModel> list);
         public IEnumerable<SelectListItem> GetAllEmployeeOfDepartment(List<EmployeeViewModel> employee);
+
+        public List<EmployeeViewModel> ListEmployee(string name);
     }  
 }

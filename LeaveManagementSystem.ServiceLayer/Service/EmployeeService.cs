@@ -23,9 +23,9 @@ namespace LeaveManagementSystem.ServiceLayer
             this.employeeRespository = employeeRespository;
         }
 
-        public void DeleteEmployeeByEmployeeID(int EmployeeID)
+        public void DeleteEmployeeByEmployeeID(int employeeID)
         {
-            employeeRespository.DeleteEmployeeByEmployeeID(EmployeeID);
+            employeeRespository.DeleteEmployeeByEmployeeID(employeeID);
         }
 
         public List<EmployeeViewModel> GetAllEmployees()
@@ -79,9 +79,9 @@ namespace LeaveManagementSystem.ServiceLayer
 
         }
 
-        public IEnumerable<SelectListItem> GetAllEmployeeByDepartmentID(int DepartmentId)
+        public IEnumerable<SelectListItem> GetAllEmployeeByDepartmentID(int departmentId)
         {
-            List<Employee> employeelist = employeeRespository.GetEmployeeByDepartmentID(DepartmentId);
+            List<Employee> employeelist = employeeRespository.GetEmployeeByDepartmentID(departmentId);
 
             var config = new MapperConfiguration(cfg =>
             {
@@ -101,14 +101,14 @@ namespace LeaveManagementSystem.ServiceLayer
             return GetAllEmployeeOfDepartment(emplist);
         }
 
-        public int AuthenticateUser(string Email, string Password)
+        public int AuthenticateUser(string email, string password)
         {
-            return employeeRespository.AuthenticateUser(Email, Password);
+            return employeeRespository.AuthenticateUser(email, password);
         }
 
-        public EmployeeViewModel GetEmployeeByID(int EmployeeID)
+        public EmployeeViewModel GetEmployeeByID(int employeeID)
         {
-           Employee employee = employeeRespository.GetEmployeeByID(EmployeeID);
+           Employee employee = employeeRespository.GetEmployeeByID(employeeID);
             EmployeeViewModel employeeViewModel = null;
             var config = new MapperConfiguration(cfg =>
             {
@@ -164,14 +164,14 @@ namespace LeaveManagementSystem.ServiceLayer
 
         }
 
-        public void UpdateIsVirtualHead(int EmployeeId, bool value)
+        public void UpdateIsVirtualHead(int employeeId, bool value)
         {
-            employeeRespository.UpdateIsVirtualHead(EmployeeId, value);
+            employeeRespository.UpdateIsVirtualHead(employeeId, value);
         }
 
-        public void UpdatePassword(string Password, int EmployeeID)
+        public void UpdatePassword(string password, int employeeID)
         {
-            employeeRespository.UpdatePassword(Password, EmployeeID);
+            employeeRespository.UpdatePassword(password, employeeID);
         }
 
         public void UpdateProfileByAdmin(EmployeeViewModel profile)
@@ -234,7 +234,7 @@ namespace LeaveManagementSystem.ServiceLayer
             }
             return selectList;
         }
-        //newly addedd
+        
         public IEnumerable<SelectListItem> GetAllProjectManagers()
         {
             var ProjectManagers = employeeRespository.GetAllProjectManagers();
@@ -252,6 +252,31 @@ namespace LeaveManagementSystem.ServiceLayer
 
             return selectListItem;
         }
-        //newly addedd
+
+        public List<EmployeeViewModel> ListEmployee(string name)
+        {
+            List<EmployeeViewModel> list = null;
+
+            List<Employee> emplist = employeeRespository.ListEmployee(name);
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Employee, EmployeeViewModel>();
+                cfg.CreateMap<Qualification, QualificationViewModel>();
+                cfg.CreateMap<Experience, ExperienceViewModel>();
+                cfg.CreateMap<Gender, GenderViewModel>();
+                cfg.CreateMap<Designation, DesignationViewModel>();
+                cfg.CreateMap<Department, DepartmentViewModel>();
+
+                cfg.IgnoreUnmapped();
+            });
+
+            IMapper mapper = config.CreateMapper();
+
+            list = mapper.Map<List<Employee>, List<EmployeeViewModel>>(emplist);
+
+            return list;
+        }
+        
     }
 }

@@ -19,14 +19,15 @@
             <td>@Model.EmailID</td>
 
         </tr>
+
         <tr>
-            <th scope="row">Date Of Birth</th>
-            <td>@Model.DateOfBirth.ToShortDateString()</td>
+            <th scope="row">Gender</th>
+            <td>@Model.Gender.GenderName</td>
 
         </tr>
         <tr>
-            @*<th scope="row">Gender</th>
-                <td>@Model.GenderName</td>*@
+            <th scope="row">Date Of Birth</th>
+            <td>@Model.DateOfBirth.ToShortDateString()</td>
 
         </tr>
         <tr>
@@ -35,8 +36,13 @@
 
         </tr>
         <tr>
-            @*<th scope="row">Qualification</th>
-                <td>@Model.QualificationName</td>*@
+            <th scope="row">Qualification</th>
+            <td>@Model.Qualification.QualificationName</td>
+
+        </tr>
+        <tr>
+            <th scope="row">Address</th>
+            <td>@Model.AddressLine1 @Model.AddressLine2 @Model.AddressLine3</td>
 
         </tr>
         <tr>
@@ -44,11 +50,7 @@
             <td>@Model.MobileNumber</td>
         </tr>
 
-        <tr>
-            <th scope="row">Address</th>
-            <td>@Model.AddressLine1 @Model.AddressLine2 @Model.AddressLine3</td>
 
-        </tr>
 
 
 

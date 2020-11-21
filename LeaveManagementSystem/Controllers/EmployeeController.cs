@@ -35,11 +35,15 @@ namespace LeaveManagementSystem.Controllers
         }
 
        
-        public ActionResult ListEmployee(string Search = "")
+        public ActionResult ListEmployee(string search="")
         {
-            List<EmployeeViewModel> list = employeeService.GetAllEmployees();
-            list = list.Where(temp => temp.FirstName.Contains(Search)).ToList();
-            return View(list);
+            if(search != "")
+             return View(employeeService.ListEmployee(search));
+            else
+            {
+                List<EmployeeViewModel> list = employeeService.GetAllEmployees();
+                return View(list);
+            }
         }
 
         

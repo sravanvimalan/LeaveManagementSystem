@@ -1,7 +1,6 @@
-﻿@*@model LeaveManagementSystem.ServiceLayer.Service.Session.UserSessionModel*@
+﻿@using LeaveManagementSystem.ServiceLayer.Service.Session
 @{
-
-   
+    var emp = (UserSessionModel)Session["EmployeeDetails"];
 }
 <html lang="en">
 <head>
@@ -33,14 +32,14 @@
 
 <body>
    
-    @*@if( (Model.IsSpecialPermission || Model.DesignationName == "Project Manager" || Model.IsVirtualTeamHead == true)
+    @if(emp.HasAdminPermission)
         {
             <style>
                 .hide-element {
                     visibility: visible !important;
                 }
             </style>
-        }*@
+        }
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-3 sidenav nav-tabs">
@@ -52,9 +51,9 @@
                     <li><a href="/leave/sendleaverequest">Leave Request</a></li>
                     <li><a href="/Account/updateprofile">Profile</a></li>
                     <li><a href="/Account/updatepassword">Password</a></li>
-                    <li @*class="hide-element"*@><a href="/employee/listEmployee">Employee</a></li>
-                    <li @*class="hide-element"*@><a href="/designation/ListDesignation"> Designation</a></li>
-                    <li @*class="hide-element"*@><a href="/department/departmentlist">Department</a></li>
+                    <li class="hide-element"><a href="/employee/listEmployee">Employee</a></li>
+                    <li class="hide-element"><a href="/designation/ListDesignation"> Designation</a></li>
+                    <li class="hide-element"><a href="/department/departmentlist">Department</a></li>
 
                 </ul><br>
 
